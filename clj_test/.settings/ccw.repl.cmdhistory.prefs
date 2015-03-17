@@ -1,0 +1,2 @@
+cmdhistory=["(+ 1 2 3)" "(a-test)" "(foo)" "(foo 4)" "(fact 6)" "(foo (fact 7))" "(a-test)" "(fact 4)" "(defn times-3 [x] x*3)" "(times-3 9)"]
+eclipse.preferences.version=1

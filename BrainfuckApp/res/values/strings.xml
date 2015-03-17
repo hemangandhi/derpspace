@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name" translatable="false">Brainfuck</string>
+    <string name="hello_world" translatable="false">Hello world!</string>
+    <string name="action_settings" translatable="false">Settings</string>
+    <string name="run_button" translatable="false">Run</string>
+    <string name="debug_button" translatable="false">Debug</string>
+    <string name="IO_mode_title" translatable="false">Input and output integers</string>
+
+</resources>

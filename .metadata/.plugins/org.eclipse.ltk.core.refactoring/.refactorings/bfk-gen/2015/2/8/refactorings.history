@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">&#x0A;<refactoring comment="Rename resource &apos;bfk-gen/src/bfk_gen/core.clj&apos; to &apos;euler-1-5.clj&apos;" description="Rename resource &apos;core.clj&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/bfk_gen/core.clj" name="euler-1-5.clj" stamp="1424365478096" updateReferences="true"/>&#x0A;<refactoring comment="Rename resource &apos;bfk-gen/src/bfk_gen/euler-1-5.clj&apos; to &apos;core.clj&apos;" description="Rename resource &apos;euler-1-5.clj&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/bfk_gen/euler-1-5.clj" name="core.clj" stamp="1424365570191" updateReferences="true"/>
+</session>

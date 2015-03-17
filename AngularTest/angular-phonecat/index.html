@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="phonecatApp"  ng-controller="PhoneListCtrl">
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.11/angular.min.js"></script>
+		<script src="controllers.js"></script>
+		<title>{{query}}</title>
+	</head>
+	<body>
+		Search: <input ng-model="query" type="text"></input>
+		Sort:
+			<select ng-model="orderProp">
+				<option value="name">By name</option>
+				<option value="age">By age</option>
+				<option value="-age">By oldest</option>
+			</select>
+		<ul>
+			<li ng-repeat="phone in phones | filter: query | orderBy: orderProp">
+				<a href="#/phones/{{phone.id}}"><img ng-src="{{phone.imageUrl}}"/></a>
+				<a href="#/phones/{{phone.id}}">{{phone.name}}</a>
+				<p>{{phone.snippet}}</p>
+			</li>
+		</ul>
+		<p>Number of phones: {{phones.length}}</p>
+	</body>
+</html>

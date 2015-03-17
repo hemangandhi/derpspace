@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="scheduleApp" ng-controller="CoursesCtrl">
+<head>
+	<title>Scheduler</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.11/angular.min.js"></script>
+	<script src="scheduler.js"></script>
+</head>
+<body>	
+	<table border="1">
+		<tr>
+			<th>Course type</th>
+			<th ng-repeat="grade in [9,10,11,12]">{{grade}}</th>
+		</tr>
+		<tr ng-repeat="type in types">
+			<th>{{type.name}} ({{type.taken}} of {{type.requirement}} taken)</th>
+			<td ng-repeat="grade in [9,10,11,12]">
+				<ul>
+					<li ng-repeat="course in fillCell(grade,type)">{{course.name}}</li>
+				</ul>
+			</td>
+		</tr>
+	</table>
+	<ul>
+		<li ng-repeat="course in data">
+		{{course.name}} in the {{course.type}} department. <br/> 
+		Requires {{course.prerecs}} and gives {{course.credits}} credits.
+		</li>
+	</ul>
+</body>
+</html>

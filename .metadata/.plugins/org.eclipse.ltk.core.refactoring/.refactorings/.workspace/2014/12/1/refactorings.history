@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;pythonDerps&apos; to &apos;nonJavaDerps&apos;" description="Rename resource &apos;pythonDerps&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="/pythonDerps" name="nonJavaDerps" stamp="1420037629262" updateReferences="true"/>
+</session>

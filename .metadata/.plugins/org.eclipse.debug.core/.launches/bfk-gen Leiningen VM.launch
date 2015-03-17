@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="ccw.launching.clojure">
+<booleanAttribute key="ccw.leiningen.configuration" value="true"/>
+<booleanAttribute key="ccw.repl.startOnLaunch" value="true"/>
+<booleanAttribute key="org.eclipse.debug.core.appendEnvironmentVariables" value="true"/>
+<mapAttribute key="org.eclipse.debug.core.environmentVariables">
+<mapEntry key="LEIN_REPL_ACK_PORT" value="49649"/>
+</mapAttribute>
+<booleanAttribute key="org.eclipse.debug.ui.ATTR_LAUNCH_IN_BACKGROUND" value="false"/>
+<booleanAttribute key="org.eclipse.debug.ui.private" value="true"/>
+<listAttribute key="org.eclipse.jdt.launching.CLASSPATH">
+<listEntry value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#13;&#10;&lt;runtimeClasspathEntry externalArchive=&quot;C:/Users/Heman/Desktop/eclipse-java-luna-SR1-win32-x86_64/eclipse/plugins/ccw.core_0.31.1.STABLE001/leiningen-standalone.jar&quot; path=&quot;3&quot; type=&quot;2&quot;/&gt;&#13;&#10;"/>
+<listEntry value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#13;&#10;&lt;runtimeClasspathEntry externalArchive=&quot;C:/Users/Heman/Desktop/eclipse-java-luna-SR1-win32-x86_64/eclipse/plugins/ccw.core_0.31.1.STABLE001/lein&quot; path=&quot;3&quot; type=&quot;2&quot;/&gt;&#13;&#10;"/>
+<listEntry value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#13;&#10;&lt;runtimeClasspathEntry containerPath=&quot;org.eclipse.jdt.launching.JRE_CONTAINER&quot; path=&quot;1&quot; type=&quot;4&quot;/&gt;&#13;&#10;"/>
+</listAttribute>
+<booleanAttribute key="org.eclipse.jdt.launching.DEFAULT_CLASSPATH" value="false"/>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="clojure.main"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-m ccw.leiningen.main  update-in :dependencies conj &quot;[ccw/ccw.server \&quot;0.1.1\&quot;]&quot; -- update-in :injections conj &quot;(require 'ccw.debug.serverrepl)&quot; -- update-in : dissoc :main -- repl :headless "/>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="bfk-gen"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value=" -client -Xbootclasspath/a:&quot;C:\Users\Heman\Desktop\eclipse-java-luna-SR1-win32-x86_64\eclipse\plugins\ccw.core_0.31.1.STABLE001\leiningen-standalone.jar&quot; -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -Dfile.encoding=UTF-8 -Dmaven.wagon.http.ssl.easy=false"/>
+</launchConfiguration>

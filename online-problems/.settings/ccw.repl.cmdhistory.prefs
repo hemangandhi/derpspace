@@ -1,0 +1,2 @@
+cmdhistory=["(euler-1 10)" "(euler-1 999)" "(euler-2)" "(euler-3  600851475143)" "(reverse \\"hi\\")" "(palindrome? \\"civic\\")" "(reverse \\"civic\\")" "(.toCharArray \\"civic\\")" "(palindrome? \\"civic\\")" "(euler-4 999 999)" "(euler-4)" "(lcm '(4 12 16))" "(lcm 4 12)" "(euler-5)" "(euler-4)" "(euler-4 999 999)" "(euler-5)" "(euler-4 999 999)" "(+ 0 euler-6)" "(euler-6 101)" "(euler-6 1)" "(euler-6 2)" "(map euler-6 (range 10))"]
+eclipse.preferences.version=1

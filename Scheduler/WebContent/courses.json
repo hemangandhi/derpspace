@@ -1,0 +1,15 @@
+[
+	{
+		"name":"LA 1",
+		"prerec":null,
+		"credits":5,
+		"type":"LA"
+	},
+	{
+		"name":"Geo honors",
+		"prerec":null,
+		"credits": 5,
+		"type":"Math"
+	}	
+	
+]
