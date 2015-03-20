@@ -15,6 +15,7 @@ public class Tile extends JLabel implements MouseListener{
 		this.x = x;
 		this.y = y;
 		environs = surroundings;
+		occupant = null;
 		
 		addMouseListener(this);
 		setOpaque(true);
@@ -30,7 +31,9 @@ public class Tile extends JLabel implements MouseListener{
 	public void setOccupant(Piece p){
 		occupant = p;
 		if(p != null)
-			p.drawLabel();
+			p.drawLabel(this);
+		else
+			setText("");
 	}
 	
 	public void restoreBackgroundColor(){
@@ -39,16 +42,33 @@ public class Tile extends JLabel implements MouseListener{
 		else
 			setBackground(Color.WHITE);
 	}
+	
+	public Board getBoard(){
+		return environs;
+	}
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		if(environs.isFirstSelectionMade()){
-			boolean moved = environs.getSelectedTile().getOccupant().move(this);
-			if(moved){
-				environs.restoreAllBackgrounds();
-				environs.updateSelection(null);
-			}
+			environs.getSelectedTile().getOccupant().move(this);
+			environs.restoreAllBackgrounds();
+			environs.updateSelection(null);
+		}else if(occupant != null){
+			Tile[] t = occupant.getValidMoves();
+			if(t != null)
+			    for(Tile a: t)
+				    if(a != null)
+					    a.setBackground(Color.BLUE);
+			environs.updateSelection(this);
 		}
+	}
+	
+	public int getX(){
+		return x;
+	}
+	
+	public int getY(){
+		return y;
 	}
 
 	@Override

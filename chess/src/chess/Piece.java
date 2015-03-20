@@ -2,11 +2,9 @@ package chess;
 
 public abstract class Piece {
 
-	private Board game;
 	private Tile currTile;
 	
-	public Piece(Board game, Tile currTile){
-		this.game = game;
+	public Piece(Tile currTile){
 		this.currTile = currTile;
 	}
 	
@@ -15,18 +13,25 @@ public abstract class Piece {
 	}
 	
 	public boolean move(Tile dest){
-		for(Tile t: getValidMoves()){
-			if(t == dest){
-				currTile.setOccupant(null);
-				currTile = dest;
-				currTile.setOccupant(this);
-				return true;
+		Tile [] valids = getValidMoves();
+		if(valids != null){
+			for(Tile t: getValidMoves()){
+				if(t == dest){
+					currTile.setOccupant(null);
+					currTile = dest;
+					currTile.setOccupant(this);
+					return true;
+				}
 			}
 		}
 		return false;
 	}
 	
-	public abstract void drawLabel();
+	public void drawLabel(){
+		drawLabel(getCurrTile());
+	}
+	
+	public abstract void drawLabel(Tile drawTo);
 	
 	public abstract Tile[] getValidMoves();
 }

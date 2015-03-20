@@ -1,0 +1,22 @@
+package chess;
+
+public abstract class Piece {
+
+	private Board game;
+	private Tile currTile;
+	
+	public Piece(Board game, Tile currTile){
+		this.game = game;
+		this.currTile = currTile;
+	}
+	
+	public Tile getCurrTile(){
+		return currTile;
+	}
+	
+	
+	
+	public abstract void drawLabel();
+	
+	public abstract Tile[] getValidMoves();
+}

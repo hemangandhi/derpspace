@@ -1,0 +1,31 @@
+package chess;
+
+public class Board {
+
+	private Tile[][] grid;
+	private boolean firstSelectionMade;
+	
+	public Board(){
+		grid = new Tile[8][8];
+		
+		for(int i = 0; i < 8; i++){
+			for(int j = 0; j < 8; j++){
+				grid[i][j] = new Tile(i,j,this);
+			}
+		}
+		
+		firstSelectionMade = false;
+	}
+	
+	public void updateSelection(boolean selectionState){
+		firstSelectionMade = selectionState;
+	}
+	
+	public Tile[][] getGrid(){
+		return grid;
+	}
+	
+	public boolean isFirstSelectionMade(){
+		return firstSelectionMade;
+	}
+}

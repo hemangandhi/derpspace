@@ -1,0 +1,20 @@
+package chess;
+
+public class Board {
+
+	private Tile[][] grid;
+	
+	public Board(){
+		grid = new Tile[8][8];
+		
+		for(int i = 0; i < 8; i++){
+			for(int j = 0; j < 8; j++){
+				grid[i][j] = new Tile(i,j,this);
+			}
+		}
+	}
+	
+	public Tile[][] getGrid(){
+		return grid;
+	}
+}

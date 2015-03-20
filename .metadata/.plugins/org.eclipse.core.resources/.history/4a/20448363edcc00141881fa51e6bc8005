@@ -1,0 +1,12 @@
+package chess;
+
+public class Tile {
+
+	private int x, y;
+	private Piece occupant;
+	private Board environs;
+	
+	public Tile(int x, int y){
+		
+	}
+}
