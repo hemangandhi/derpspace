@@ -1,0 +1,31 @@
+package chess;
+
+public class Pawn extends Piece {
+
+	private int player;
+	private boolean movedTwice;
+	
+	public Pawn(Tile currTile, int player) {
+		super(currTile);
+		
+		this.player = player;
+		movedTwice = false;
+	}
+
+	@Override
+	public void drawLabel(Tile drawTo) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public Tile[] getValidMoves() {
+		if(getCurrTile().getBoard().getCurrPlayer() != player)
+			return null;
+		else{
+			Tile [] toRet = new Tile[4];
+			if(getCurrTile().getY() + 1 )
+		}
+	}
+
+}

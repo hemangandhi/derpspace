@@ -61,16 +61,31 @@ public class Board extends JPanel{
 	}
 	
 	public static Board chessBoard(){
+		//Get variables
 		Board toRet = new Board(2);
 		Tile[][] board = toRet.getGrid();
 		
+		//Add pawns
 		for(int i = 0; i < 8; i++){
 			board[1][i].setOccupant(new Pawn(board[1][i],0));
 			board[6][i].setOccupant(new Pawn(board[6][i],1));
-			
-			board[1][i].getOccupant().drawLabel();
-			board[6][i].getOccupant().drawLabel();
 		}
+		
+		//Add knights
+		board[0][1].setOccupant(new Knight(board[0][1],0));
+		board[0][6].setOccupant(new Knight(board[0][6],0));
+		board[7][1].setOccupant(new Knight(board[7][1],1));
+		board[7][6].setOccupant(new Knight(board[7][6],1));
+		
+		//Add kings
+		board[0][4].setOccupant(new King(board[0][4],0));
+		board[7][4].setOccupant(new King(board[7][4],1));
+		
+		//Add rooks
+		board[0][0].setOccupant(new Rook(board[0][0],0));
+		board[0][7].setOccupant(new Rook(board[0][7],0));
+		board[7][0].setOccupant(new Rook(board[7][0],1));
+		board[7][7].setOccupant(new Rook(board[7][7],1));
 		
 		toRet.repaint();
 		return toRet;

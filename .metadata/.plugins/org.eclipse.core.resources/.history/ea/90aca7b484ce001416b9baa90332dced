@@ -1,0 +1,32 @@
+package chess;
+
+public abstract class Piece {
+
+	private Board game;
+	private Tile currTile;
+	
+	public Piece(Board game, Tile currTile){
+		this.game = game;
+		this.currTile = currTile;
+	}
+	
+	public Tile getCurrTile(){
+		return currTile;
+	}
+	
+	public boolean move(Tile dest){
+		for(Tile t: getValidMoves()){
+			if(t == dest){
+				currTile.setOccupant(null);
+				currTile = dest;
+				currTile.setOccupant(this);
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public abstract void drawLabel(Tile drawTo);
+	
+	public abstract Tile[] getValidMoves();
+}

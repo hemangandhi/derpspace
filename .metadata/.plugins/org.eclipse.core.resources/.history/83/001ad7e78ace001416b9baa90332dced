@@ -1,0 +1,47 @@
+package chess;
+
+public class Pawn extends Piece {
+
+	private int player;
+	
+	public Pawn(Tile currTile, int player) {
+		super(currTile);
+		
+		this.player = player;
+	}
+
+	@Override
+	public void drawLabel(Tile drawTo) {
+		drawTo.setForeground(new java.awt.Color(java.awt.Color.RED));
+		if(player == 0)	
+			drawTo.setText("White pawn");
+		else
+			drawTo.setText("Black pawn");
+
+	}
+
+	@Override
+	public Tile[] getValidMoves() {
+		Tile curr = getCurrTile();
+		int moveY = (player == 0)? curr.getY() + 1: curr.getY() - 1;
+		if(curr.getBoard().getCurrPlayer() != player || moveY >= 8)
+			return null;
+		else{
+			Tile [] toRet = new Tile[4];
+			if(curr.getBoard().getGrid()[curr.getX()][moveY].getOccupant() == null)
+				toRet[0] = curr.getBoard().getGrid()[curr.getX()][moveY];
+			if(curr.getX() - 1 >= 0 && 
+					curr.getBoard().getGrid()[curr.getX() - 1][moveY].getOccupant() != null)
+				toRet[1] = curr.getBoard().getGrid()[curr.getX() - 1][moveY];
+			if(curr.getX() + 1 < 8 &&
+					curr.getBoard().getGrid()[curr.getX() + 1][curr.getY() + 1].getOccupant() != null)
+				toRet[2] = curr.getBoard().getGrid()[curr.getX() + 1][moveY];
+			if(((player == 0 && curr.getY() == 1) || (player == 1 && curr.getY() == 6))
+					&& toRet[0] != null &&
+					curr.getBoard().getGrid()[curr.getX()][curr.getY() + 2].getOccupant() == null)
+				toRet[3] = curr.getBoard().getGrid()[curr.getX()][curr.getY() + 2 * ((player == 0)? 1 : -1)];
+			return toRet;
+		}
+	}
+
+}
