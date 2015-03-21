@@ -11,6 +11,10 @@ public class Board extends JPanel{
 	private int currPlayer;
 	private int totalPlayers;
 	
+	/**
+	 * Creates a generic board with numPlayers total players.
+	 * @param numPlayers the number of players in the game.
+	 */
 	public Board(int numPlayers){
 		setLayout(new GridLayout(8,8));
 		
@@ -29,22 +33,38 @@ public class Board extends JPanel{
 		currPlayer = 0;
 	}
 	
+	/**
+	 * Returns the user selected tile, null if no selection is made.
+	 * @return the user selected tile or null.
+	 */
 	public Tile getSelectedTile(){
 		return selected;
 	}
 	
-	public void updateSelection(Tile newSelection){
+	/**
+	 * Updates the selected tile.
+	 * @param newSelection the newly selected tile.
+	 * @param turn whether the new selection completed a turn.
+	 */
+	public void updateSelection(Tile newSelection, boolean turn){
 		selected = newSelection;
-		if(newSelection == null){
+		if(newSelection == null && turn){
 			currPlayer++;
 			currPlayer %= totalPlayers;
 		}
 	}
 	
+	/**
+	 * Returns the current player (an integer x where 0 <= x < total players).
+	 * @return the current player.
+	 */
 	public int getCurrPlayer(){
 		return currPlayer;
 	}
 	
+	/**
+	 * Restores the grid to a checker-board pattern.
+	 */
 	public void restoreAllBackgrounds(){
 		for(Tile[] row: grid){
 			for(Tile t: row)
@@ -52,14 +72,26 @@ public class Board extends JPanel{
 		}
 	}
 	
+	/**
+	 * Returns the grid.
+	 * @return the grid.
+	 */
 	public Tile[][] getGrid(){
 		return grid;
 	}
 	
+	/**
+	 * Returns whether or not the user has made their first selection.
+	 * @return whether or not the user has made their first selection.
+	 */
 	public boolean isFirstSelectionMade(){
 		return selected != null;
 	}
 	
+	/**
+	 * Creates a chess board set up.
+	 * @return the set up chess board.
+	 */
 	public static Board chessBoard(){
 		//Get variables
 		Board toRet = new Board(2);
@@ -87,10 +119,24 @@ public class Board extends JPanel{
 		board[7][0].setOccupant(new Rook(board[7][0],1));
 		board[7][7].setOccupant(new Rook(board[7][7],1));
 		
+		//Add bishops
+		board[0][2].setOccupant(new Bishop(board[0][2],0));
+		board[0][5].setOccupant(new Bishop(board[0][5],0));
+		board[7][2].setOccupant(new Bishop(board[7][2],1));
+		board[7][5].setOccupant(new Bishop(board[7][5],1));
+		
+		//Add queens
+		board[0][3].setOccupant(new Queen(board[0][3],0));
+		board[7][3].setOccupant(new Queen(board[7][3],1));
+		
 		toRet.repaint();
 		return toRet;
 	}
 	
+	/**
+	 * Draws a coordinate grid (for testing purposes).
+	 * @return the generated coordinate grid.
+	 */
 	public static Board drawGrid(){
 		Board toRet = new Board(1);
 		
