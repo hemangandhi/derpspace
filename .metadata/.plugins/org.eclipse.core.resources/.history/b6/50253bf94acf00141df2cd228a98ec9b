@@ -1,0 +1,22 @@
+package chess;
+
+public class Knight extends Piece {
+
+	public Knight(Tile currTile) {
+		super(currTile);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void drawLabel(Tile drawTo) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public Tile[] getValidMoves() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}
