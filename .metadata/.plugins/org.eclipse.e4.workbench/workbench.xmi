@@ -9,6 +9,7 @@
     <persistedState key="workingSets" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>&#xD;&#xA;&lt;workingSets/>"/>
     <persistedState key="aggregateWorkingSetId" value="Aggregate for window 1418596865380"/>
     <tags>topLevel</tags>
+    <tags>shellMaximized</tags>
     <children xsi:type="basic:PartSashContainer" xmi:id="_mWSzMqNnEeSNRZPJN5vIIw" selectedElement="_mWSzM6NnEeSNRZPJN5vIIw" horizontal="true">
       <children xsi:type="advanced:PerspectiveStack" xmi:id="_mWSzM6NnEeSNRZPJN5vIIw" elementId="org.eclipse.ui.ide.perspectivestack" containerData="7500" selectedElement="_mWSzNKNnEeSNRZPJN5vIIw">
         <children xsi:type="advanced:Perspective" xmi:id="_mWSzNKNnEeSNRZPJN5vIIw" elementId="org.eclipse.jdt.ui.JavaPerspective" selectedElement="_mWSzNaNnEeSNRZPJN5vIIw" label="Java" iconURI="platform:/plugin/org.eclipse.jdt.ui/icons/full/eview16/jperspective.gif">
@@ -74,7 +75,7 @@
           <tags>persp.actionSet:adt.actionSet.avdManager</tags>
           <tags>persp.actionSet:adt.actionSet.lint</tags>
           <tags>persp.actionSet:adt.actionSet.refactorings</tags>
-          <children xsi:type="basic:PartSashContainer" xmi:id="_mWSzNaNnEeSNRZPJN5vIIw" selectedElement="_mWSzQaNnEeSNRZPJN5vIIw" horizontal="true">
+          <children xsi:type="basic:PartSashContainer" xmi:id="_mWSzNaNnEeSNRZPJN5vIIw" selectedElement="_mWSzNqNnEeSNRZPJN5vIIw" horizontal="true">
             <children xsi:type="basic:PartSashContainer" xmi:id="_mWSzNqNnEeSNRZPJN5vIIw" containerData="2500" selectedElement="_mWSzN6NnEeSNRZPJN5vIIw">
               <children xsi:type="basic:PartStack" xmi:id="_mWSzN6NnEeSNRZPJN5vIIw" elementId="left" containerData="6000" selectedElement="_mWSzOKNnEeSNRZPJN5vIIw">
                 <tags>newtablook</tags>
@@ -596,7 +597,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_mWS1IqNnEeSNRZPJN5vIIw" elementId="org.eclipse.ui.workbench.file">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_QgvogdTFEeSd7JhbTlExog" elementId="print" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" enabled="false" command="_mWckQ6NnEeSNRZPJN5vIIw"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_-JpwEOEzEeSdyfFDvC3hvg" elementId="print" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/print_edit.png" tooltip="Print" enabled="false" command="_mWckQ6NnEeSNRZPJN5vIIw"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_mWS1MKNnEeSNRZPJN5vIIw" elementId="additions" toBeRendered="false">
         <tags>toolbarSeparator</tags>
@@ -635,7 +636,7 @@
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_mWS1aKNnEeSNRZPJN5vIIw" elementId="org.eclipse.ui.workbench.navigate">
         <tags>Draggable</tags>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_Qg5ZgtTFEeSd7JhbTlExog" elementId="org.eclipse.ui.window.pinEditor" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_mWS70KNnEeSNRZPJN5vIIw"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_-JxE0OEzEeSdyfFDvC3hvg" elementId="org.eclipse.ui.window.pinEditor" visible="false" iconURI="platform:/plugin/org.eclipse.ui/icons/full/etool16/pin_editor.png" tooltip="Pin Editor" type="Check" command="_mWS70KNnEeSNRZPJN5vIIw"/>
       </children>
       <children xsi:type="menu:ToolBar" xmi:id="_mWS1c6NnEeSNRZPJN5vIIw" elementId="group.editor" toBeRendered="false">
         <tags>toolbarSeparator</tags>
