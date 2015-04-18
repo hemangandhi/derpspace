@@ -1,2 +1,2 @@
-cmdhistory=["(+ 1 2 3)" "(a-test)" "(foo)" "(foo 4)" "(fact 6)" "(foo (fact 7))" "(a-test)" "(fact 4)" "(defn times-3 [x] x*3)" "(times-3 9)"]
+cmdhistory=["(+ 1 2 3)" "(a-test)" "(foo)" "(foo 4)" "(fact 6)" "(foo (fact 7))" "(a-test)" "(fact 4)" "(defn times-3 [x] x*3)" "(times-3 9)" "(str-to-symbol-list \\"Hello world\\")" "(symbol h)" "(symbol \\"h\\")" "h" "(str-to-symbol-list \\"Does atom work?\\")" "does" "(def words (str-to-symbol-list \\"Hello\\"))" "words" "(def words2 (str-to-symbol-list \\"Hello people. Do I work?\\"))" "words2" "(nth words2 2)" "@(nth words2 2)" "Do" "(defn do [] (println \\"Do called\\"))" "(apply (symbol \\"do\\"))" "(apply (symbol \\"do\\") nil)" "(symbol \\"do\\")" "do" "(do)"]
 eclipse.preferences.version=1

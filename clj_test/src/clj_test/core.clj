@@ -11,3 +11,6 @@
   (if (<= x 0)
     1
     (* x (fact (- x 1)))))
+
+(defn str-to-symbol-list [string]
+  (map atom (.split string " ")))

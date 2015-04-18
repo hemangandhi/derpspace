@@ -14,4 +14,16 @@
                              (do (swap! np-a inc)))
                           @np-a)) 
                          (- n 1)))))
-                
+
+(defn str-to-digits [string] (map #(java.lang.Integer/parseInt (str % "")) (.toCharArray string)))
+
+(defn greatest-consec-prod "Solves Euler 8." [digits n] 
+  (if (empty? digits) 0
+    (java.lang.Math/max (apply * (for [x (range n) :when (< x (count digits))] (nth digits x)))
+                        (greatest-consec-prod (rest digits) n))))
+ 
+(defn euler9 [sum] (apply * (first (filter (fn [[a b c]] (= sum (+ a b c))) (for [a (range 1 sum)
+                                                                                  b (range 1 sum)
+                                                                                  c (range 1 sum)
+                                                                                  :when (= (* c c) (+ (* a a) (* b b)))]
+                                                                              [a b c])))))
