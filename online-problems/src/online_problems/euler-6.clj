@@ -27,3 +27,10 @@
                                                                                   c (range 1 sum)
                                                                                   :when (= (* c c) (+ (* a a) (* b b)))]
                                                                               [a b c])))))
+
+(defn triangle-num [n] (* n (+ 1 n) 1/2))
+
+(defn count-factors [n] (count (for [i (range 1 (+ 1 n)) :when (= 0 (mod n i))] i)))
+
+(defn euler12 [n] (let [i (atom 1E100)] (while (>= (count-factors (triangle-num @i)) n) (do (swap! i dec))) 
+                    (triangle-num @i)))
