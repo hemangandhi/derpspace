@@ -1191,3 +1191,599 @@ org.osgi.framework.BundleException: Unable to acquire the state change lock for 
 
 !ENTRY ccw.core 1 0 2015-04-29 20:03:23.664
 !MESSAGE Started ccw nREPL server: nrepl://127.0.0.1:53881
+!SESSION 2015-05-01 16:31:39.385 -----------------------------------------------
+eclipse.buildId=4.4.1.M20140925-0400
+java.version=1.8.0_45
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product
+
+!ENTRY org.eclipse.m2e.logback.configuration 2 0 2015-05-01 16:31:50.430
+!MESSAGE Exception while setting up logging:org.eclipse.osgi.internal.framework.EquinoxConfiguration$1 cannot be cast to java.lang.String
+!STACK 0
+java.lang.ClassCastException: org.eclipse.osgi.internal.framework.EquinoxConfiguration$1 cannot be cast to java.lang.String
+	at org.eclipse.m2e.logback.configuration.LogHelper.logJavaProperties(LogHelper.java:26)
+	at org.eclipse.m2e.logback.configuration.LogPlugin.loadConfiguration(LogPlugin.java:189)
+	at org.eclipse.m2e.logback.configuration.LogPlugin.configureLogback(LogPlugin.java:144)
+	at org.eclipse.m2e.logback.configuration.LogPlugin.access$2(LogPlugin.java:107)
+	at org.eclipse.m2e.logback.configuration.LogPlugin$1.run(LogPlugin.java:62)
+	at java.util.TimerThread.mainLoop(Unknown Source)
+	at java.util.TimerThread.run(Unknown Source)
+
+!ENTRY org.eclipse.egit.ui 2 0 2015-05-01 16:32:08.872
+!MESSAGE Warning: EGit couldn't detect the installation path "gitPrefix" of native Git. Hence EGit can't respect system level
+Git settings which might be configured in ${gitPrefix}/etc/gitconfig under the native Git installation directory.
+The most important of these settings is core.autocrlf. Git for Windows by default sets this parameter to true in
+this system level configuration. The Git installation location can be configured on the
+Team > Git > Configuration preference page's 'System Settings' tab.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.egit.ui 2 0 2015-05-01 16:32:08.872
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\Heman'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY ccw.core 2 0 2015-05-01 16:35:34.700
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 36)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:35:35.950
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 36)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:35:38.731
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 36)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:35:40.898
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 36)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:35:41.585
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 36)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:35:42.645
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 36)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:35:45.235
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 36)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:35:46.078
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 36)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:35:48.938
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 36)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:35:54.803
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 36)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:35:56.882
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 36)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:36:04.156
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 36)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:36:07.610
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: Map literal must contain an even number of forms)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:36:09.154
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 36)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:36:11.040
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 36)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:36:12.337
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 36)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:36:13.274
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 36)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:36:14.254
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: Invalid token: :)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:36:15.172
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: Map literal must contain an even number of forms)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:36:17.016
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 36)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:36:19.891
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: Invalid token: :)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:36:21.660
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: Map literal must contain an even number of forms)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:36:22.988
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 36)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:36:25.176
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 36)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:36:34.551
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 36)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:36:39.703
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 36)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:36:41.091
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 36)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:36:44.352
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 36)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:36:46.274
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: Map literal must contain an even number of forms)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:36:47.086
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: Map literal must contain an even number of forms)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:36:47.587
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: Map literal must contain an even number of forms)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:36:48.540
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: Map literal must contain an even number of forms)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:37:00.490
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: Map literal must contain an even number of forms)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:37:07.584
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 37)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:37:11.739
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 37)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:37:13.473
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 37)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:37:14.392
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 37)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:37:19.628
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 37)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:37:21.645
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 37)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:37:28.374
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 37)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:37:30.455
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 37)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:37:33.080
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 37)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:37:33.877
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 37)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:37:34.705
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 37)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:37:40.772
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 36)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:37:42.213
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 36)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:38:54.379
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 38)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:38:57.707
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 38)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:38:59.329
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 38)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:39:00.132
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 38)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:39:07.735
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 39)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:39:09.297
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 39)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:39:12.063
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 39)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:39:13.003
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 39)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:39:14.643
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 39)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:39:16.236
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 39)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:39:20.476
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 39)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:39:21.054
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 39)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:39:22.442
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 39)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:39:33.286
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 39)
+
+!ENTRY ccw.core 1 0 2015-05-01 16:39:39.243
+!MESSAGE Started ccw nREPL server: nrepl://127.0.0.1:62976
+
+!ENTRY ccw.core 2 0 2015-05-01 16:41:55.265
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 36)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:41:56.160
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 36)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:41:57.192
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 36)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:41:59.388
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 36)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:42:01.529
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 36)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:42:23.584
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 36)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:42:26.334
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 36)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:42:27.803
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 36)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:42:29.615
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 36)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:42:30.612
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 36)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:42:32.751
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 36)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:42:34.719
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 36)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:42:35.282
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 36)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:42:37.094
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 36)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:42:39.454
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 36)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:42:40.969
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 36)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:43:09.351
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 38)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:43:11.625
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 38)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:43:19.169
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 38)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:43:19.888
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 38)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:43:21.232
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 38)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:43:22.588
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 40)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:43:24.151
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 40)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:43:29.145
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 41)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:43:30.731
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 41)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:43:32.159
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 41)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:43:32.815
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 41)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:43:39.874
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 41)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:43:49.602
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 41)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:43:52.743
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 41)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:43:56.167
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 41)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:44:07.271
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 41)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:44:25.713
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 41)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:44:27.364
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 41)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:44:30.924
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 41)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:44:32.362
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 41)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:44:33.128
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 41)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:44:33.986
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 41)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:44:39.791
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 38)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:44:40.306
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 38)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:44:40.838
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 36)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:57:12.792
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 36)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:57:14.273
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: EOF while reading, starting at line 36)
+
+!ENTRY ccw.core 2 0 2015-05-01 16:59:39.124
+!MESSAGE Failed to read file 24_game.clj (java.lang.RuntimeException: Unmatched delimiter: ))
+!SESSION 2015-05-05 17:40:51.785 -----------------------------------------------
+eclipse.buildId=4.4.1.M20140925-0400
+java.version=1.8.0_45
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product
+
+!ENTRY org.eclipse.m2e.logback.configuration 2 0 2015-05-05 17:40:59.205
+!MESSAGE Exception while setting up logging:org.eclipse.osgi.internal.framework.EquinoxConfiguration$1 cannot be cast to java.lang.String
+!STACK 0
+java.lang.ClassCastException: org.eclipse.osgi.internal.framework.EquinoxConfiguration$1 cannot be cast to java.lang.String
+	at org.eclipse.m2e.logback.configuration.LogHelper.logJavaProperties(LogHelper.java:26)
+	at org.eclipse.m2e.logback.configuration.LogPlugin.loadConfiguration(LogPlugin.java:189)
+	at org.eclipse.m2e.logback.configuration.LogPlugin.configureLogback(LogPlugin.java:144)
+	at org.eclipse.m2e.logback.configuration.LogPlugin.access$2(LogPlugin.java:107)
+	at org.eclipse.m2e.logback.configuration.LogPlugin$1.run(LogPlugin.java:62)
+	at java.util.TimerThread.mainLoop(Unknown Source)
+	at java.util.TimerThread.run(Unknown Source)
+
+!ENTRY org.eclipse.egit.ui 2 0 2015-05-05 17:41:18.548
+!MESSAGE Warning: EGit couldn't detect the installation path "gitPrefix" of native Git. Hence EGit can't respect system level
+Git settings which might be configured in ${gitPrefix}/etc/gitconfig under the native Git installation directory.
+The most important of these settings is core.autocrlf. Git for Windows by default sets this parameter to true in
+this system level configuration. The Git installation location can be configured on the
+Team > Git > Configuration preference page's 'System Settings' tab.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.egit.ui 2 0 2015-05-05 17:41:18.548
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\Heman'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY ccw.core 2 0 2015-05-05 17:56:15.337
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 38)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:56:17.743
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 38)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:56:19.259
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 38)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:56:19.868
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 38)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:56:20.462
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 38)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:56:22.430
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 38)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:56:24.150
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 38)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:56:26.276
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 38)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:56:27.295
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 38)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:56:28.704
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 38)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:56:30.782
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 38)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:56:31.610
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 38)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:56:32.163
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 38)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:56:34.098
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 39)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:56:34.864
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 39)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:56:36.126
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 39)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:56:37.441
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 39)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:56:39.020
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 39)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:56:39.910
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 39)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:56:40.879
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 39)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:56:41.591
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 39)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:56:42.985
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 39)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:56:43.938
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 40)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:56:44.719
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 40)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:56:46.969
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 40)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:56:48.001
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 40)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:56:49.897
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 40)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:56:50.938
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 40)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:56:51.766
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 40)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:56:52.813
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 40)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:56:55.244
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 40)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:56:56.587
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 40)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:56:57.284
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 40)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:57:00.303
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 40)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:57:02.483
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 40)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:57:03.690
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 40)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:57:05.303
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 40)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:57:06.824
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 40)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:57:07.452
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 40)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:57:14.193
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 40)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:57:15.041
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 40)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:57:15.775
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 40)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:57:17.438
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 40)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:57:18.110
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 40)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:57:19.910
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 41)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:57:21.770
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 41)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:57:22.308
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 41)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:57:23.812
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 41)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:57:25.984
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 41)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:57:26.796
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 41)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:57:29.392
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 41)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:57:30.960
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 41)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:57:32.351
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 41)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:57:33.355
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 41)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:57:34.623
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 41)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:57:37.249
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 41)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:57:38.408
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 41)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:57:39.733
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 41)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:57:41.265
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 41)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:57:42.422
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 41)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:57:43.235
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 41)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:57:44.772
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 41)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:57:45.959
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 41)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:57:47.163
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 41)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:57:48.163
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 41)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:57:55.867
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 41)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:57:56.743
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 41)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:57:57.369
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 40)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:58:02.066
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 40)
+
+!ENTRY ccw.core 2 0 2015-05-05 17:58:03.582
+!MESSAGE Failed to read file euler-6.clj (java.lang.RuntimeException: EOF while reading, starting at line 40)
+
+!ENTRY ccw.core 1 0 2015-05-05 17:58:12.319
+!MESSAGE Started ccw nREPL server: nrepl://127.0.0.1:63616

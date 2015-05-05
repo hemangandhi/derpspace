@@ -33,4 +33,11 @@
   "Gets 4 numbers for the use of the popular game 24."
   (take-last-n 4 (flatten (gen-24 target len max :ops ops))))
   
-               
+(defn solve-for-tar 
+  [target gen-ed &{:keys [f-map] :or {f-map (hash-map '+ '- '- '+ '* '/ '/ '*)}}]
+  (if (= target (nth gen-ed 1))
+    gen-ed
+    (let [left-side (nth gen-ed 1)]
+      (solve-for-tar target (list '= (nth left-side 1) 
+                                  (list (f-map (first left-side)) (last gen-ed) (last left-side)))
+                     :f-map f-map))))
