@@ -35,7 +35,9 @@
 (defn euler12 [n] (let [i (atom 1E100)] (while (>= (count-factors (triangle-num @i)) n) (do (swap! i dec))) 
                     (triangle-num @i)))
 
-(defn eulers-meth [dydx xi xf yi steps]
+(defn eulers-meth 
+  "Performs a euler approximation of dy/dx(x,y)."
+  [dydx xi xf yi steps]
   (if (= xi xf) yi
     (eulers-meth dydx (+ xi (/ (- xf xi) steps)) xf
                  (+ yi (* (dydx xi yi) (/ (- xf xi) steps)))
