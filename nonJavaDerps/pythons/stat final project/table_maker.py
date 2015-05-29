@@ -1,5 +1,5 @@
 #all the possible flags
-ALL_POSS_STATES = "ABCDEF"
+ALL_POSS_STATES = "ABCDEFG"
 
 #df = index + 1, alpha = .05
 chi_sq_values = [3.84,5.99,7.81,9.49,11.07,12.59,14.07,15.51,16.92,18.31,19.68,21.03,
@@ -11,12 +11,12 @@ survey = {"Gender":(0,["Female","Male"]),
           "Grade level":(1,["9","10","11","12"]),
           "Ethnicity":(2,["East Asian","South Asian","Caucasian","African","Hispanic","Other"]),
           "Cut in line":(3,["Yes","no"]),
-          "Line choice":(4,["Fried Chicken","Pasta","Pizza","Hot Lunch", "Deli", "Baegel"]),
+          "Line choice":(4,["Fried Chicken","Pasta","Pizza","Hot Lunch", "Deli", "Baegel","None"]),
           "Spend amount":(5,["0-2","2-4","4-6","6-8","8-10"]),
           "Has lab day":(6,["1st half","2nd half","none","both"]),
           "Grade of lab day":(7,["9","10","11","12"]),
           "Cut in line on lab day":(8,["Yes","no"]),
-          "Lab day line choice":(9,["Fried Chicken","Pasta","Pizza","Hot Lunch", "Deli", "Baegel"]),
+          "Lab day line choice":(9,["Fried Chicken","Pasta","Pizza","Hot Lunch", "Deli", "Baegel","None"]),
           "Lab day spending":(10,["0-2","2-4","4-6","6-8","8-10"])}
 
 def get_cell_checker(cell_x_var,cell_y_var,cell_x,cell_y):
