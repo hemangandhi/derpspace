@@ -113,7 +113,10 @@ def conduct_test(x_var, y_var, data):
     print_mat(test[3])
     print("Chi squared test statistic: " + str(test[0]))
     print("Degrees of freedom: " + str(test[1]))
-    reject_null = test[0] > chi_sq_values[test[1] - 1]
+    if test[1] > 25 or test[1] < 0:
+        reject_null = None
+    else:  
+        reject_null = test[0] > chi_sq_values[test[1] - 1]
     if reject_null:
         print("At alpha = .05, we reject H0 in favor of Ha.")
     else:
