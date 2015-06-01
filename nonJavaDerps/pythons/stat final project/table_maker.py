@@ -191,6 +191,10 @@ def exec_main():
         print("Here are the test results: ")
         conduct_test(x_var, y_var, data)
         to_cont = input("Type in yes to conduct more tests: ") == "yes"
+    print("Here's the full data: ")
+    gen_full_table(data)    
+
+gen_full_table = lambda data: print_mat([[survey[get_key(i)][1][ord(j[i]) - 65] for i in range(len(j) - 1)] for j in data])
 
 if __name__ == "__main__":
     exec_main()
