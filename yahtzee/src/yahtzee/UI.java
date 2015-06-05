@@ -15,6 +15,10 @@ public class UI extends JFrame implements ActionListener{
 	private int finshes;
 	private JButton roll;
 	
+	/**
+	 * Makes a UI with a specified number of players.
+	 * @param numPlayers the number of players.
+	 */
 	public UI(int numPlayers){
 		super("Yahtzee!");
 		
@@ -41,10 +45,18 @@ public class UI extends JFrame implements ActionListener{
 		nextTurn();
 	}
 	
+	/**
+	 * Returns the dice panel.
+	 * @return the dice panel.
+	 */
 	public DicePanel getDiceRoll(){
 		return dice;
 	}
 	
+	/**
+	 * Handles the next turn, making sure such is possible.
+	 * If every player cannot play, handles the end game.
+	 */
 	public void nextTurn(){
 		currPlayer++;
 		currPlayer %= players.length;
@@ -61,11 +73,14 @@ public class UI extends JFrame implements ActionListener{
 		}	
 	}
 	
+	/**
+	 * Handles the end game, prompting the user for continuation.
+	 */
 	public void endGame(){
 		UI u;
 		String mes = "Game over!\n";
 		for(int p = 0; p < players.length; p++){
-			mes += "Player " + p + " got " + players[p].updateText();
+			mes += "Player " + p + " got " + players[p].updateText() + "\n";
 		}
 		//Prompt user for continuation
 		boolean toContinue = JOptionPane.showConfirmDialog(this, mes, "resume?", 
@@ -86,7 +101,19 @@ public class UI extends JFrame implements ActionListener{
 	}
 	
 	public static void main(String [] args){
-		UI u = new UI(100);
+		UI u = new UI(getInt());
 		
+	}
+	
+	private static int getInt(){
+		int toRet = -1;
+		do{
+			try{
+				toRet = Integer.parseInt(JOptionPane.showInputDialog("Enter the number of players: "));
+			}catch(NumberFormatException nfe){
+				toRet = -1;
+			}
+		}while(toRet < 0);
+		return toRet;
 	}
 }

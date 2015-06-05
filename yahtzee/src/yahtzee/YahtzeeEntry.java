@@ -2,6 +2,12 @@ package yahtzee;
 
 import java.util.HashSet;
 
+/**
+ * Handles all the scoring of a dice roll and 
+ * everything about each yahtzee play (expect forced joker).
+ * @author Heman
+ *
+ */
 public enum YahtzeeEntry {
 	
 	ONES("Ones"),TWOS("Twos"),THREES("Threes"),FOURS("Fours"),FIVES("Fives"),SIXES("Sixes"),
@@ -19,6 +25,11 @@ public enum YahtzeeEntry {
 		return label;
 	}
 	
+	/**
+	 * Get the sum of the dice value (useful for scoring).
+	 * @param dr the dice panel containing the current roll.
+	 * @return the sum of all the dice values.
+	 */
 	public static int getDiceSum(DicePanel dr){
 		int [] roll = dr.getDice();
 		int sum = 0;
@@ -27,6 +38,12 @@ public enum YahtzeeEntry {
 		return sum;
 	}
 	
+	/**
+	 * Get the sum of the dice values that match a certain value.
+	 * @param dr the dice panel containing the roll of interest.
+	 * @param toMatch the value to match.
+	 * @return the sum of all the "toMatch" in the given dice roll. 
+	 */
 	public static int getDiceSum(DicePanel dr, int toMatch){
 		int [] rolls = dr.getDice();
 		int sum = 0;
@@ -36,6 +53,11 @@ public enum YahtzeeEntry {
 		return sum;
 	}
 	
+	/**
+	 * Gets the length of the longest match.
+	 * @param dr the dice panel containing the roll.
+	 * @return the length of the longest match (ie. a yahtzee would return 5 here).
+	 */
 	public static int getLongestMatch(DicePanel dr){
 		int currMax = 0;
 		for(int i = 1; i <= 6; i++){
@@ -46,13 +68,28 @@ public enum YahtzeeEntry {
 		return currMax;
 	}
 	
+	/**
+	 * Returns whether the roll is a full house.
+	 * For the forced joker rule, handles yahtzees as a full house.
+	 * @param dr the roll.
+	 * @return whether the roll is a full house.
+	 */
 	public static boolean isFullHouse(DicePanel dr){
+		int lm = getLongestMatch(dr);
+		if(lm == 5)
+			return true;
+		
 		HashSet<Integer> nums = new HashSet<Integer>();
 		for(int i: dr.getDice())
 			nums.add(i);
-		return nums.size() == 2 && getLongestMatch(dr) == 3;
+		return nums.size() == 2 && lm == 3;
 	}
 	
+	/**
+	 * Returns whether the roll is a straight of 4 (ie. 1,2,3,4) in any order.
+	 * @param dr the roll.
+	 * @return whether the roll is a straight of 4 (a short straight).
+	 */
 	public static boolean is4Straight(DicePanel dr){
 		HashSet<Integer> nums = new HashSet<Integer>();
 		for(int i: dr.getDice())
@@ -65,6 +102,11 @@ public enum YahtzeeEntry {
 			return (nums.contains(1) && nums.contains(2)) || (nums.contains(5) && nums.contains(6));
 	}
 	
+	/**
+	 * Returns whether the roll is a straight of 5 (ie. 1,2,3,4,5) in any order.
+	 * @param dr the roll.
+	 * @return whether the roll is a straight of 5 (a long straight).
+	 */
 	public static boolean is5Straight(DicePanel dr){
 		HashSet<Integer> nums = new HashSet<Integer>();
 		for(int i: dr.getDice())
@@ -76,16 +118,30 @@ public enum YahtzeeEntry {
 		
 	}
 	
+	/**
+	 * Get all the entries that pertain to the upper table.
+	 * @return the entries in the upper table.
+	 */
 	public static YahtzeeEntry[] upperValues(){
 		return new YahtzeeEntry[]{ONES,TWOS,THREES,FOURS,FIVES,SIXES};
 	}
 	
+	/**
+	 * All the entries in the lower table.
+	 * @return all the entries in the lower table.
+	 */
 	public static YahtzeeEntry[] lowerValues(){
 		return new YahtzeeEntry[]{THREE_OF_KIND,FOUR_OF_KIND,
 				SHORT_STRAIGHT,LONG_STRAIGHT,
 				FULL_HOUSE,CHANCE,YAHTZEE};
 	}
 	
+	/**
+	 * Gets the score of a said entry for a given dice roll.
+	 * @param ye the entry of interest.
+	 * @param dr the panel with the roll of interest.
+	 * @return the score of a given entry for the given roll.
+	 */
 	public static int getVal(YahtzeeEntry ye, DicePanel dr){
 		switch(ye){
 		case ONES:
@@ -137,6 +193,11 @@ public enum YahtzeeEntry {
 		}
 	}
 	
+	/**
+	 * Gets the yahtzee entry by its string representation.
+	 * @param s the string representation.
+	 * @return the yahtzee entry with that string representation (or null).
+	 */
 	public static YahtzeeEntry getByString(String s){
 		for(YahtzeeEntry ye: values())
 			if(ye.toString().equals(s))

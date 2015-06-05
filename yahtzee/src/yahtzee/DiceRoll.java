@@ -9,11 +9,18 @@ public class DiceRoll {
 	
 	private int [] roll;
 	
+	/**
+	 * Makes an empty roll - as if no dice have been rolled.
+	 */
 	public DiceRoll(){
 		roll = new int[NUM_DICE];
 		
 	}
 	
+	/**
+	 * Rolls all die except those in exclusions.
+	 * @param exclusions the indexes of the dice not rolled.
+	 */
 	public void rollDice(Collection<Integer> exclusions){
 		for(int i = 0; i < roll.length; i++)
 			if(!exclusions.contains(i))
@@ -21,6 +28,10 @@ public class DiceRoll {
 			
 	}
 	
+	/**
+	 * Returns all the dice rolled as an int array, position indicating which die.
+	 * @return an int array representing the roll.
+	 */
 	public int [] getDice(){
 		return roll;
 	}

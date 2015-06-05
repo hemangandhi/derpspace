@@ -18,6 +18,10 @@ public class PlayerPanel extends JPanel implements ActionListener {
 	
 	private int rollsLeft;
 	
+	/**
+	 * Makes an empty panel within the specified UI.
+	 * @param screen the UI this panel is a part of.
+	 */
 	public PlayerPanel(UI screen) {
 		rollsLeft = 2;
 		ui = screen;
@@ -55,11 +59,23 @@ public class PlayerPanel extends JPanel implements ActionListener {
 		
 	}
 	
+	/**
+	 * Gives the rolls left in a players turn.
+	 * @return the rolls left in a players turn.
+	 */
 	public int numRolls(){
 		return rollsLeft;
 	}
 	
+	/**
+	 * Updates all the text fields, returning the player's overall total.
+	 * @return the player's overall total.
+	 */
 	public int updateText(){
+		for(int i = 0; i < points.length; i++){
+			points[i].setText(me.getScore(YahtzeeEntry.getByString(actions[i].getText())) + "");
+		}
+		
 		upperTotal.setText(me.getUpperScore() + "");
 		lowerTotal.setText(me.getLowerScore() + "");
 		overallTotal.setText(me.getTotalScore() + "");
@@ -88,13 +104,22 @@ public class PlayerPanel extends JPanel implements ActionListener {
 		ui.nextTurn();
 	}
 	
+	/**
+	 * Handles the forced joker rule.
+	 */
 	private void handleForcedJoker(){
 		DicePanel rolled = ui.getDiceRoll();
 		int val = rolled.getDice()[0];
+		
+		if(me.timesYahtzeed() != -1)
+			me.setScore(YahtzeeEntry.YAHTZEE, (me.timesYahtzeed() + 1)*50);
+		
 		if(!me.isUsed(YahtzeeEntry.upperValues()[val - 1])){
 			me.setScore(YahtzeeEntry.upperValues()[val - 1], val*5);
 			points[val - 1].setText(val*5 + " forced");
+			ui.nextTurn();
 		}
+		
 			
 	}
 	
@@ -104,6 +129,10 @@ public class PlayerPanel extends JPanel implements ActionListener {
 		}
 	}
 	
+	/**
+	 * Handles a dice roll.
+	 * @return the number of rolls left after this roll.
+	 */
 	public int rollDice(){
 		ui.getDiceRoll().rollDice();
 		updateTooltips(ui.getDiceRoll());
@@ -112,6 +141,10 @@ public class PlayerPanel extends JPanel implements ActionListener {
 		return --rollsLeft;
 	}
 	
+	/**
+	 * Handles a new turn, enabling the possible buttons.
+	 * @return whether the player had anything to play.
+	 */
 	public boolean handleNewTurn(){
 		boolean toRet = false;
 		for(int i = 0; i < actions.length; i++){
