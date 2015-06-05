@@ -19,7 +19,7 @@ public enum YahtzeeEntry {
 		return label;
 	}
 	
-	public static int getDiceSum(DiceRoll dr){
+	public static int getDiceSum(DicePanel dr){
 		int [] roll = dr.getDice();
 		int sum = 0;
 		for(int i: roll)
@@ -27,7 +27,7 @@ public enum YahtzeeEntry {
 		return sum;
 	}
 	
-	public static int getDiceSum(DiceRoll dr, int toMatch){
+	public static int getDiceSum(DicePanel dr, int toMatch){
 		int [] rolls = dr.getDice();
 		int sum = 0;
 		for(int i: rolls)
@@ -36,7 +36,7 @@ public enum YahtzeeEntry {
 		return sum;
 	}
 	
-	public static int getLongestMatch(DiceRoll dr){
+	public static int getLongestMatch(DicePanel dr){
 		int currMax = 0;
 		for(int i = 1; i <= 6; i++){
 			int currSt = getDiceSum(dr,i)/i;
@@ -46,14 +46,14 @@ public enum YahtzeeEntry {
 		return currMax;
 	}
 	
-	public static boolean isFullHouse(DiceRoll dr){
+	public static boolean isFullHouse(DicePanel dr){
 		HashSet<Integer> nums = new HashSet<Integer>();
 		for(int i: dr.getDice())
 			nums.add(i);
 		return nums.size() == 2 && getLongestMatch(dr) == 3;
 	}
 	
-	public static boolean is4Straight(DiceRoll dr){
+	public static boolean is4Straight(DicePanel dr){
 		HashSet<Integer> nums = new HashSet<Integer>();
 		for(int i: dr.getDice())
 			nums.add(i);
@@ -65,7 +65,7 @@ public enum YahtzeeEntry {
 			return (nums.contains(1) && nums.contains(2)) || (nums.contains(5) && nums.contains(6));
 	}
 	
-	public static boolean is5Straight(DiceRoll dr){
+	public static boolean is5Straight(DicePanel dr){
 		HashSet<Integer> nums = new HashSet<Integer>();
 		for(int i: dr.getDice())
 			nums.add(i);
@@ -76,7 +76,17 @@ public enum YahtzeeEntry {
 		
 	}
 	
-	public static int getVal(YahtzeeEntry ye, DiceRoll dr){
+	public static YahtzeeEntry[] upperValues(){
+		return new YahtzeeEntry[]{ONES,TWOS,THREES,FOURS,FIVES,SIXES};
+	}
+	
+	public static YahtzeeEntry[] lowerValues(){
+		return new YahtzeeEntry[]{THREE_OF_KIND,FOUR_OF_KIND,
+				SHORT_STRAIGHT,LONG_STRAIGHT,
+				FULL_HOUSE,CHANCE,YAHTZEE};
+	}
+	
+	public static int getVal(YahtzeeEntry ye, DicePanel dr){
 		switch(ye){
 		case ONES:
 			return getDiceSum(dr,1);
