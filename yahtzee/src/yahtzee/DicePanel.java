@@ -1,9 +1,12 @@
 package yahtzee;
 
 import java.util.*;
+
 import javax.swing.*;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.*;
 
 public class DicePanel extends JPanel implements ActionListener{
@@ -21,13 +24,14 @@ public class DicePanel extends JPanel implements ActionListener{
 		dice = new JButton[DiceRoll.NUM_DICE];
 		for(int i = 0; i < DiceRoll.NUM_DICE; i++){
 			dice[i] = new JButton();
+			dice[i].setFont(new Font("Luciana Grande",Font.BOLD,20));
 			dice[i].setBackground(Color.RED);
 			dice[i].addActionListener(this);
 			add(dice[i]);
 		}	
 		exclusions = new HashSet<Integer>();
 		rollDice();
-		setSize(500,100);
+		setSize(500,200);
 	}
 	
 	/**

@@ -37,7 +37,7 @@ public class UI extends JFrame implements ActionListener{
 		
 		roll = new JButton("Roll");
 		roll.addActionListener(this);
-		add(roll,BorderLayout.SOUTH);
+		add(roll,BorderLayout.EAST);
 		
 		setSize(1000,1000);
 		setVisible(true);
@@ -79,9 +79,15 @@ public class UI extends JFrame implements ActionListener{
 	public void endGame(){
 		UI u;
 		String mes = "Game over!\n";
+		int winnerInd = 0, winScore = 0;
 		for(int p = 0; p < players.length; p++){
-			mes += "Player " + p + " got " + players[p].updateText() + "\n";
+			int score = players[p].updateText();
+			mes += "Player " + p + " got " + score + "\n";
+			if(winScore < score)
+				winnerInd = p;
 		}
+		mes += "Player " + winnerInd + " won! \n";
+		mes += "Press OK to replay, cancel to quit.";
 		//Prompt user for continuation
 		boolean toContinue = JOptionPane.showConfirmDialog(this, mes, "resume?", 
 				JOptionPane.CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE) == 0;
@@ -93,6 +99,9 @@ public class UI extends JFrame implements ActionListener{
 	}
 
 
+	/**
+	 * Handles the press of the roll button.
+	 */
 	public void actionPerformed(ActionEvent arg0) {
 		int rolls = players[currPlayer].rollDice();
 		if(rolls <= 0)
@@ -105,6 +114,10 @@ public class UI extends JFrame implements ActionListener{
 		
 	}
 	
+	/**
+	 * Prompts user for an integer.
+	 * @return the integer the user entered.
+	 */
 	private static int getInt(){
 		int toRet = -1;
 		do{

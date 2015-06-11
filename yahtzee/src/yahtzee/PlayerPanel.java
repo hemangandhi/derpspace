@@ -3,6 +3,7 @@ package yahtzee;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.*;
 
 public class PlayerPanel extends JPanel implements ActionListener {
@@ -39,6 +40,7 @@ public class PlayerPanel extends JPanel implements ActionListener {
 			add(actions[i]);
 			points[i] = new JTextField();
 			points[i].setEditable(false);
+			points[i].setFont(new Font("Luciana Grande",Font.BOLD,20));
 			add(points[i]);
 		}
 		
@@ -51,6 +53,10 @@ public class PlayerPanel extends JPanel implements ActionListener {
 		upperTotal.setEditable(false);
 		lowerTotal.setEditable(false);
 		overallTotal.setEditable(false);
+		upperTotal.setFont(new Font("Luciana Grande",Font.BOLD,20));
+		lowerTotal.setFont(new Font("Luciana Grande",Font.BOLD,20));
+		overallTotal.setFont(new Font("Luciana Grande",Font.BOLD,20));
+		
 		add(upper);add(upperTotal);
 		add(lower);add(lowerTotal);
 		add(overall);add(overallTotal);
@@ -73,7 +79,8 @@ public class PlayerPanel extends JPanel implements ActionListener {
 	 */
 	public int updateText(){
 		for(int i = 0; i < points.length; i++){
-			points[i].setText(me.getScore(YahtzeeEntry.getByString(actions[i].getText())) + "");
+			String init = points[i].getText();
+			points[i].setText(me.getScore(YahtzeeEntry.getByString(actions[i].getText())) + (init.endsWith("forced")?" forced":""));
 		}
 		
 		upperTotal.setText(me.getUpperScore() + "");
@@ -87,6 +94,9 @@ public class PlayerPanel extends JPanel implements ActionListener {
 	}
 
 
+	/**
+	 * Handles a selection of a particular yahtzee entry.
+	 */
 	public void actionPerformed(ActionEvent arg0) {
 		JButton clicked = (JButton) arg0.getSource();
 		
@@ -111,8 +121,7 @@ public class PlayerPanel extends JPanel implements ActionListener {
 		DicePanel rolled = ui.getDiceRoll();
 		int val = rolled.getDice()[0];
 		
-		if(me.timesYahtzeed() != -1)
-			me.setScore(YahtzeeEntry.YAHTZEE, (me.timesYahtzeed() + 1)*50);
+		me.setScore(YahtzeeEntry.YAHTZEE, (me.timesYahtzeed() + 1)*50);
 		
 		if(!me.isUsed(YahtzeeEntry.upperValues()[val - 1])){
 			me.setScore(YahtzeeEntry.upperValues()[val - 1], val*5);
@@ -120,9 +129,15 @@ public class PlayerPanel extends JPanel implements ActionListener {
 			ui.nextTurn();
 		}
 		
+		updateText();
+		
 			
 	}
 	
+	/**
+	 * Updates the tool tips that give the user the potential scores.
+	 * @param dr the rolled dice.
+	 */
 	private void updateTooltips(DicePanel dr){
 		for(JButton jb: actions){
 			jb.setToolTipText(""+YahtzeeEntry.getVal(YahtzeeEntry.getByString(jb.getText()), dr));

@@ -11,9 +11,9 @@ import java.util.HashSet;
 public enum YahtzeeEntry {
 	
 	ONES("Ones"),TWOS("Twos"),THREES("Threes"),FOURS("Fours"),FIVES("Fives"),SIXES("Sixes"),
-	THREE_OF_KIND("3 of a kind"),FOUR_OF_KIND("4 of a kind"),
+	THREE_OF_KIND("3 of a kind"),FOUR_OF_KIND("4 of a kind"),FULL_HOUSE("Full House"),
 	SHORT_STRAIGHT("Short Straight"),LONG_STRAIGHT("Long Straight"),
-	FULL_HOUSE("Full House"),CHANCE("Chance"),YAHTZEE("Yahtzee");
+	YAHTZEE("Yahtzee"),CHANCE("Chance");
 
 	private String label;
 	
