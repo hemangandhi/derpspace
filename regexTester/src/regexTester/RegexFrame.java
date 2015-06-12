@@ -21,6 +21,9 @@ public class RegexFrame extends JFrame{
 		pattern = new JTextField("Enter a regex here!");
 		submit = new JButton("Submit!");
 		
+		output.setEditable(false);
+		input.setLineWrap(true);
+		
 		setLayout(new GridLayout(2,2));
 		add(input);
 		add(output);
@@ -44,7 +47,7 @@ public class RegexFrame extends JFrame{
 		
 		Matcher m = Pattern.compile(pattern.getText()).matcher(input.getText());
 		while(m.find())
-			output.append(m.group() + " at " + m.start() + "\n");
+			output.append("\"" + m.group() + "\"" + " at " + m.start() + "\n");
 	}
 	
 	public static void main(String [] args){
