@@ -2633,3 +2633,16 @@ org.eclipse.core.runtime.CoreException: Cannot determine URI for '/yahtzee/src/y
 	at org.eclipse.equinox.launcher.Main.run(Main.java:1465)
 !SUBENTRY 1 org.eclipse.core.filebuffers 4 0 2015-06-05 15:08:09.310
 !MESSAGE Cannot determine URI for '/yahtzee/src/yahtzee/UI.java'.
+
+!ENTRY ccw.core 1 0 2015-06-05 17:06:29.977
+!MESSAGE Started ccw nREPL server: nrepl://127.0.0.1:51388
+
+!ENTRY org.eclipse.core.jobs 4 2 2015-06-05 17:07:09.342
+!MESSAGE An internal error occurred during: "ccw REPL command history persistence".
+!STACK 0
+java.lang.NullPointerException
+	at ccw.repl.cmdhistory$preference_store.invoke(cmdhistory.clj:29)
+	at ccw.repl.cmdhistory$persist_schedule_ms.invoke(cmdhistory.clj:39)
+	at ccw.repl.cmdhistory$fn__8342$fn__8343.invoke(cmdhistory.clj:124)
+	at ccw.repl.cmdhistory.proxy$org.eclipse.core.runtime.jobs.Job$ff19274a.run(Unknown Source)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
