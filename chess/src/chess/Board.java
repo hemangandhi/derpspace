@@ -1,6 +1,8 @@
 package chess;
 
+import java.awt.Graphics;
 import java.awt.GridLayout;
+
 import javax.swing.*;
 
 public class Board extends JPanel{
@@ -60,6 +62,10 @@ public class Board extends JPanel{
 	 */
 	public int getCurrPlayer(){
 		return currPlayer;
+	}
+	
+	public void paintComponent(Graphics g){
+		restoreAllBackgrounds();
 	}
 	
 	/**

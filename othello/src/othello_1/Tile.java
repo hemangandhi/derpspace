@@ -19,7 +19,7 @@ public class Tile extends JLabel implements MouseListener {
 		setBackground(background);
 		setOpaque(true);
 		addMouseListener(this);
-		setBorder(new LineBorder(Color.BLACK));
+		setBorder(new LineBorder(Color.BLUE));
 	}
 	
 	@Override
@@ -97,7 +97,7 @@ public class Tile extends JLabel implements MouseListener {
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		setBorder(new LineBorder(Color.BLACK));
+		setBorder(new LineBorder(Color.BLUE));
 	}
 
 	@Override
