@@ -42,7 +42,7 @@ class Light(object):
 
 def run():
     print("Welcome to hue cmdln. Type in the light id.")
-    conn = cli.HTTPConnection("10.0.0.26")
+    conn = cli.HTTPConnection("192.168.0.107")
     l_id = input("id > ")
     conn.request("GET","/api/newdeveloper/lights")
     while l_id not in json.loads(conn.getresponse().read().decode('utf-8')):
