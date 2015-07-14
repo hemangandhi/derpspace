@@ -26,8 +26,12 @@ def gen_dir_vecs(x, y, mat, wrd_len):
 
 def place_word(word, matrix, flag_str = "^"):
     location_list = []
-    for i in range(len(matrix)):
-        for j in range(len(matrix[0])):
+    rows = list(range(len(matrix)))
+    shuffle(rows)
+    for i in rows:
+        cols = list(range(len(matrix[0])))
+        shuffle(cols)
+        for j in cols:
             valid_dirs = gen_dir_vecs(i, j, matrix, len(word))
             shuffle(valid_dirs)
             for k in valid_dirs:
