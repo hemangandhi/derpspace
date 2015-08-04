@@ -2,7 +2,7 @@
 <section name="Workbench">
 	<item value="0" key="org.eclipse.egit.ui.internal.clone.GitSelectWizardPageWizardSel"/>
 	<item value="2182" key="DIALOG_WIDTH"/>
-	<item value="1|Segoe UI|9.0|0|WINDOWS|1|-18|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
+	<item value="1|Segoe UI|9.0|0|WINDOWS|1|-18|0|0|0|400|0|0|0|1|0|0|5|0|Segoe UI" key="DIALOG_FONT_NAME"/>
 	<item value="1462" key="DIALOG_HEIGHT"/>
 	<item value="0" key="DIALOG_X_ORIGIN"/>
 	<item value="0" key="DIALOG_Y_ORIGIN"/>
