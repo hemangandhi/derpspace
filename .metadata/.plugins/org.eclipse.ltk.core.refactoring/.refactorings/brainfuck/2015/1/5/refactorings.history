@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Copy 2 elements to &apos;BrainfuckApp/src/com.heman.brainfuckapp&apos;&#x0D;&#x0A;- Original project: &apos;brainfuck&apos;&#x0D;&#x0A;- Destination element: &apos;BrainfuckApp/src/com.heman.brainfuckapp&apos;&#x0D;&#x0A;- Original elements:&#x0D;&#x0A;     brainfuck_2.ReadBfk.java&#x0D;&#x0A;     brainfuck_2.BfkUIHandler.java" description="Copy compilation units" destination="=BrainfuckApp/src&lt;com.heman.brainfuckapp" element1="/src&lt;brainfuck_2{ReadBfk.java" element2="/src&lt;brainfuck_2{BfkUIHandler.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1422662321928" units="2" version="1.0"/>
-</session>

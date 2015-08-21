@@ -1,3 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">&#x0A;<refactoring comment="Rename resource &apos;online-problems/src/online_problems/core.clj&apos; to &apos;euler-1-5.clj&apos;" description="Rename resource &apos;core.clj&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/online_problems/core.clj" name="euler-1-5.clj" stamp="1424365626774" updateReferences="true"/>&#x0A;<refactoring comment="Rename resource &apos;online-problems/src/online_problems/euler.clj&apos; to &apos;euler-6.clj&apos;" description="Rename resource &apos;euler.clj&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/online_problems/euler.clj" name="euler-6.clj" stamp="1424365734464" updateReferences="true"/>
-</session>
