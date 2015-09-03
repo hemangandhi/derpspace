@@ -3,12 +3,6 @@
 ;op-sudoku-solver
 ;box: [val op [[x1 y1] [x2 y2]]]
 ;solution: [[x1 y1 val] [x2 y2 val]]
-
-(defn pretty-print-mat [mat]
-  (do (println "--")
-    (dorun (map println mat))
-    (println "--")))
-
 (defn row [n mat]
   "Get the nth row of a matrix."
   (nth mat n))
@@ -55,15 +49,17 @@
 
 (defn all-perms [lsts]
   "Get all the combinations of values from a list of lists - one from each inner list."
-  (loop [ret '()
-         inds (vec (for [x lsts] 0))
-         in 0]
-    (if (<= (count (nth lsts in)) (nth inds in))
-      (if (>= in (- (count inds) 1))
-        ret
-        (recur ret (incr-vec (assoc inds in 0) (+ 1 in)) (+ 1 in)))
-      (recur (conj ret (for [x (range (count inds))] (nth (nth lsts x) (nth inds x))))
-             (incr-vec inds 0) 0))))
+  (if (not (not-any? empty? lsts))
+    '()
+    (loop [ret '()
+           inds (vec (for [x lsts] 0))
+           in 0]
+      (if (<= (count (nth lsts in)) (nth inds in))
+        (if (>= in (- (count inds) 1))
+          ret
+          (recur ret (incr-vec (assoc inds in 0) (+ 1 in)) (+ 1 in)))
+        (recur (conj ret (for [x (range (count inds))] (nth (nth lsts x) (nth inds x))))
+               (incr-vec inds 0) 0)))))
 
 (defn get-possible [mat [x y]]
   "Get the possible values for a cell in a matrix without row/column repetition."
@@ -110,9 +106,6 @@
                             min-sol-ind (min-ind-by-fn count sols)
                             min-sol (nth sols min-sol-ind)
                             rem-box? #(= % (nth boxes min-sol-ind))]
-                        ;(println "The best box is" (nth boxes min-sol-ind))
-                        ;(println "The best box has " (count min-sol) " solutions:")
-                        ;(println min-sol)
                         (if (= 0 (count min-sol))
                           fail
                           (let
@@ -123,4 +116,4 @@
                             (remove #(or (and (coll? %) (empty? %)) (= fail %))
                                     tries-list)))))))
 
-(solve-mat 3 [[2 * [[0 0] [0 1] [1 1]]] [1 - [[1 0] [2 0]]] [9 + [[0 2] [1 2] [2 2] [2 1]]]])
+;(solve-mat 3 [[2 * [[0 0] [0 1] [1 1]]] [1 - [[1 0] [2 0]]] [9 + [[0 2] [1 2] [2 2] [2 1]]]])

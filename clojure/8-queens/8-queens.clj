@@ -46,4 +46,4 @@
       (. setVisible true)
       (.setDefaultCloseOperation JFrame/DISPOSE_ON_CLOSE))))
 
-(run-queens 5)
+(run-queens 8)
