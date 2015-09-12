@@ -45,3 +45,10 @@ Temporary Items
 #eclipse crap
 .metadata
 .recommenders
+
+#vc++
+.obj
+.exe
+
+#py
+.pyc
