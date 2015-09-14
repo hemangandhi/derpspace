@@ -1,17 +1,14 @@
 #pragma once
 #include "Node.h"
+#include "SimpleLinkedList.h"
 
 template<typename T>
-class SimpleQueue {
+class SimpleQueue: private SimpleLinkedList<T> {
 public:
-	SimpleQueue();
-	~SimpleQueue();
+	//SimpleQueue();
+	//~SimpleQueue();
 	void push(T& data);
 	T& peek();
-	T& pop();
+	T pop();
 	int size();
-private:
-	Node<T>* head;
-	Node<T>* tail;
-	int len;
 };

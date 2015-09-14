@@ -1,9 +1,11 @@
 #include "stdafx.h"
 #include "Node.cpp"
+#include "SimpleLinkedList.cpp"
 #include "SimpleStack.cpp"
 #include "SimpleQueue.cpp"
 
 template class Node<int>;
+template class SimpleLinkedList<int>;
 template class SimpleStack<int>;
 template class SimpleQueue<int>;
 
@@ -17,6 +19,9 @@ void testSimpleStack() {
 	}
 	int add = 8;
 	st->push(add);
+	int add2 = 9;
+	st->push(add2);
+	printf("%d on top.\n", st->pop());
 	printf("%d on top.\n", st->peek());
 	delete st;
 	printf("done");
@@ -42,8 +47,8 @@ void testSimpleQueue() {
 
 
 int main() {
-//	testSimpleStack();
-	testSimpleQueue();
+	testSimpleStack();
+//	testSimpleQueue();
 	return 0;
 }
 
