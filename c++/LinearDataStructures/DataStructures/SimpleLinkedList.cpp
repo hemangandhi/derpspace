@@ -40,16 +40,20 @@ void SimpleLinkedList<T>::addToTail(T& data) {
 
 template<typename T>
 void SimpleLinkedList<T>::addAt(int ind, T& data) {
-	Node<T>* prev = nullptr, * nxt = nullptr;
-	nxt = head;
-	while (ind >= 0 && nxt != nullptr) {
-		prev = nxt;
-		nxt = nxt->next;
-		ind--;
-	}
-	if (nxt == nullptr && ind > 0) {
-		throw std::out_of_range("Index is out of bounds.");
-	} else {
+	if (ind == 0)
+		addToHead(data);
+	else if (ind == len)
+		addToTail(data);
+	else if (ind < 0 || ind > len)
+		throw std::out_of_range("Index out of bounds.");
+	else {
+		Node<T>* prev = head;
+		Node<T>* nxt = head->next;
+		while (ind > 1) {
+			prev = nxt;
+			nxt = nxt->next;
+			ind--;
+		}
 		prev->next = new Node<T>(data, nxt);
 	}
 }
@@ -113,4 +117,14 @@ T& SimpleLinkedList<T>::operator[](int ind) {
 template<typename T>
 bool SimpleLinkedList<T>::operator==(SimpleLinkedList<T>& other) {
 	return head == other.head;
+}
+
+template<typename T>
+my_iterator<T> SimpleLinkedList<T>::begin() {
+	return my_iterator<T>(head);
+}
+
+template<typename T>
+my_iterator<T> SimpleLinkedList<T>::end() {
+	return my_iterator<T>();
 }

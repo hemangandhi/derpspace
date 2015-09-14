@@ -6,6 +6,7 @@
 
 template class Node<int>;
 template class SimpleLinkedList<int>;
+template class my_iterator<int>;
 template class SimpleStack<int>;
 template class SimpleQueue<int>;
 
@@ -45,10 +46,23 @@ void testSimpleQueue() {
 	getchar();
 }
 
+void testLinkedList() {
+	printf("Testing linked list!\n");
+	SimpleLinkedList<int>* ll = new SimpleLinkedList<int>();
+	for (int i = 0; i < 10; i++)
+		ll->addToTail(i);
+	ll->addAt(6, *(new int(8)));
+	ll->remove(6);
+	for (my_iterator<int> itr = ll->begin(); itr != ll->end(); itr++)
+		printf("%d\n",*itr);
+	printf("Index of 9: %d \n", ll->indexOf(*(new int(9))));
+	getchar();
+}
 
 int main() {
-	testSimpleStack();
+//	testSimpleStack();
 //	testSimpleQueue();
+	testLinkedList();
 	return 0;
 }
 
