@@ -92,7 +92,11 @@ T SimpleLinkedList<T>::remove(int ind) {
 	else
 		head = toRem->next;
 
-	toRem->next = nullptr;
+	if (toRem->next != nullptr)
+		toRem->next = nullptr;
+	else
+		tail = prev;
+
 	T toRet = *(new T(toRem->data));
 	delete toRem;
 	return toRet;
@@ -107,6 +111,9 @@ template<typename T>
 T& SimpleLinkedList<T>::operator[](int ind) {
 	if (ind < 0 || ind >= len)
 		throw std::out_of_range("Index out of bounds.");
+
+	if (ind == len - 1)
+		return tail->data;
 
 	Node<T>* temp = nullptr;
 	for (temp = head; temp != nullptr && ind > 0; temp = temp->next)

@@ -1,11 +1,12 @@
-﻿Build started 9/14/2015 9:43:21 AM.
+﻿Build started 9/17/2015 6:34:03 PM.
      1>Project "C:\Users\Heman\Desktop\derpspace\c++\LinearDataStructures\DataStructures\DataStructures.vcxproj" on node 2 (Build target(s)).
      1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(392,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (DataStructures.vcxproj).  This can lead to incorrect clean and rebuild behavior.
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Yu"stdafx.h" /Fp"Debug\LinearDataStructures.pch" /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Yu"stdafx.h" /Fp"Debug\LinearDataStructures.pch" /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt SimpleLinkedList.cpp main.cpp
+         SimpleLinkedList.cpp
+         Generating Code...
+         Skipping... (no relevant changes detected)
          main.cpp
-     1>c:\users\heman\desktop\derpspace\c++\lineardatastructures\datastructures\main.cpp(18): warning C4101: 'orr': unreferenced local variable
-     1>c:\users\heman\desktop\derpspace\c++\lineardatastructures\datastructures\main.cpp(38): warning C4101: 'orr': unreferenced local variable
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Heman\Desktop\derpspace\c++\LinearDataStructures\Debug\LinearDataStructures.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\Heman\Desktop\derpspace\c++\LinearDataStructures\Debug\LinearDataStructures.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Heman\Desktop\derpspace\c++\LinearDataStructures\Debug\LinearDataStructures.lib" /MACHINE:X86 Debug\main.obj
          Debug\Node.obj
@@ -19,4 +20,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:00.89
+Time Elapsed 00:00:00.92

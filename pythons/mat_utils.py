@@ -34,7 +34,10 @@ class Matrix:
         """
         if not Matrix.validate(data):
             raise TypeError("The matrix passed in must be a rectangular list of list of int or float")
-        self.data = data
+        elif type(data) != Matrix:
+            self.data = data
+        else:
+            self.data = data.copy().data
 
     def copy(self):
         """Returns a copy of the current matrix."""
@@ -130,13 +133,13 @@ class Matrix:
         cp = self.copy()
         for i in range(len(cp)):
             for j in range(i + 1,len(cp)):
-                c = cp[i][i] != 0 and cp[j][i]/cp[i][i] or 1
+                c = cp[j][i]/cp[i][i]
                 for k in range(i,len(cp[0])):
                     cp[j][k] = cp[j][k] - c*cp[i][k]           
         for i in range(len(cp)):
             c = cp[i][i]
             for j in range(i,len(cp[0])):
-                cp[i][j] = c != 0 and cp[i][j]/c or cp[i][j]
+                cp[i][j] = cp[i][j]/c
         return cp
 
     def rref(self):
@@ -144,7 +147,7 @@ class Matrix:
         cp = self.ref()
         for i in range(len(cp) - 1, -1, -1):
             for j in range(i - 1, -1, -1):
-                c = cp[i][i] != 0 and cp[j][i]/cp[i][i] or 1
+                c = cp[j][i]/cp[i][i]
                 for k in range(i,len(cp[0])):
                     cp[j][k] = cp[j][k] - c*cp[i][k]
         return cp
@@ -160,3 +163,13 @@ class Matrix:
             return self[0][0]
         else:
             return sum(self[0][i]*-1*((i%2)*2 - 1)*self.without_top_and_col(i).det() for i in range(len(self)))
+
+    def __abs__(self):
+        return self.det()
+
+    def inverse(self):
+        if len(self) != len(self[0]) and self.det() != 0:
+            raise ValueError("Must be a square matrix with determinant != 0!")
+        cp = Matrix([[i for i in self[j]] + [i for i in Matrix.identity(len(self))[j]] for j in range(len(self))])
+        cp = cp.rref()
+        return cp[(slice(None),slice(len(self),len(cp[0])))]
