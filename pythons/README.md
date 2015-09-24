@@ -8,6 +8,7 @@ A few files of note:
 * op_sudoku_solver is an incomplete Kenken solver. There's a complete version in Clojure.
 * string_permute yields all the unique permutations of a given string.
 * template decorator is an experiment in python decorators. It forces type checking for simple functions.
+* A matrix utility class in python (rref is not complete).
 
 In the folder 'divesh' are a few more files (made for a friend):
 * A solver for the 8 queens problem.
