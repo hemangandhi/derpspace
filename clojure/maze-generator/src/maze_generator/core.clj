@@ -130,4 +130,4 @@
     (.setVisible true)
     (.setDefaultCloseOperation JFrame/DISPOSE_ON_CLOSE)))
 
-;(run-maze 25 25)
+(run-maze 25 25)

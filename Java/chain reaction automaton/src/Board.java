@@ -98,7 +98,9 @@ public class Board extends JFrame{
 	}
 	
 	public static void main(String [] args){
-		Board b = new Board(10,10,false);
+		
+		Board b = new Board(2,2,false);
+		//b.randomSpawn();
 		//b.randomSpawn();
 	}
 	
