@@ -12,3 +12,4 @@ Project, by project:
 * othello: An implementation of Othello.
 * regexTester: A way to test regex on strings you input. Uses Java's `re`.
 * yahtzee: An implementation of yahtzee. N-player.
+* PersistentDataStructures: A few persistent data structures (stack only, so far). Will re-write in c++ once I figure out memory management.
