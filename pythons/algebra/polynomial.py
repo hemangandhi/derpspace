@@ -152,7 +152,7 @@ class Polynomial:
         self = Polynomial.validate(self)
         if other == None or self == None:
             raise TypeError("Other and self must be type polynomial, float or dict of float, not " + type(other))
-        return reduce(Polynomial.__add__,[{i + j: self[i]*other[j]} for i in self for j in other])
+        return Polynomial(reduce(Polynomial.__add__,[{i + j: self[i]*other[j]} for i in self for j in other]))
 
     def __eq__(self, other):
         """Compare two polynomials."""
@@ -196,3 +196,16 @@ class Polynomial:
             raise ValueError("Cannot integrate 1/x.")
         else:
             return ad(b) - ad(a)
+
+
+def taylor_polynomial(terms, funcs, coeffs, center = 0, degs = lambda x: x):
+    return sum((coeffs(i)*funcs[i % len(funcs)](center, i))*(Polynomial("x - " + str(center))**degs(i)) for i in range(terms))  
+
+def exp_poly(terms):
+    def inv_fact(n):
+        if n == 0 or n == 1:
+            return 1
+        else:
+            return 1/reduce(int.__mul__, range(1, n + 1))
+
+    return taylor_polynomial(terms, [lambda x,y: 1], inv_fact)

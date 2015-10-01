@@ -12,7 +12,7 @@ public class PersistentStack<T> {
 		this(top,0);
 	}
 	
-	public PersistentStack(Node<T> top, int size){
+	private PersistentStack(Node<T> top, int size){
 		this.top = top;
 		this.size = size;
 	}

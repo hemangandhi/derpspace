@@ -13,3 +13,5 @@ Project, by project:
 * regexTester: A way to test regex on strings you input. Uses Java's `re`.
 * yahtzee: An implementation of yahtzee. N-player.
 * PersistentDataStructures: A few persistent data structures (stack only, so far). Will re-write in c++ once I figure out memory management.
+* misc: Just a few classes. Has a minor assignment and an idea for a project (zuma, it's explained in the notes for that project.)
+* mankala: an implementation of [the mankala game](https://en.wikipedia.org/wiki/Mancala). UI needs improvement.

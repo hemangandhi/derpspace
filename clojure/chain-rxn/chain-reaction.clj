@@ -92,5 +92,5 @@
                   (mousePressed [e] nil)
                   (mouseReleased [e] (add [x y] mat))))))))
 
-(run-panel [30 30] [(const-adder [0 0]) (const-adder [29 29])] 100 false)
+(run-panel [31 31] [(const-adder [15 15])] 100 true)
 ;(ui-panel [10 10] false)

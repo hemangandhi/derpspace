@@ -45,9 +45,16 @@ public class RegexFrame extends JFrame{
 	public void displayMatches(){
 		output.setText("");
 		
-		Matcher m = Pattern.compile(pattern.getText()).matcher(input.getText());
+		Matcher m;
+		try{
+			m = Pattern.compile(pattern.getText()).matcher(input.getText());
+		}catch (PatternSyntaxException pse){
+			output.append(pse.getMessage());
+			return;
+		}	
 		while(m.find())
-			output.append("\"" + m.group() + "\"" + " at " + m.start() + "\n");
+			output.append("\"" + m.group() + "\"" + " from " + m.start() + " to " + m.end() + "\n");
+		output.append("That's all folks!");
 	}
 	
 	public static void main(String [] args){

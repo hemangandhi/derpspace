@@ -1,0 +1,15 @@
+Project notes:
+
+The game itself:
+-> The game is to be a model of zuma - where the user moves a turret (in the form of a frog, usually)
+   to fire balls at a chain of balls. If adjacent balls are of the same color once the chain is hit,
+   those matching balls disappear.
+-> Scoring is done by the total number of balls made to disappear (modeled by chars for this implementation).
+-> The chain grows every two non-firing moves and in this implementation, the user can also move the turret
+   left or right (within bounds).
+
+*This is a collaboration between 111 and 112.
+*111 will do: Runner.java and CharUtil.java.
+*112 will do: Game.java and use any choice of data structure (with implementation). The data structure
+ must be in the dataStructures package.
+*111 can do this first, following the documentation provided for Game.java.
