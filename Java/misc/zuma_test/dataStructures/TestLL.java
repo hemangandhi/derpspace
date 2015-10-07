@@ -13,18 +13,14 @@ public class TestLL {
 		LinkedList<Integer> ll = new LinkedList<>();
 		
 		for(int i = 0; i < 10; i++)
-			ll.addToHead(i);
+			ll.add(ll.size(), i);
 		for(int i = 0; i < 5; i++)
-			ll.addToHead(9);
+			ll.add(ll.size(), 9);
 		
 		System.out.println(ll);
-		System.out.println(ll.removeMatchingAdj(9));
+		System.out.println(ll.removeMatchingAdj(ll.size() - 1));
 		System.out.println(ll);
 		System.out.println(ll.size());
-		
-		for(Object o: ll.vals())
-			System.out.print((Integer)o);
-
 	}
 
 }
