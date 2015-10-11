@@ -4,10 +4,12 @@ A bunch of un-organized python things.
 
 A few files of note:
 * factor_things has a function to factor integers etc.
-* hue_light is designed to manipulate a Phillips Hue light. (Yes, IoT here!)
+* hue_light is designed to manipulate a [Phillips Hue light.](http://www2.meethue.com/en-us/) (Yes, IoT here!)
 * op_sudoku_solver is an incomplete Kenken solver. There's a complete version in Clojure.
 * string_permute yields all the unique permutations of a given string.
 * template decorator is an experiment in python decorators. It forces type checking for simple functions.
+* logic_expr evaluates basic logical expressions.
+* look_say runs the [look say sequence](https://en.wikipedia.org/wiki/Look-and-say_sequence) on a string.
 
 In the folder 'divesh' are a few more files (made for a friend):
 * A solver for the 8 queens problem.

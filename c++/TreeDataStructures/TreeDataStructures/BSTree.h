@@ -11,8 +11,9 @@ public:
 	BSTree() : root(nullptr) {}
 	~BSTree();
 	void add(const T& data);
-	bool search(const T& data) const;
+	T search(const T& data) const;
 	BSTree<T>& operator+= (const T& data);
+	T delete(const T& data);
 private:
 	BinaryNode<T>* root;
 };
@@ -29,7 +30,7 @@ void BSTree<T>::add(const T& data) {
 		return;
 	}
 	for (BinaryNode<T>* tmp = root; tmp != nullptr;) {
-		if (data > tmp->data) {
+		if (data > *(tmp->data)) {
 			if (tmp->right == nullptr) {
 				tmp->right = new BinaryNode<T>(data, nullptr, nullptr);
 				return;
@@ -54,11 +55,11 @@ BSTree<T>& BSTree<T>::operator+= (const T& data) {
 }
 
 template<typename T>
-bool BSTree<T>::search(const T& data) const {
+T BSTree<T>::search(const T& data) const {
 	for (BinaryNode<T>* tmp = root; tmp != nullptr;) {
-		if (data == tmp->data)
-			return true;
-		else if (data > tmp->data)
+		if (data == *(tmp->data))
+			return *(tmp->data);
+		else if (data > *(tmp->data))
 			tmp = tmp->right;
 		else
 			tmp = tmp->left;

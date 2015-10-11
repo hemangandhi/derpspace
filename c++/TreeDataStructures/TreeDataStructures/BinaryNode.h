@@ -7,10 +7,10 @@ template<typename T>
 class BinaryNode {
 public:
 	BinaryNode<T>* left, * right;
-	T data;
+	T* data;
 	friend ostream& operator<<(ostream& out, BinaryNode<T> node);
 	BinaryNode(T data, BinaryNode<T>* l, BinaryNode<T>* r) {
-		this->data = data;
+		this->data = &data;
 		left = l;
 		right = r;
 	}
@@ -41,7 +41,7 @@ ostream& operator<<(ostream& out, BinaryNode<T> node) {
 
 
 ostream& operator<<(ostream& out, BinaryNode<int> node) {
-	out << "Data :" << node.data << endl;
+	out << "Data :" << *(node.data) << endl;
 	out << "Left child:" << endl;
 	if (node.left == nullptr) {
 		out << "None" << endl;

@@ -59,13 +59,13 @@ aunt(X,Y):-
 	parent(Z,Y),
 	sister(X,Z).
 
-aunt(X,Y):-
-	uncle(Z,Y),
-	wife(X,Z).
-
 uncle(X,Y):-
 	parent(Z,Y),
 	brother(X,Z).
+
+aunt(X,Y):-
+	uncle(Z,Y),
+	wife(X,Z).
 
 uncle(X,Y):-
 	aunt(Z,Y),
@@ -92,7 +92,7 @@ niece(X,Y) :-
 	uncle(Y,X).
 
 niece(X,Y):-
-	female(X).
+	female(X),
 	aunt(Y,X).
 
 nephew(X,Y):-
@@ -101,7 +101,7 @@ nephew(X,Y):-
 
 nephew(X,Y):-
 	aunt(Y,X),
-	female(X).
+	male(X).
 
 son(X,Y) :- parent(Y,X), male(X).
 daughter(X,Y) :- parent(Y,X), female(X).
@@ -123,6 +123,16 @@ mother(heena, keya).
 female(dhara).
 female(keya).
 male(neel).
+
+
+
+
+
+
+
+
+
+
 
 
 
