@@ -10,6 +10,7 @@ A few files of note:
 * template decorator is an experiment in python decorators. It forces type checking for simple functions.
 * logic_expr evaluates basic logical expressions.
 * look_say runs the [look say sequence](https://en.wikipedia.org/wiki/Look-and-say_sequence) on a string.
+* magic_fingers runs a game of magic fingers for n players.
 
 In the folder 'divesh' are a few more files (made for a friend):
 * A solver for the 8 queens problem.
