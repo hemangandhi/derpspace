@@ -136,15 +136,15 @@ class Matrix:
                 c = cp[j][i]/cp[i][i]
                 for k in range(i,len(cp[0])):
                     cp[j][k] = cp[j][k] - c*cp[i][k]           
-        for i in range(len(cp)):
-            c = cp[i][i]
-            for j in range(i,len(cp[0])):
-                cp[i][j] = cp[i][j]/c
         return cp
 
     def rref(self):
         """Gives the reduced row-Eachelon form matrix."""
         cp = self.ref()
+        for i in range(len(cp)):
+            c = cp[i][i]
+            for j in range(i,len(cp[0])):
+                cp[i][j] = cp[i][j]/c
         for i in range(len(cp) - 1, -1, -1):
             for j in range(i - 1, -1, -1):
                 c = cp[j][i]/cp[i][i]

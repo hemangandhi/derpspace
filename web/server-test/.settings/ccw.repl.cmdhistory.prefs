@@ -1,2 +1,2 @@
-cmdhistory=["(gen-pg)" "(layout \\"\\")" "(main)" "(io/as-file \\"web/lib/angular.min.js\\")" "(.exists (io/as-file \\"web/lib/angular.min.js\\"))" "(main)"]
+cmdhistory=["(gen-pg)" "(layout \\"\\")" "(main)" "(io/as-file \\"web/lib/angular.min.js\\")" "(.exists (io/as-file \\"web/lib/angular.min.js\\"))" "(main)" "(creds/bcrypt-credential-fn users {\:username \\"Neil\\" \:password (creds/hash-bcrypt \\"Gay\\")})"]
 eclipse.preferences.version=1

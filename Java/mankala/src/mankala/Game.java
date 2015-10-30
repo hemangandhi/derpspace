@@ -19,18 +19,24 @@ public class Game {
 			throw new IllegalArgumentException("Invalid place on board!");
 		
 		int i = ind + 7*turn;
-		if(board[i] == 0)
+		if(board[i] == 0)//moving on 0 does nothing
 			return;
+		
+		//else dissipate the cell
 		for(int val = board[i]; val > 0; val--, i++){
 			board[(i + 1) % board.length]++;
 		}
 		board[ind + 7*turn] = 0;
 		
+		//Filling in one side at the end of your turn captures the seeds in the opposite.
 		if(board[i % board.length] == 1 && i % board.length != 6 && i % board.length != 13){
 			board[7*(turn + 1) - 1] += board[i % board.length] + board[(i + 7) % board.length]; 
 			board[i % board.length] = board[(i + 7) % board.length] = 0;
 		}
 		
+		
+		//If the current player's side is empty, the opposite player gets
+		//all seeds on their side.
 		int sum = 0;
 		for(int j = 7*turn; j < 7*turn + 7; j++){
 			sum += board[j % board.length];
@@ -45,6 +51,7 @@ public class Game {
 			return;
 		}
 		
+		//Update the current player (if the turn didn't end in a mancala).
 		if(i % board.length != 6 && i % board.length != 13){
 			turn++;
 			turn = turn%2;

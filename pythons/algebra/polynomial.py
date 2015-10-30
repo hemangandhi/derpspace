@@ -181,7 +181,7 @@ class Polynomial:
 
     def derivative(self):
         """Return the polynomial that is the derivative."""
-        return Polynomial({i - 1: self[i]*i for i in self})
+        return Polynomial({i - 1: self[i]*i for i in self if i != 0})
     def anti_derivative(self):
         """Return the anti-derivative. Returns a string with an ln for any 1/x."""
         p = {i + 1: self[i]/(i + 1) for i in self if i != -1}
