@@ -30,5 +30,5 @@
 (defn parse-file [path]
   (full-json-parse (.trim (.replaceAll (slurp path) "[\n\r]" ""))))
 
-(get (first (parse-file "C:\\Users\\Heman\\Documents\\Torchlight\\web\\events.json")) "time")
+;(get (first (parse-file "C:\\Users\\Heman\\Documents\\Torchlight\\web\\events.json")) "time")
 
