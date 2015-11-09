@@ -11,6 +11,8 @@ A few files of note:
 * logic_expr evaluates basic logical expressions.
 * look_say runs the [look say sequence](https://en.wikipedia.org/wiki/Look-and-say_sequence) on a string.
 * magic_fingers runs a game of magic fingers for n players.
+* flash_extract has a method to convert HTML to a combination of lists and dictionaries.
+* ein klien algorithm has a few small algorithms that are kind of fun and a partial-function decorator.
 
 In the folder 'divesh' are a few more files (made for a friend):
 * A solver for the 8 queens problem.

@@ -53,4 +53,4 @@
     "d" :down
     (opt-prompt m)))
 
-(run-game [4 4] opt-prompt (make-ui [4 4] 200))
+;(run-game [4 4] opt-prompt (make-ui [4 4] 200))

@@ -89,3 +89,59 @@ def force_enum(iterator, clearer = False):
             mem = []
             return t
         return (get_index, clear)
+
+
+def partial_wrap(*arg_cts):
+    """Decorator that allows for Haskell-like partial functions. (No kw-arguments.)
+       Pass in the number of arguments as the last item, please.
+       pass in list(range( number of args + 1)) for any legal number of arguments to be used.
+       Also, no arbitrary number of arguments (discerning what to return would not be possible).
+
+       Examples:
+
+       #example 1
+       @partial_wrap(1,2)
+       def add(x, y):
+           return x + y
+
+       inc = add(1)
+       inc(2) #returns 3
+
+       #example 2:
+       @partial_wrap(1,2,3)
+       def add(x, y, z):
+           return x + y + z
+
+       a = add(2)
+       a(8)(2) #12
+       inc = a(-1)
+       inc(6) #7
+       a(8,2) #12
+       """
+    def wrap(f):
+        def call(*args):
+            """Here's how the voodoo works:
+
+               This "call" replaces f, the function decorated.
+               The first if is a simple though vital validator.
+               The next checks if f can be applied and, if so,
+               returns f(*args).
+               Otherwise a partial function is returned. The partial
+               takes any number of arguments so that calls can return other partial
+               functions."""
+            if len(args) not in arg_cts:
+                raise TypeError("Invalid number of arguments")
+            elif len(args) == arg_cts[len(arg_cts) - 1]:
+                return f(*args)
+            else:
+                def part(*x):
+                    passed = args + x
+                    return call(*passed)
+                return part
+        return call
+    return wrap
+
+@partial_wrap(1,2,3)
+def add(x, y, z):
+    return x + y + z
+    

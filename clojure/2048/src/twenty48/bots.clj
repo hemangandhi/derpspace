@@ -40,25 +40,24 @@
   ([m l]
     (first (apply max-key #(second (val %)) l))))
 
-(defn keep-corner
-  "All the moves that preserve the bottom right
+(defn keep-cell
+  "All the moves that preserve cell
    while not being null."
-  [m]
-  (let [h (count m)
-        w (count (nth m 0))]
-    (filter-moves-by-mat m #(<= (get-in-mat m [(dec h) (dec w)])
-                             (get-in-mat % [(dec h) (dec w)]))
-                         (filter-null m))))
+  [m [x y]]
+  (filter-moves-by-mat m #(<= (get-in-mat m [x y])
+                           (get-in-mat % [x y]))
+                       (filter-null m)))
 
 (defn high-corner-bot
   "Plays into bottom right if possible,
    else plays by highest-score-bot."
-  [m]
-  (let [con (keep-corner m)]
-    (if (or (empty? con)
-            (not (= (apply max (map #(apply max %) m))
-                    (get-in-mat m [(dec (count m)) (dec (count (first m)))]))))
-      (highest-score-bot m)
-      (highest-score-bot m con))))
+  [[x y]]
+  (fn [m]
+    (let [con (keep-cell m [x y])]
+      (if (or (empty? con)
+              (not (= (apply max (map #(apply max %) m))
+                      (get-in-mat m [x y]))))
+        (highest-score-bot m)
+        (highest-score-bot m con)))))
 
-(run-game [4 4] (wrap-bot high-corner-bot 100) (make-ui [4 4] 100))
+(run-game [4 4] (wrap-bot (high-corner-bot [3 3]) 100) (make-ui [4 4] 100))
