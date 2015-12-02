@@ -60,4 +60,30 @@
         (highest-score-bot m)
         (highest-score-bot m con)))))
 
-(run-game [4 4] (wrap-bot (high-corner-bot [3 3]) 100) (make-ui [4 4] 100))
+(defn non-nulls-by-bot
+  "Does the first non-null move in mseq."
+  [mseq]
+  (fn [m]
+    (let [non-null (filter-null m)]
+      (first (filter #(contains? non-null %) mseq)))))
+
+(defn inv-move [move]
+  (condp = move
+    :left :right
+    :right :left
+    :up :down
+    :down :up))
+
+(defn no-inv-nnb-bot
+  [mseq]
+  (let [prev (atom (inv-move (last mseq)))]
+    (fn [m]
+      (let [non-null (filter-null m)
+            nm (first (filter #(and (contains? non-null %) (not (= @prev (inv-move %)))) mseq))]
+        (if (nil? nm)
+          (reset! prev ((non-nulls-by-bot mseq) m))
+          (reset! prev nm))))))
+
+;(run-game [4 4] (wrap-bot (high-corner-bot [3 3]) 100) (make-ui [4 4] 100))
+
+(run-game [4 4] (wrap-bot (no-inv-nnb-bot [:right :up :left :down]) 100) (make-ui [4 4] 100))
