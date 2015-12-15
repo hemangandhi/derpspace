@@ -30,22 +30,16 @@ public class HashMap<K,V> {
 		this(10, 0.75f);
 	}
 	
+	public int size(){
+		return size;
+	}
+	
 	public void insert(K key, V val){
+		remove(key);
 		int l = key.hashCode() % right.length;
-		
-		boolean nf = true;
-		for(Node<K, V> t = right[l]; t != null; t = t.next){
-			if(t.key.equals(key)){
-				nf = false;
-				t.val = val;
-				break;
-			}	
-		}
-		
-		if(nf){
-			right[l] = new Node<K, V>(key, val, right[l]);
-			size++;
-		}	
+
+		right[l] = new Node<K, V>(key, val, right[l]);
+		size++;	
 		
 		if(lInd >= 0){
 			amortizedRehash();

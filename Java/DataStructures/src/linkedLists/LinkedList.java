@@ -15,6 +15,15 @@ public class LinkedList<T> {
 	private Node<T> head, tail;
 	private int size;
 	
+	public LinkedList<T> copy(){
+		LinkedList<T> r = new LinkedList<T>();
+		
+		for(Node<T> h = head; h != null; h = h.next)
+			r.addToTail(h.data);
+		
+		return r;
+	}
+	
 	public void addToHead(T val){
 		if(head == null){
 			head = new Node<T>(val, null);
@@ -49,6 +58,10 @@ public class LinkedList<T> {
 			tmp.next = new Node<T>(val,tmp);
 			size++;
 		}
+	}
+	
+	public T getTail(){
+		return tail.data;
 	}
 	
 	public T removeHead(){
