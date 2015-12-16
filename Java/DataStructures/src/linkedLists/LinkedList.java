@@ -1,5 +1,7 @@
 package linkedLists;
 
+import java.util.ArrayList;
+
 public class LinkedList<T> {
 
 	private static class Node<U>{
@@ -22,6 +24,30 @@ public class LinkedList<T> {
 			r.addToTail(h.data);
 		
 		return r;
+	}
+	
+	public ArrayList<T> toArrayList(){
+		ArrayList<T> r = new ArrayList<T>(size);
+		for(Node<T> t = head; t != null; t = t.next)
+			r.add(t.data);
+		
+		return r;
+	}
+	
+	public void clear(){
+		head = tail = null;
+		size = 0;
+	}
+	
+	public void join(LinkedList<T> other){
+		if(other.size > 0){
+			tail.next = other.head;
+			tail = other.tail;
+			size += other.size;
+			
+			other.head = other.tail = null;
+			other.size = 0;
+		}
 	}
 	
 	public void addToHead(T val){
@@ -71,6 +97,8 @@ public class LinkedList<T> {
 		T r = head.data;
 		head = head.next;
 		size--;
+		if(size == 0)
+			head = tail = null;
 		return r;
 	}
 	
