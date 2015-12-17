@@ -13,6 +13,11 @@ public class UpdateableHeap<T extends Comparable<T>> {
 		lst = new HashMap<T, Integer>();
 	}
 	
+	/**
+	 * Heapifies dat in places.
+	 * O(n)
+	 * @param dat the data
+	 */
 	public UpdateableHeap(ArrayList<T> dat){
 		for(int i = (dat.size() - 1)/2; i >= 0; i--){
 			for(int p = i, l = 2*p + 1, r = 2*p+2; l < dat.size(); l = 2*p+1, r = 2*p+2){
@@ -46,6 +51,10 @@ public class UpdateableHeap<T extends Comparable<T>> {
 		data.set(j, ai);
 	}
 	
+	/**
+	 * Adds value to heap, updates hash table.
+	 * @param v the value to add
+	 */
 	public void add(T v){
 		data.add(v);
 		
@@ -58,6 +67,10 @@ public class UpdateableHeap<T extends Comparable<T>> {
 		}
 	}
 	
+	/**
+	 * Removes a value from the heap.
+	 * @return the removed value.
+	 */
 	public T remove(){
 		if(data.size() == 1){
 			lst.remove(data.get(0));
@@ -83,40 +96,42 @@ public class UpdateableHeap<T extends Comparable<T>> {
 		return m;
 	}
 	
+	/**
+	 * Gets the size.
+	 * @return the size.
+	 */
 	public int size(){
 		return data.size();
 	}
 	
-	public static <T extends Comparable<T>> void sort(ArrayList<T> s){
-		Heap<T> disp = new Heap<T>(s);
-		
-		for(int i = s.size() - 1; i >= 0; i--){
-			T t = s.get(0);
-			s.set(0, s.get(i));
-			s.set(i, t);
-			
-			for(int p = 0, l = 2*p + 1, r = 2*p + 2; l < i; l = p*2 + 1, r = 2*p + 2){
-				int sc = (r >= i || s.get(l).compareTo(s.get(r)) > 0)? l : r;
-				if(s.get(p).compareTo(s.get(sc)) < 0){
-					T tmp = s.get(sc);
-					s.set(sc,  s.get(p));
-					s.set(p, tmp);
-					
-					p = sc;
-				}else
-					break;
-			}
-		}
-	}
-	
+	/**
+	 * Checks if a value is contained in the heap.
+	 * O(1) thanks to hash table.
+	 * @param v the value to test.
+	 * @return whether the value is in the heap.
+	 */
 	public boolean contains(T v){
 		return lst.contains(v);
 	}
 	
+	/**
+	 * Gets the value from the heap.
+	 * The value of returned should not be altered.
+	 * O(1). 
+	 * @param c the value to get.
+	 * @return the value gotten.
+	 */
 	public T get(T c){
 		return data.get(lst.get(c));
 	}
 	
+	/**
+	 * Updates a value in the heap.
+	 * O(log n). Performs both sifts in case
+	 * old > ne or old < ne. O(1) if old == ne.
+	 * @param old the old value.
+	 * @param ne the updated value.
+	 */
 	public void update(T old, T ne){
 		int ind = lst.remove(old);
 		lst.insert(ne, ind);
@@ -130,17 +145,16 @@ public class UpdateableHeap<T extends Comparable<T>> {
 				break;
 			}
 		}
-	}
-	
-	public static void main(String [] args){
-		ArrayList<Integer> t = new ArrayList<Integer>();
 		
-		for(int i = 0; i < 100; i++){
-			t.add((int)(Math.random()*100));
+		ind = lst.get(ne);
+		for(int p = ind, l = 2*p + 1, r = 2*p + 2; l < data.size(); l = 2*p + 1, r = 2*p + 2){
+			int sm = (r >= data.size() || data.get(l).compareTo(data.get(r)) > 0)? l : r;
+			if(data.get(sm).compareTo(data.get(p)) > 0){
+				swap(p, sm);
+				p = sm;
+			}else{
+				break;
+			}
 		}
-		
-		System.out.println(t);
-		sort(t);
-		System.out.println(t);
 	}
 }

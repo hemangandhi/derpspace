@@ -13,6 +13,10 @@ public class AVLTree<T extends Comparable<T>> {
 			data = d;
 		}
 		
+		/**
+		 * Assuming all child heights are computed,
+		 * computes the left and right heights of this node.
+		 */
 		public void computeHeights(){
 			if(left == null)
 				lh = 0;
@@ -28,6 +32,12 @@ public class AVLTree<T extends Comparable<T>> {
 	
 	private Node<T> root;
 	
+	/**
+	 * Performs a binary search for key.
+	 * O(lg n).
+	 * @param key the element to search for.
+	 * @return the matching key found or null.
+	 */
 	public T search(T key){
 		for(Node<T> t = root; t != null;){
 			int c = t.data.compareTo(key);
@@ -42,6 +52,13 @@ public class AVLTree<T extends Comparable<T>> {
 		return null;
 	}
 	
+	/**
+	 * Inserts the element.
+	 * O(lg n) due to binary search and
+	 * the fact that only 1 rotation is
+	 * required for re-balancing.
+	 * @param data the item to insert.
+	 */
 	public void insert(T data){
 		if(root == null)
 			root = new Node<T>(data);
@@ -72,11 +89,17 @@ public class AVLTree<T extends Comparable<T>> {
 		return rebalance(r);
 	}
 	
+	/**
+	 * Rebalances the node r.
+	 * @param r the node to rebalance.
+	 * @return the new root of the current sub-tree.
+	 */
 	private Node<T> rebalance(Node<T> r){
 		r.computeHeights();
 		
 		if(r.lh - r.rh > 1){
 			if(r.left.lh > r.left.rh){
+				//Case 1, clockwise.
 				Node<T> t = r.left;
 				r.left = t.right;
 				t.right = r;
@@ -86,6 +109,7 @@ public class AVLTree<T extends Comparable<T>> {
 				
 				return t;
 			}else{
+				//Case 2, counter-clockwise
 				Node<T> t = r.left.right;
 				r.left.right = t.left;
 				t.left = r.left;
@@ -100,6 +124,7 @@ public class AVLTree<T extends Comparable<T>> {
 			}
 		}else if(r.rh - r.lh > 1){
 			if(r.right.rh > r.right.lh){
+				//Case 1, counter-clockwise
 				Node<T> t = r.right;
 				r.right = t.left;
 				t.left = r;
@@ -109,6 +134,7 @@ public class AVLTree<T extends Comparable<T>> {
 				
 				return t;
 			}else{
+				//Case 2, clockwise.
 				Node<T> t = r.right.left;
 				r.right.left = t.right;
 				t.right = r.right;
@@ -126,6 +152,11 @@ public class AVLTree<T extends Comparable<T>> {
 		return r;
 	}
 	
+	/**
+	 * Performs an in order traversal.
+	 * O(n)
+	 * @return the elements in sorted order.
+	 */
 	public ArrayList<T> inOrder(){
 		ArrayList<T> r = new ArrayList<T>();
 		inOrder(root, r);
@@ -144,6 +175,11 @@ public class AVLTree<T extends Comparable<T>> {
 		}
 	}
 	
+	/**
+	 * O(lg n)
+	 * @param key the element to delete.
+	 * @return the deleted element.
+	 */
 	public T delete(T key){
 		T r = search(key);
 		if(r == null)
@@ -183,6 +219,12 @@ public class AVLTree<T extends Comparable<T>> {
 		return rebalance(r);
 	}
 	
+	/**
+	 * Performs the tree sort algorithm.
+	 * O(n lg n), but uses O(n) memory space.
+	 * @param arg the array to sort.
+	 * @return the sorted values.
+	 */
 	public static <T extends Comparable<T>> ArrayList<T> sort(ArrayList<T> arg){
 		AVLTree<T> a = new AVLTree<T>();
 		

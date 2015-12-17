@@ -17,6 +17,10 @@ public class LinkedList<T> {
 	private Node<T> head, tail;
 	private int size;
 	
+	/**
+	 * Runtime: f(size) = size all the time, O(n)
+	 * @return a copy of the linked list
+	 */
 	public LinkedList<T> copy(){
 		LinkedList<T> r = new LinkedList<T>();
 		
@@ -26,6 +30,10 @@ public class LinkedList<T> {
 		return r;
 	}
 	
+	/**
+	 * Runtime: O(n) always.
+	 * @return A copy of the linked list as an arraylist.
+	 */
 	public ArrayList<T> toArrayList(){
 		ArrayList<T> r = new ArrayList<T>(size);
 		for(Node<T> t = head; t != null; t = t.next)
@@ -34,11 +42,19 @@ public class LinkedList<T> {
 		return r;
 	}
 	
+	/**
+	 * Runtime: O(1)
+	 */
 	public void clear(){
 		head = tail = null;
 		size = 0;
 	}
 	
+	/**
+	 * Adds other list to end of this one, clears other list.
+	 * O(1)
+	 * @param other
+	 */
 	public void join(LinkedList<T> other){
 		if(other.size > 0){
 			tail.next = other.head;
@@ -50,6 +66,10 @@ public class LinkedList<T> {
 		}
 	}
 	
+	/**
+	 * O(1)
+	 * @param val
+	 */
 	public void addToHead(T val){
 		if(head == null){
 			head = new Node<T>(val, null);
@@ -61,6 +81,10 @@ public class LinkedList<T> {
 		size++;
 	}
 	
+	/**
+	 * O(1) thanks to the pointer to the tail.
+	 * @param val
+	 */
 	public void addToTail(T val){
 		if(head == null){
 			addToHead(val);
@@ -71,6 +95,11 @@ public class LinkedList<T> {
 		}
 	}
 	
+	/**
+	 * O(ind) - runs the for loop, updating a temp variable exactly ind times.
+	 * @param ind
+	 * @param val
+	 */
 	public void add(int ind, T val){
 		if(ind < 0 || ind > size)
 			throw new IllegalArgumentException("Index of of bounds");
@@ -86,10 +115,18 @@ public class LinkedList<T> {
 		}
 	}
 	
+	/**
+	 * O(1) thanks to pointer to tail.
+	 * @return
+	 */
 	public T getTail(){
 		return tail.data;
 	}
 	
+	/**
+	 * O(1)
+	 * @return
+	 */
 	public T removeHead(){
 		if(head == null)
 			throw new IllegalStateException("Can't remove from empty list");
@@ -102,6 +139,11 @@ public class LinkedList<T> {
 		return r;
 	}
 	
+	/**
+	 * O(ind), updates a temporary variable ind times.
+	 * @param ind
+	 * @return
+	 */
 	public T remove(int ind){
 		if(head == null)
 			throw new IllegalStateException("Can't remove from empty list");
@@ -123,6 +165,11 @@ public class LinkedList<T> {
 		}
 	}
 	
+	/**
+	 * O(n) as this performs a linear search.
+	 * @param val
+	 * @return
+	 */
 	public T remove(T val){
 		if(head == null)
 			throw new IllegalStateException("Can't remove from empty list");
@@ -148,6 +195,11 @@ public class LinkedList<T> {
 		return size;
 	}
 	
+	/**
+	 * O(n) - this is a linear search.
+	 * @param val
+	 * @return
+	 */
 	public int indexOf(T val){
 		int c = 0;
 		for(Node<T> t = head; t != null && !t.data.equals(val); t = t.next, c++);
@@ -171,6 +223,14 @@ public class LinkedList<T> {
 	
 	//FOR MERGE SORT
 	
+	/**
+	 * O(n): splits the list by looping once and updating
+	 * a pointer to find the end. Another pointer is updated
+	 * half the time. f(n) = 3*n/2 if pointer updates are the only things
+	 * counted.
+	 * @param src The linked list to divide.
+	 * @return The second half. (src is updated to have only half its original contents.)
+	 */
 	public static <T> LinkedList<T> split(LinkedList<T> src){
 		int stb = src.size/2;
 		int stc = stb + (src.size % 2);
@@ -198,6 +258,13 @@ public class LinkedList<T> {
 		return r;
 	}
 	
+	/**
+	 * l and r must be sorted.
+	 * Runs in O(n).
+	 * @param l one of the linked lists to merge. Must be sorted.
+	 * @param r the other linked list. Must be sorted.
+	 * @return the sorted merger of both.
+	 */
 	public static <T extends Comparable<T>> LinkedList<T> merge(LinkedList<T> l, LinkedList<T> r){
 		LinkedList<T> m = new LinkedList<T>();
 		int ms = r.size + l.size;
@@ -228,6 +295,14 @@ public class LinkedList<T> {
 		return m;
 	}
 	
+	/**
+	 * Sorts the list using merge sort.
+	 * f(n) = (n + n)*lg n. The splitting and
+	 * merging take O(n), making each level of the sort
+	 * 2n. There are lg n levels. This is O(n lg n).
+	 * @param s The list to sort.
+	 * @return The sorted list.
+	 */
 	public static <T extends Comparable<T>> LinkedList<T> sort(LinkedList<T> s){
 		if(s.size() > 1){
 			LinkedList<T> r = split(s);

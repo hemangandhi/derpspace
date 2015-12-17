@@ -27,6 +27,12 @@ public class HuffmanCoder {
 		}
 	}
 	
+	/**
+	 * Gets all the leaf nodes for the Huffman tree.
+	 * O(n) if n is the string length.
+	 * @param toEnc the string to encode.
+	 * @return the leaf nodes for the Huffman tree.
+	 */
 	public static Heap<Node> initNodes(String toEnc){
 		HashMap<Character, Integer> charC = new HashMap<Character, Integer>();
 		for(char c: toEnc.toCharArray()){
@@ -44,6 +50,12 @@ public class HuffmanCoder {
 		return r;
 	}
 	
+	/**
+	 * Builds a Huffman tree.
+	 * O(n) if n is the number of leaf nodes.
+	 * @param nodes the leaf nodes.
+	 * @return the root of the Huffman tree.
+	 */
 	public static Node code(Heap<Node> nodes){
 		Heap<Node> t = new Heap<Node>();
 		while(true){
@@ -75,6 +87,13 @@ public class HuffmanCoder {
 		}
 	}
 	
+	/**
+	 * Gets the encoded characters.
+	 * O(n) as this is a pre-order traversal of the
+	 * Huffman tree. O(N) overall, if N is the string's length.
+	 * @param arg the string to encode.
+	 * @return the encoded characters.
+	 */
 	public static HashMap<Character, String> encoded(String arg){
 		Node hTree = code(initNodes(arg));
 		HashMap<Character, String> r = new HashMap<Character, String>();
@@ -95,6 +114,13 @@ public class HuffmanCoder {
 		}
 	}
 	
+	/**
+	 * Decodes a Huffman encoded string given a tree.
+	 * O(N) where N is the length of the encoded string.
+	 * @param enc the string to encode.
+	 * @param root the root of the Huffman tree.
+	 * @return the decoded string.
+	 */
 	public static String decode(String enc, Node root){
 		String ret = "";
 		Node t = root;

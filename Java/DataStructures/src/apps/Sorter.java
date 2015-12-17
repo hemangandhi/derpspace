@@ -5,6 +5,11 @@ import linkedLists.LinkedList;
 
 public class Sorter {
 
+	/**
+	 * Unoptimized quicksort over the list.
+	 * O(n lg n) to O(n * n), depending on the list.
+	 * @param arg The list to sort.
+	 */
 	public static <T extends Comparable<T>> void quickSort(ArrayList<T> arg){
 		quickSort(arg, 0, arg.size() - 1);
 	}
@@ -40,6 +45,11 @@ public class Sorter {
 		return j;
 	}
 	
+	/**
+	 * O(n) check if the list is sorted.
+	 * @param arg the list
+	 * @return whether the list is sorted
+	 */
 	public static <T extends Comparable<T>> boolean isSorted(ArrayList<T> arg){
 		for(int i = 1; i < arg.size(); i++){
 			if(arg.get(i - 1).compareTo(arg.get(i)) > 0)
@@ -49,11 +59,26 @@ public class Sorter {
 		return true;
 	}
 	
+	/**
+	 * Interface to get an item at a specified radix.
+	 * @author heman
+	 *
+	 * @param <T> the type to find radixes of.
+	 */
 	public static interface Radixator<T>{
 		public int atRadix(T val, int radix);
 		public int getBase(T val);
 	}
 	
+	/**
+	 * Performs a radix sort over the list, using the radixator
+	 * to get radix values.
+	 * Costs O(n + r) memory, where r is the radix base.
+	 * Runs in f(n) = r + 2n + d*(n + r), or O(dn + dr).
+	 * @param arg the list to sort.
+	 * @param rad the radixator.
+	 * @return a sorted copy of arg.
+	 */
 	public static <T> ArrayList<T> radixSort(ArrayList<T> arg, Radixator<T> rad){
 		LinkedList<T>[] hm = new LinkedList[rad.getBase(arg.get(0))];
 		for(int i = 0; i < hm.length; i++)
