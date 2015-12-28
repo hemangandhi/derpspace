@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="lib.js"></script>
+<style>
+.pos:hover {
+	background-color: cyan;
+}
+</style>
+<title>Six!</title>
+<script>
+var p1Fn, p2Fn;
+
+var doWin = function(gs, ws){
+	renderMat(gs.mat, $('#main'));
+	if(ws == 1)
+		alert("Red won as " + $('#p1 option:selected').text());
+	else if(ws == -1)
+		alert("Black won as " + $('#p2 option:selected').text());
+	else
+		alert($('#p1 option:selected').text() + " and " + $('#p2 option:selected').text() + " tied!");
+	$('#form').show();
+};
+
+var doPosClick = function(gs){
+	$('.pos').click(function(){
+		var m = tagToMat($(this));
+		gs.mat.push([m[0],m[1],gs.turn]);
+
+		if(checkWin(gs.mat, m[0], m[1])){
+			doWin(gs, ((gs.turn)?1:-1));
+		}else if(gs.mat.length == 44){
+			doWin(gs, 0);
+		}else{
+			var nm = renderAll(gs.mat, $('#main'));
+			gs.moves = nm;
+			gs.turn = !gs.turn;
+
+			if(gs.turn)
+				p1Fn(gs);
+			else
+				p2Fn(gs);
+		}
+	});
+};
+
+var makeBotCaller = function(bp){
+	return function(gs){
+		$.post(bp, JSON.stringify(gs)).done(function(data){
+			data = JSON.parse(data)
+			if(data.err === undefined && !isUnoccupied(gs.moves, data.x, data.y)){
+				gs.mat.push([data.x, data.y, gs.turn]);
+				
+				if(checkWin(gs.mat, data.x, data.y))
+					doWin(gs, ((gs.turn)?1:-1));
+				else if(gs.mat.length == 44)
+					doWin(gs, 0);
+				else{
+				
+					gs.moves = renderAll(gs.mat, $('#main'));
+					gs.turn = !gs.turn;
+
+					if(gs.turn)
+						p1Fn(gs);
+					else
+						p2Fn(gs);
+				}
+			}else{
+				if(data.err === undefined)
+					alert("Player made impossible move: (" + data.x + ", " + data.y + ")");
+				else
+					alert(data.err);
+				doPosClick(gs);
+			}
+		});
+	};
+};
+
+$(document).ready(function(){
+	$.get("http://localhost:8080/bots").done(function(data){
+		data = JSON.parse(data);
+		for(p in data){
+			var o = $('<option>').text(p).val(data[p]);
+			$('#p1').append(o.clone());
+			$('#p2').append(o);
+		}
+	});
+
+	$('#sub').click(function(){
+		$('#form').hide();
+
+		if($('#p1').val() === "human")
+			p1Fn = doPosClick;
+		else
+			p1Fn = makeBotCaller($('#p1').val());
+		
+		if($('#p2').val() === "human")
+			p2Fn = doPosClick;
+		else
+			p2Fn = makeBotCaller($('#p2').val());
+
+		var gs = renderStart($('#main'));
+		gs.turn = true;
+
+		p1Fn(gs);
+	});
+});
+</script>
+</head>
+<body style="overflow:scroll">
+<div id="form">
+	Red Player: <select id="p1"><option value="human" selected>Human</option></select><br/>
+	Black Player: <select id="p2"><option value="human" selected>Human</option></select><br/>
+	<input id="sub" type="button" value="Play!"></input>
+</div>
+<div id="main" style="position:absolute"></div>
+</body>
+</html>

@@ -1,0 +1,73 @@
+#! /usr/bin/env python
+
+from random import choice
+
+"""
+HOW TO USE:
+** This file is all you need to modify to create bots for the six game.
+   To have a bot registered to the server here, just do as follows:
+
+1) Have a function that accepts 3 parameters: the game state matrix, the possible
+   moves and the turn. (Each will be explained.) Ensure that it returns a value from
+   the possible moves.
+2) Add it to the dictionary, bots_dict, by providing the key as a name (for users) and
+   the value as an address. Use @{function's name} for a default address to be used.
+   The provided address will be given an HTTP POST with the three parameters as JSON,
+   see the server for details. If you provide your own address, you're responsible for
+   that server.
+
+THE PARAMETERS PASSED TO A BOT:
+** The parameters are (in order): the game matrix, the possible moves, and the current player.
+
+** The current player is a boolean that is true if the bot is playing for red.
+
+** The game matrix is a list of three-value lists. The inner lists have the format (x, y, is_red) (where
+   is_red is true if the piece at (x, y) is red).
+
+** The matrix of possible moves is a list of (x, y) points where moves can be made.
+
+THE COORDINATE SYSTEM USED:
+To represent hexagons, the following system is used (relative to a hexagon at (x, y)):
+
+            (x,y + 1) == positive y
+             _______
+            /       \
+ (x-1,y+1) /         \  (x + 1, y) == positive x
+          /           \
+          \  (x, y)   /
+  (x-1,y)  \         /  (x + 1, y - 1)
+  (neg. x)  \       /
+             -------
+            (x, y - 1)
+            (neg. y)
+
+The global variable (tuple of tuples) "dels" is provided to give the neighbors about
+(0, 0) from the top right in clockwise order.
+"""
+
+bots_dict = {'random mover': '@rand_move_bot',
+             'maximal adjacency': '@max_adj_bot'}
+
+dels = ((1,0),(1,-1),(0,-1),(-1,0),(-1,1),(0,1))
+
+def rand_move_bot(mat, pos, trn):
+  """A bots that selects a random possible move."""
+  return choice(pos)
+
+def n_adj(mat, trn, x, y):
+  """The number of same-color adjacent cells in the matrix about (x, y)."""
+  c = 0
+  for i in dels:
+    if [i[0] + x, i[1] + y, trn] in mat:
+      c = c + 1
+  return c
+
+def max_adj_bot(mat, pos, trn):
+  mpi = 0
+  mp = n_adj(mat, trn, *pos[0])
+  for i in range(1, len(pos)):
+    c = n_adj(mat, trn, *pos[i])
+    if c > mp:
+      mp = c
+      mpi = i
+  return pos[mpi]
