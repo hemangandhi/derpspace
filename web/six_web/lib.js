@@ -111,7 +111,7 @@ var checkWin = function(mat, x, y){
 	}
 
 	//Ring - all cases.
-	for(var k = 0; k < 3; k++){
+	for(var k = 0; k < 6; k++){
 		if(lineLens[k] >= 1){
 			var xp = x + dels[k][0], yp = y + dels[k][1], j;
 			for(j = 1; j < 6; j++){
