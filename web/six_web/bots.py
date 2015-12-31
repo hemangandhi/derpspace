@@ -46,7 +46,8 @@ The global variable (tuple of tuples) "dels" is provided to give the neighbors a
 """
 
 bots_dict = {'random mover': '@rand_move_bot',
-             'maximal adjacency': '@max_adj_bot'}
+             'maximal adjacency': '@max_adj_bot',
+             'smarter max adjacency': '@smarter_adj'}
 
 dels = ((1,0),(1,-1),(0,-1),(-1,0),(-1,1),(0,1))
 
@@ -73,3 +74,67 @@ def max_adj_bot(mat, pos, trn):
       mp = c
       mpi = i
   return pos[mpi]
+
+def is_win(mat, x, y, is_red):
+  """Checks if a placement of is_red at (x, y) would be a win.
+     Assumes that [x, y, is_red] is not in mat."""
+  line_lens = []
+  for i in dels:
+    j = 0
+    while [i[0]*(j+1) + x, i[1]*(j+1) + y, is_red] in mat:
+      j = j + 1
+    line_lens.append(j)
+
+  if any(line_lens[i] + line_lens[i+3] >= 5 for i in range(3)):
+    return True
+
+  for j in range(6):
+    k = (j + 1) % 6
+    if line_lens[k] >= 2 and line_lens[j] >= 2 and [x + dels[k][0] + dels[j][0], y + dels[k][1] + dels[j][1], is_red] in mat:
+      return True
+
+  for k in range(6):
+    if line_lens[k] >= 1:
+      xp = x + dels[k][0]
+      yp = y + dels[k][1]
+      for j in range(1,6):
+        if [xp, yp, is_red] in mat:
+          xp = xp + dels[(k + j) % 6][0]
+          yp = yp + dels[(k + j) % 6][1]
+        else:
+          break
+      else:
+        return True
+
+  for k in range(6):
+    if all(line_lens[(k + j) % 6] >= 1 for j in range(4)):
+      if [x + dels[(k + 1) % 6][0] + dels[(k + 2) % 6][0], y + dels[(k + 1) % 6][1] + dels[(k + 2) % 6][1], is_red] in mat:
+        return True
+
+  return False
+
+def smarter_bot(bot):
+  """Takes a bot and returns a bot that will:
+     1) Play immediate wins.
+     2) Block immediate losses.
+     3) Otherwise, behave like the original bot.
+
+     This is also a decorator, so can be used as:
+     @smarter_bot
+     def dumb_bot(mat, pos, trn): #etc..."""
+  def smart(mat, pos, trn):
+    w = list(filter(lambda x: is_win(mat, x[0], x[1], trn), pos))
+    fil = list(filter(lambda x: is_win(mat, x[0], x[1], not trn), pos))
+    if len(w) == 1:
+      return w[0]
+    elif len(w) > 1:
+      return bot(mat, w, trn)
+    elif len(fil) == 0:
+      return bot(mat, pos, trn)
+    elif len(fil) > 1:
+      return bot(mat, fil, trn)
+    else:
+      return fil[0]
+  return smart
+
+smarter_adj = smarter_bot(max_adj_bot)
