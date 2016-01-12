@@ -4,8 +4,9 @@ class interface(type):
             raise TypeError("All methods not implemented!")
         else:
             return type.__new__(self, name, sups, attrs)
-    def validate(self, o_class):
-        return all(hasattr(o_class, i) and hasattr(getattr(o_class, i),'__call__') for i in self.funcs)
+    @staticmethod    
+    def validate(o_class, funcs):
+        return all(hasattr(o_class, i) and hasattr(getattr(o_class, i),'__call__') for i in funcs)
             
 
 def make_interface(name, *funs):
@@ -20,7 +21,13 @@ class defer_implementation(interface):
         for i in slf.funcs:
             if i not in attrs:
                 def n(self, *a, i = i):
-                    return getattr(getattr(self, defer[i]), i)(*a)
+                    b = []
+                    for j in a:
+                        if type(j) == type(self):
+                            b += [getattr(j, defer[i])]
+                        else:
+                            b += [j]
+                    return getattr(getattr(self, defer[i]), i)(*b)
                 attrs[i] = n
         return interface.__new__(slf, name, sups, attrs)
 
