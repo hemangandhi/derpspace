@@ -188,6 +188,8 @@ def mk_defer(di, fname, attr, ct = False):
         r = getattr(getattr(s, attr), fname)(*b)
         if type(ct) == type:
             return ct(r)
+        elif ct == '':
+            return type(s)(r)
         else:
             return r
     di[fname] = defered
@@ -197,7 +199,10 @@ class DeferImpl(Interface):
        the specified field.
 
        Decorated classes are expected to have:
-       __defer__ = {"function to defer's name": "field to defer to",...}"""
+       __defer__ = {"function to defer's name": "field to defer to",...}
+       Make the value a tuple: "(field, return type)" and the defered
+       implentation will return the type provided. Set return type to ''
+       to return the type being implemented."""
     def __init__(self, funcs):
         Interface.__init__(self, funcs)
     def __call__(self, cls):
@@ -227,4 +232,31 @@ def rev_dict(d):
     for i in d:
         for j in d[i]:
             r[j] = i
-    return r        
+    return r
+
+def mem_wrap(f):
+    """Wraps functions to store recent calls and cache them.
+       Allows for dictionary-like iteration, contents testing,
+       item getting and item deletion.
+
+       Calling the returned object will emulate calling the wrapped
+       function except that values will be cached."""
+    
+    @DeferImpl(['__getitem__','__delitem__','__iter__','__contains__'])
+    class f_cache:
+        __defer__ = rev_dict({'mem':['__getitem__','__delitem__','__iter__','__contains__']})
+        def __init__(self, g):
+            self.f = g
+            self.mem = {}
+        def __call__(self, *args):
+            if args in self:
+                return self[args]
+            else:
+                self.mem[args] = self.f(*args)
+                return self[args]
+        def clear_cache(self):
+            r = self.mem
+            self.mem = {}
+            return r
+
+    return f_cache(f)

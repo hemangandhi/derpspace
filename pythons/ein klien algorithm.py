@@ -52,7 +52,7 @@ def fst_no_rep(s):
 #force_enum, partial_til_cond, partial_wrap and thread have moved to hemanUtil
 from hemanUtils import DeferImpl, rev_dict
 
-@DeferImpl(['__mul__','__rmul__','__str__','__repr__', '__sub__','__isub__', '__iadd__'])
+@DeferImpl(['__mul__','__rmul__','__str__','__add__','__repr__', '__sub__','__isub__', '__iadd__'])
 class Char:    
     def __init__(self, v):
         if type(v) == str:
@@ -87,3 +87,4 @@ class Char:
                           'o':[('__sub__', ''), ('__isub__', ''), ('__iadd__', '')]})
     
         
+#A wrapper to store recent function calls is in hemanUtils
