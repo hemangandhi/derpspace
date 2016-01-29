@@ -32,7 +32,7 @@
 
 (defn make-maze
   "Makes maze of width and height."
-  ([width height] (make-maze width height [0 0] '() '()))
+  ([width height] (make-maze width height [0 0] #{} #{}))
   ([width height pos mem conex] (let [next-pos (get-random (get-neighbour pos [width height] mem))]
                                   (if (nil? next-pos)
                                     (let [ok-backtrack

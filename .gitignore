@@ -53,3 +53,6 @@ Temporary Items
 #py
 .pyc
 **/__pycache__
+
+#vim
+.swp
