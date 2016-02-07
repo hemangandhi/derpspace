@@ -13,6 +13,7 @@ def merge_dicts(dl, dr, func = lambda x,y: x + y):
 
 class Polynomial:
     """Represents a basic polynomial."""
+    @staticmethod
     def validate(data):
         """Validates a polynomial returning the validated form. Returns None for invalid data."""
         if type(data) == Polynomial:
@@ -25,6 +26,8 @@ class Polynomial:
             return Polynomial.from_string(data, r_dict = True)
         else:
             return None
+
+    @staticmethod    
     def term_to_string(deg,cof):
         """Returns a string that represent the given term."""
         if deg == 0:
@@ -39,6 +42,8 @@ class Polynomial:
                 return str(cof) + "x^" + str(deg)
             else:
                 return "x^" + str(deg)
+
+    @staticmethod        
     def from_string(st, var = 'x', r_dict = False):
         """Converts a polynomial ax^n + ...
            var sets the variable to search for.

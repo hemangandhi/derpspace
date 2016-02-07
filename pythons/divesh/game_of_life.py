@@ -48,7 +48,7 @@ def neighbours(x,y,board):
 
 def print_board(board, alive = "#", dead = " "):
     """
-    Prints the board state, given the ant as a list, specified in run_board.
+    Prints the board state, given the state as a list, specified in run_board.
     """
     print("+" + "".join("-" for i in board[0]) + "+")
     for i in range(len(board)):

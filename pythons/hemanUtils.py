@@ -98,11 +98,6 @@ def partial_wrap(*arg_cts):
        """
     return partial_til_cond(lambda x: len(x) == arg_cts[len(arg_cts) - 1], lambda x: len(x) not in arg_cts)
     
-@partial_wrap(1,2,3)
-def add(x, y, z):
-    return x + y + z
-    
-
 @partial_til_cond(lambda x: not hasattr(x[len(x) - 1], '__call__'))
 def thread(*v):
     """
@@ -234,29 +229,22 @@ def rev_dict(d):
             r[j] = i
     return r
 
-def mem_wrap(f):
-    """Wraps functions to store recent calls and cache them.
-       Allows for dictionary-like iteration, contents testing,
-       item getting and item deletion.
-
-       Calling the returned object will emulate calling the wrapped
-       function except that values will be cached."""
     
-    @DeferImpl(['__getitem__','__delitem__','__iter__','__contains__'])
-    class f_cache:
-        __defer__ = rev_dict({'mem':['__getitem__','__delitem__','__iter__','__contains__']})
-        def __init__(self, g):
-            self.f = g
-            self.mem = {}
-        def __call__(self, *args):
-            if args in self:
-                return self[args]
-            else:
-                self.mem[args] = self.f(*args)
-                return self[args]
-        def clear_cache(self):
-            r = self.mem
-            self.mem = {}
-            return r
+@DeferImpl(['__getitem__','__delitem__','__iter__','__contains__', '__len__'])
+class mem_wrap:
+    __defer__ = rev_dict({'mem':['__getitem__','__delitem__','__iter__','__contains__', '__len__']})
+    def __init__(self, g):
+        self.f = g
+        self.mem = {}
+    def __call__(self, *args):
+        if args in self:
+            return self[args]
+        else:
+            self.mem[args] = self.f(*args)
+            return self[args]
+    def clear_cache(self):
+        r = self.mem
+        self.mem = {}
+        return r
 
-    return f_cache(f)
+

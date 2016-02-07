@@ -29,7 +29,7 @@ def prompt_turn(name, state):
 		if state[name][not src] == 0:
 			if state[name][src] % 2 == 0:
 				state[name][src] /= 2
-				state[name][not src] /= 2
+				state[name][not src] = state[name][src]
 			else:
 				print("Illegal move! Try again!")
 				prompt_turn(name, state)

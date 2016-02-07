@@ -88,3 +88,16 @@ class Char:
     
         
 #A wrapper to store recent function calls is in hemanUtils
+
+#A quick method to return all the permutations of dims*range(start, stop)
+#Useful to find all adjacent points from a point in dims dimensions.
+def n_dims(dims, start, stop):
+	if dims == 1:
+		return list(map(lambda x: [x], range(start, stop)))
+	else:
+		p = n_dims(dims - 1, start, stop)
+		a = []
+		for i in range(start, stop):
+			a += [j + [i] for j in p]
+		return a
+
