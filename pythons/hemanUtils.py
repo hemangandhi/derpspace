@@ -247,4 +247,10 @@ class mem_wrap:
         self.mem = {}
         return r
 
-
+def wrap_last():
+    """
+    Use this decorator as a partial-wrap that wraps until an callable is passed last.
+    This is useful for creating decorators that accept arguments, as no nested decorator
+    is needed.
+    """
+    return partial_til_cond(lambda x: hasattr(x[-1],"__call__"))

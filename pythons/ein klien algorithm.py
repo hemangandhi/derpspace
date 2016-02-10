@@ -50,7 +50,7 @@ def fst_no_rep(s):
 #print("\n".join(i + " : " + str(fst_no_rep(i)) for i in tests))
 
 #force_enum, partial_til_cond, partial_wrap and thread have moved to hemanUtil
-from hemanUtils import DeferImpl, rev_dict
+from hemanUtils import DeferImpl, rev_dict, wrap_last
 
 @DeferImpl(['__mul__','__rmul__','__str__','__add__','__repr__', '__sub__','__isub__', '__iadd__'])
 class Char:    
@@ -100,4 +100,18 @@ def n_dims(dims, start, stop):
 		for i in range(start, stop):
 			a += [j + [i] for j in p]
 		return a
+
+#R-like vectorize wrapper
+#Warning: Only pass 1 argument when wrapping. Third will be passed by python! (See wrap_last.)
+@wrap_last()
+def auto_map(arg_c, f):
+    def ret(*args):
+        if len(args) != arg_c:
+            raise TypeError("Invalid number of arguments!")
+        elif hasattr(args[arg_c - 1], "__iter__"):
+            bef = args[:arg_c - 1]
+            return map(lambda x: f(*(bef + (x,))), args[arg_c - 1])
+        else:
+            return f(*args)
+    return ret
 
