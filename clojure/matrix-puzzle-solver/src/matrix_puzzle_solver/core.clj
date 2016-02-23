@@ -8,5 +8,5 @@
   [& args]
   (println (gen/poss-to-mat-vec [[2 [1 3 4] 6] [10 [11 12 14] 16]] 
                                 #(every? identity (flatten (util/for-each-in-mat % 
-                                                           (list (= (mod 2 v) 0))))) 
+                                                             (list (or (nil? v) (= (mod v 2) 0))))))
                                 4)))

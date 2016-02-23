@@ -115,3 +115,28 @@ def auto_map(arg_c, f):
             return f(*args)
     return ret
 
+def all_comb(l, e):
+    if e == 0 or len(l) < e:
+        return []
+    elif len(l) == e:
+        return [l]
+    else:
+        r = all_comb(l[1:], e)
+        le = list(map(lambda x: [l[0]] + x, all_comb(l[1:], e - 1)))
+        return r + le
+
+def even_odd_partition(arr):
+    n_o = sum(map(lambda x: x % 2 == 1, arr))
+    i = 0
+    j = n_o
+    while i < n_o and j < len(arr):
+        if arr[i] % 2 == 0 and arr[j] % 2 == 1:
+            arr[i], arr[j] = arr[j], arr[i]
+            i = i + 1
+            j = j + 1
+        else:
+            if arr[i] % 2 == 1:
+                i = i + 1
+            if arr[j] % 2 == 0:
+                j = j + 1
+    return arr
