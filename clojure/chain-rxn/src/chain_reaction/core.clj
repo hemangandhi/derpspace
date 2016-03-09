@@ -2,7 +2,8 @@
   (:import [javax.swing JFrame JLabel]
            [java.awt Color GridLayout Color]
            [java.awt.event MouseListener]
-           [javax.swing.border LineBorder]))
+           [javax.swing.border LineBorder])
+  (:gen-class))
 
 (defn neighbours
   ([[x y] [width height]]
@@ -92,5 +93,6 @@
                   (mousePressed [e] nil)
                   (mouseReleased [e] (add [x y] mat))))))))
 
-(run-panel [31 31] [(const-adder [15 15])] 100 true)
+(defn -main [& args]
+  (run-panel [31 31] [(const-adder [15 15])] 100 false))
 ;(ui-panel [10 10] false)

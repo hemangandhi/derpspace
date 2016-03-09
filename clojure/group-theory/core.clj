@@ -11,4 +11,4 @@
 (defn dummy-op [x y]
   (mod (+ x y) 4))
 
-(check-group dummy-op dummy)
+(println (check-group dummy-op dummy))
