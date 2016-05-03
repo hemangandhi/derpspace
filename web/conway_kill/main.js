@@ -1,5 +1,16 @@
 //JS
 
+var genRand = function(h, w){
+	var rv = [];
+	for(var i = 0; i < h; i++){
+		rv.push([]);
+		for(var j = 0; j < w; j++){
+			rv[i].push(Math.floor(Math.random() * 2) == 1);
+		}
+	}
+	return rv;
+};
+
 var initialize = function(h, w, init){
         var rv = [];
         for(var i = 0; i < h; i++){
@@ -22,8 +33,10 @@ $(document).ready(function(){
         var paused;
         var interID;
 
-        var renderNext = function(){
-                if(paused)return;
+	$('#game').hide();
+
+        var renderNext = function(isStep){
+                if(paused && !isStep)return;
                 steps['stps']++;
                 matrix = nextState(matrix, rules);
                 render($('#canvas'), matrix);
@@ -59,9 +72,12 @@ $(document).ready(function(){
                 steps = {'gen':0, 'kill':0, 'stps': 0};
                 paused = false;
 
-                matrix = initialize(h, w, allTheInits[$('#init').val()]);
+		if($('#init').val() !== "Rand")
+			matrix = initialize(h, w, allTheInits[$('#init').val()]);
+		else
+			matrix = genRand(h, w);
 
-                interID = setInterval(renderNext, 100);
+                interID = setInterval(function(){renderNext(false);}, 100);
                 $('#game').show();
                 render($('#canvas'), matrix);
         });
@@ -92,4 +108,8 @@ $(document).ready(function(){
                         $(this).attr('value', 'Pause');
         });
 
+	$('#step').click(function(){
+		if(!paused)return;
+		renderNext(true);
+	});
 });
