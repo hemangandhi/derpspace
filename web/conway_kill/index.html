@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+        <head>
+                <title>Conway kill!</title>
+                <style>
+#prev{
+        display: none;
+}
+
+.cell-alive{
+        background-color: red;
+        border: 2px solid black;
+}
+
+.cell-dead{
+        background-color: white;
+        border: 2px solid black;
+}
+                </style>
+                <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+                <script src="inits.js"></script>
+                <script src="gameOfLife.js"></script>
+                <script src="main.js"></script>
+        </head>
+        <body>
+                <div id="form">
+                        <div id="prev">
+                                Previous game:
+                        </div>
+                        Height: <input type="text" value="60" id="hinp"></input>
+                        Width: <input type="text" value="60" id="winp"></input><br/>
+                        Spawn at <div id="spwn">
+                                <input value="0" type="checkbox"></input><label>0</label>
+                                <input value="1" type="checkbox"></input><label>1</label>
+                                <input value="2" type="checkbox"></input><label>2</label>
+                                <input value="3" type="checkbox" checked></input><label>3</label>
+                                <input value="4" type="checkbox"></input><label>4</label>
+                                <input value="5" type="checkbox"></input><label>5</label>
+                                <input value="6" type="checkbox"></input><label>6</label>
+                                <input value="7" type="checkbox"></input><label>7</label>
+                                <input value="8" type="checkbox"></input><label>8</label>
+                        </div> neighbours.<br/>
+                        Live with <div id="live">
+                                <input value="0" type="checkbox"></input><label>0</label>
+                                <input value="1" type="checkbox"></input><label>1</label>
+                                <input value="2" type="checkbox" checked></input><label>2</label>
+                                <input value="3" type="checkbox" checked></input><label>3</label>
+                                <input value="4" type="checkbox"></input><label>4</label>
+                                <input value="5" type="checkbox"></input><label>5</label>
+                                <input value="6" type="checkbox"></input><label>6</label>
+                                <input value="7" type="checkbox"></input><label>7</label>
+                                <input value="8" type="checkbox"></input><label>8</label>
+                        </div> neighbours.<br/>
+                        Initialize: <select id="init">
+                                <option value="Gosper" selected>Gosper Glider Gun</option>
+                                <option value="F">F Tetramino</option>
+                                <option value="Ship">Large Spaceship</option>
+                        </select>
+                        <input type="button" id="start-btn" value="Start!"></input>
+                </div>
+                <div id="game">
+                        <div id="currSt"></div>
+                        <input type="button" id="pause" value="Pause"></input>
+                        <div id="canvas"></div>
+                </div>
+        </body>
+</html>
