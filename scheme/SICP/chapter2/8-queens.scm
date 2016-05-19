@@ -8,7 +8,7 @@
 
 (define (enumerate-interval from to)
   (define (iter cur acc)
-    (if (= cur from) acc
+    (if (< cur from) acc
       (iter (- cur 1) (cons cur acc))))
   (iter to (list)))
 
@@ -26,8 +26,8 @@
          (abs (- (qu-col q1) (qu-col q2))))))
 
 (define (get-queen-by-col col queens)
-  (filter (lambda (x) (= (qu-col x) col))
-          queens))
+  (car (filter (lambda (x) (= (qu-col x) col))
+          queens)))
 
 (define (same? q1 q2)
   (and (= (car q1) (car q2))
