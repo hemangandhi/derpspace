@@ -181,7 +181,3 @@
 (define (sum-thing n s)
   (filter (lambda (x) (= s (accumulate + 0 x)))
           (unique-n-tuples 3 n)))
-
-;2.42
-
-
