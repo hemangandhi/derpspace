@@ -35,10 +35,6 @@
 
 (define (safe? col positions)
   (let ((qu (get-queen-by-col col positions)))
-    (newline)
-    (display positions)
-    (newline)
-    (display col)
     (null? (filter (lambda (x) (and (checking? x qu)
                                     (not (same? x qu))))
                    positions))))
