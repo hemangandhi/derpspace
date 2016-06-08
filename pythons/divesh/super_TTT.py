@@ -14,7 +14,7 @@ def won_board(board):
         except StopIteration:
             if all(board[i//3][i%3] == board[0][0] for i in range(0, 9, 4)) and board[0][0] != "e":
                 return board[0][0]
-            elif all(board[i//3][i%3] == board[0][0] for i in range(2, 7, 2)) and board[0][2] != "e":
+            elif all(board[i//3][i%3] == board[0][2] for i in range(2, 7, 2)) and board[0][2] != "e":
                 return board[0][2]
             else:
                 return "e"
@@ -85,14 +85,14 @@ def make_move(board, move, turn, won_bds):
     else:
         turn = 'X'
 
+    bv = won_board(board[move[0]][move[1]])
+    if bv != 'e':
+        won_bds[(move[0], move[1])] = bv
+
     if (move[2], move[3]) in won_bds:
         moves = {(i, j, k, l) for i in range(3) for j in range(3) for k in range(3) for l in range(3) if board[i][j][k][l] == 'e'}
     else:
         moves = {(move[2], move[3], i, j) for i in range(3) for j in range(3) if board[move[2]][move[3]][i][j] == 'e'}
-
-    bv = won_board(board[move[0]][move[1]])
-    if bv != 'e':
-        won_bds[(move[0], move[1])] = bv
 
     return (turn, moves)
 
