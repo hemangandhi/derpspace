@@ -3,8 +3,16 @@
   (Math/sqrt (apply + (map (fn [x1 x2] (Math/pow (- x1 x2) 2))
                            P1 P2))))
 
-(defn sq-pt-dist [P Sq1 Sq2]
-  (let [in-range (map (fn [x1 x2 p] (or (= x1 p) (= x2 p)
+(defn pad-zero [seq]
+  (lazy-seq (cons (if (empty? seq) 0 (first seq))
+                  (pad-zero (rest seq)))))
+
+(defn sq-pt-dist [Pt Sq-pt1 Sq-pt2]
+  (let [dims (apply max (map count [Pt Sq-pt1 Sq-pt2]))
+        [P Sq1 Sq2] (map #(if (= (count %) dims) %
+                            (pad-zero %)) 
+                         [Pt Sq-pt1 Sq-pt2])
+        in-range (map (fn [x1 x2 p] (or (= x1 p) (= x2 p)
                                         (not= (neg? (- x1 p))
                                               (neg? (- x2 p)))))
                       Sq1 Sq2 P)]

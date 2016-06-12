@@ -3,7 +3,15 @@
 def distance(p1, p2):
     return sum(map(lambda x, y: (x - y) ** 2, p1, p2)) ** 0.5
 
+def pad_zeroes(iter):
+    yield from iter
+    while True:
+        yield 0
+
 def sq_to_pt_dist(pt, sq1, sq2):
+    dims = max(map(len, [pt, sq1, sq2]))
+    pt, sq1, sq2 = tuple(map(lambda x: x if len(x) == dims else pad_zeroes(x),
+            [pt, sq1, sq2]))
     def is_in(x, y, z):
         return z in [x, y] or \
                 (x - z < 0) != (y - z < 0)
