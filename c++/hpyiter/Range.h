@@ -1,5 +1,6 @@
 #include <iterator>
 
+namespace hPyIter{
 
 class Range : public std::iterator<std::bidirectional_iterator_tag, int> {
 public:
@@ -24,3 +25,5 @@ public:
 private:
 	int start, stop, step, curr;
 };
+
+}

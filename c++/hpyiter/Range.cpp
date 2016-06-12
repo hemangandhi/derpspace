@@ -1,6 +1,7 @@
 #include <stdexcept>
-#include "stdafx.h"
 #include "Range.h"
+
+using namespace hPyIter;
 
 Range::Range(int start, int stop, int step) {
 	if ((stop < start && step > 0) || step == 0 || (start < stop && step < 0))
@@ -107,11 +108,11 @@ int Range::operator->() {
 }
 
 Range& Range::begin() {
-	return Range(start, stop, step);
+	return new Range(start, stop, step);
 }
 
 Range& Range::end() {
-	Range& r = Range(start, stop, step);
+	Range& r = new Range(start, stop, step);
 	r.curr = size();
 	return r;
 }
