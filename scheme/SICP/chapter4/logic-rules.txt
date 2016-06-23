@@ -1,0 +1,33 @@
+;scheme psuedo-code for the logic programming chapter.
+
+;exercise 4.57 
+(rule (can-replace ?p1 ?p2)
+  (or (and (job ?p1 ?j)
+           (job ?p2 ?j)
+           (not (same ?p1 ?p2)))
+      (and (can-replace ?p1 ?p3)
+           (can-replace ?p3 ?p2))))
+
+;a)
+(can-replace ?p (Fect Cy D))
+;b)
+(and (can-replace ?p1 ?p2)
+     (salary ?p1 ?s1)
+     (salary ?p2 ?s2)
+     (lisp-eval < ?s1 ?s2))
+
+; exercise 4.58
+(rule (big-shot ?p)
+  (and (supervisor ?s ?p)
+       (job ?s (?s-div . ?s-role))
+       (job ?p (?p-div . ?p-role))
+       (not (same ?s-dive ?p-div))))
+
+; exercise 4.59 - b
+(rule (meeting-time ?p ?time)
+  (or (meeting whole-company ?time)
+      (and (job ?p (?div . ?role))
+           (meeting ?div ?time))))
+
+;c)
+(meeting-time (Hacker Alyssa P) (Wednesday ?time))

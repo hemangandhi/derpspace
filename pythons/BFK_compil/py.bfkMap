@@ -1,0 +1,37 @@
+!===indent===!
+        
+!===\indent===!
+!===init===!
+mem = dict()
+mem_ptr = 0
+!===\init===!
+!===>===!
+mem_ptr += {0}
+!===\>===!
+!===<===!
+mem_ptr -= {0}
+!===\<===!
+!===+===!
+if mem_ptr in mem:
+        mem[mem_ptr] += {0}
+else:
+        mem[mem_ptr] = {0}
+!===\+===!
+!===-===!
+if mem_ptr in mem:
+        mem[mem_ptr] -= {0}
+else:
+        mem[mem_ptr] = -{0}
+!===\-===!
+!===[===!
+while mem_ptr in mem and mem_ptr[mem] != 0:
+!===\[===!
+!===]===!
+
+!===\]===!
+!===.===!
+print(mem[mem_ptr] if mem_ptr in mem else 0)
+!===\.===!
+!===,===!
+mem[mem_ptr] = input()
+!===\,===!
