@@ -4,7 +4,7 @@
 
 using namespace hPyIter;
 
-typedef class Map<Range, int>;
+template class Map<Range, int>;
 
 int main(int argc, char ** argv){
         Map<Range, int> v {Range(9), Range(9).end(), 

@@ -5,6 +5,7 @@ IterNode * makeIterator(void * state, void * value, NextMaker next){
         IterNode * in = (IterNode *) malloc(sizeof(IterNode));
         in->state = state;
         in->value = value;
+        in->prev = NULL;
         in->getNextValue = next;
         in->next = NULL
         return in;
@@ -23,14 +24,19 @@ void defaultFreeIter(IterNode * list){
 }
 
 IterNode * getNext(IterNode * this){
-        if(this->next == NULL)
+        if(this->next == NULL){
                 this->next = this->getNextValue(this);
+                this->next->prev = this;
+        }
         return this->next;
 }
 
 IterNode * destGetNext(IterNode * this, DeallocFn state, DeallocFn value){
         IterNode * temp = this->getNextValue(this);
+        temp->prev = NULL;
         this->next = NULL;
+        if(this->prev != NULL)
+                this->prev->next = NULL;
         freeIterator(this, state, value);
         return temp;
 }

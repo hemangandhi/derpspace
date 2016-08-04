@@ -19,9 +19,9 @@ public:
 	int operator[](int ind);
 	bool hasNext();
 	bool hasPrev();
-	int size();
-	Range& begin();
-	Range& end();
+	int size() const;
+	Range& begin() const;
+	Range& end() const;
 private:
 	int start, stop, step, curr;
 };

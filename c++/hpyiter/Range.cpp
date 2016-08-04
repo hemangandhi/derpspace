@@ -37,7 +37,7 @@ Range::Range(const Range& cp){
         this->curr = cp.curr;
 }
 
-int Range::size() {
+int Range::size() const{
 	int s = stop - start;
 	if (s % step == 0)
 		return s / step;
@@ -107,12 +107,14 @@ int Range::operator->() {
 	return **this;
 }
 
-Range& Range::begin() {
-	return new Range(start, stop, step);
+Range& Range::begin() const{
+	Range& temp = *new Range(*this);
+        temp.curr = 0;
+        return temp;
 }
 
-Range& Range::end() {
-	Range& r = new Range(start, stop, step);
-	r.curr = size();
+Range& Range::end() const{
+	Range& r = *new Range(*this);
+	r.curr = this->size();
 	return r;
 }

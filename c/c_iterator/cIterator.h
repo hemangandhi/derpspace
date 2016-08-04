@@ -6,6 +6,7 @@ struct __IterNode_def{
         void * value;
         struct __IterNode_def * (* getNextValue)(struct __IterNode_def * this);
         struct __IterNode_def * next;
+        struct __IterNode_def * prev;
 };
 
 typedef struct __IterNode_def IterNode;
