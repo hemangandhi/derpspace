@@ -12,11 +12,17 @@ IterNode * makeIterator(void * state, void * value, NextMaker next){
 }
 
 void freeIterator(IterNode * list, DeallocFn state, DeallocFn value){
-        state(list->state);
-        value(list->value);
-        if(list->next != NULL)
-                free(list->next);
-        free(list);
+        IterNode * next;
+        for(; list != NULL; list = next){
+                next = list->next;
+                if(list->prev != NULL)
+                        list->prev->next = NULL;
+                if(next != NULL)
+                        next->prev = NULL;
+                state(list->state);
+                value(list->value);
+                free(list);
+        }
 }
 
 void defaultFreeIter(IterNode * list){
@@ -35,8 +41,6 @@ IterNode * destGetNext(IterNode * this, DeallocFn state, DeallocFn value){
         IterNode * temp = this->getNextValue(this);
         temp->prev = NULL;
         this->next = NULL;
-        if(this->prev != NULL)
-                this->prev->next = NULL;
         freeIterator(this, state, value);
         return temp;
 }
@@ -62,7 +66,7 @@ IterNode * mapNextVal(IterNode * this){
         }
         nextState->mapFn = state->mapFn;
         return makeIterator(nextState, 
-                        state->mapFn(state->currPtr->value), 
+                        state->mapFn(nextState->currPtr->value), 
                         &mapNextVal);
 }
 
@@ -113,7 +117,7 @@ IterNode * nextIntFromBy(IterNode * this){
         int * state = (int *) this->state;
         int curr = * (int *) (this->value);
         int * nextCurr = (int *) malloc(sizeof(int));
-        *nextCurr += *state;
+        *nextCurr = *state + curr;
         return makeIterator(state, nextCurr, &nextIntFromBy);
 }
 
