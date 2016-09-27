@@ -3,8 +3,21 @@
         <head>
                 <title>Simul Go Timer!</title>
                 <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-                <script src="js/main.js"></script>
+                <script src="js/main2.js"></script>
         </head>
         <body>
+                <form id="the-form">
+                        <div id="players">
+                                <div id="player1" class="player-input">
+                                        <input type="text" name="normalTime" value="Enter the normal time for this player"></input>
+                                        <input type="text" name="byoCount" value="Enter the number of byos for this player"></input>
+                                        <input type="text" name="byoLen" value="Enter the length of eacho byo for this player"></input>
+                                        <input type="text" name="delay" value="Enter the turn delay after this player"></input>
+                                </div>
+                        </div>
+                        <input type="button" id="add-player" value="Add player"></input>
+                        <input type="button" id="start-game" value="Start Game"></input>
+                </form>
+                <div id="timers"></div>
         </body>
 </html>

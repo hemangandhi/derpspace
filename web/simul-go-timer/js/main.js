@@ -1,16 +1,16 @@
 //JS
 
-var player = function(normalTime, byoYomiCount, byoYomiDurr, playerDelay, nextPlayer){
+var player = function(idx, normalTime, byoYomiCount, byoYomiDurr, playerDelay, startNextPlayer){
         var currByo = byoYomiDurr;
         var currInt = null;
         this.next = nextPlayer;
         this.playTime = function(uiUpdater, doTimeout){
                 var playerFn = function(){
                         if(normalTime > 0){
-                                uiUpdater(1, normalTime);
+                                uiUpdater(idx, 1, normalTime);
                                 normalTime--;
                         }else{
-                                uiUpdater(byoYomiCount, currByo);
+                                uiUpdater(idx, byoYomiCount, currByo);
                                 if(currByo > 0)
                                         currByo--;
                                 else{
@@ -18,7 +18,7 @@ var player = function(normalTime, byoYomiCount, byoYomiDurr, playerDelay, nextPl
                                         currByo = byoYomiDurr;
                                 }
                                 if(byoYomiCount == 0)
-                                        doTimeout();
+                                        doTimeout(idx);
                         }
                 };
                 currInt = setInterval(playerFn, 1000);
@@ -28,13 +28,9 @@ var player = function(normalTime, byoYomiCount, byoYomiDurr, playerDelay, nextPl
                 if(currInt !== null){
                         clearInterval(currInt);
                         this.resetByo();
-                        return this.next;
+                        setTimeout(this.next.playTime, playerDelay);
                 }
         };
-};
-
-var game = function(players, UIUpdater, doTimeOut){
-
 };
 
 $(document).ready(function(){

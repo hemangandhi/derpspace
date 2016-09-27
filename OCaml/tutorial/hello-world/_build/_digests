@@ -1,0 +1,5 @@
+"Rule: ocaml: ml -> cmo & cmi (%=hello )": "\254\172LJI\206\220c\"m\168\007k\240W\\"
+"Resource: /home/heman/coding/derpspace/OCaml/tutorial/hello-world/hello.ml": "\129O\143\145\147\172\172hs\164\189vf\195\004\178"
+"Rule: ocaml dependencies ml (%=hello )": "\144Cxy\031'\2102`\248\145\232\184y\195\202"
+"Rule: ocaml: ml & cmi -> cmx & o (%=hello )": "4G\031+\129\235\227S\254\131F\232D\185\1602"
+"Rule: ocaml: cmx* & o* -> native (%=hello )": "%;d\183>\168\171]\017OI\\Q\214\018\190"
