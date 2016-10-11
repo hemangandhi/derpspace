@@ -23,7 +23,7 @@ let solve_queens dim =
                           (fold_left append 
                                      []
                                      (map (fun ls -> next_col_for_list ls dim) acc))
-        in loop 0 (next_col_for_list [] dim);;
+        in loop 1 (next_col_for_list [] dim);;
 
 let print_sol sol = 
         iter (fun (x, y) -> print_string "("; 
@@ -33,8 +33,6 @@ let print_sol sol =
                             print_string "), ") sol;
         print_string "\n";;
 
-let sols = (solve_queens 1) in
+let sols = (solve_queens 8) in
         if 0 = length sols then print_string "No solutions!\n"
         else iter print_sol sols;;
-
-iter print_sol (next_col_for_list [(0, 1)] 8)

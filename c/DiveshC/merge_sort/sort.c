@@ -57,7 +57,7 @@ static void sortLocal(void * src, void * dest, int start, int end, int size, Com
                 sortLocal(src, dest, start, mid, size, comp);
                 sortLocal(src, dest, mid, end, size, comp);
                 merge(src, dest, start, mid, end, size, comp);
-                memcpy(src + start * size, dest + start * size, (end - start) * size);
+                memcpy(src + start * size, dest + start * size, (end - start) * size);
         }
 }
 
