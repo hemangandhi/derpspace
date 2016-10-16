@@ -1,26 +1,6 @@
-#ifndef __HashMap__header
-#define __HashMap__header
 #include <stdlib.h>
 #include <stdio.h>
-
-typedef int (*hashFn) (const void * in);
-typedef int (*eqFn)(const void * obj1, const void * obj2);
-typedef void (*deallocator) (void * obj);
-
-struct __Node__def{
-        void * key, * value;
-        struct __Node__def * next;
-};
-
-typedef struct __Node__def Node;
-
-typedef struct {
-        hashFn hash;
-        eqFn eq;
-        Node ** nds;
-        int listSize, mapSize;
-        float loadFactor;
-} HashMap;
+#include "HashMap.h"
 
 HashMap * createMap(int initSize, float lfa, hashFn hs, eqFn e){
         HashMap * ret = (HashMap *) malloc(sizeof(HashMap));
@@ -95,7 +75,9 @@ void rehash(HashMap * map){
                 while(map->nds[i] != NULL){
                         Node * t = map->nds[i];
                         int idx = map->hash(t->key) % (map->listSize * 2);
+                        //delete
                         map->nds[i] = t->next;
+                        //insert
                         t->next = newNds[idx];
                         newNds[idx] = t;
                 }
@@ -163,4 +145,3 @@ int main(int argc, char ** argv){
         freeMap(h);
 }
 */
-#endif

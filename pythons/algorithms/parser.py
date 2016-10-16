@@ -23,7 +23,7 @@ def firsts_from_helper(symbol, rules, epsilon = "eps", ps = dict()):
                 break
             elif indx == len(rules) - 1: # If A := BCDE and epsilon is in FIRST(BCDE), epsilon is in FIRST(A).
                 ps[symbol] |= set([epsilon])
-        else:
+        else: #if the loop is never broken, the last symbol had an eps, which means this symbol has an eps.
             ps[symbol] |= set([epsilon])
     return ps
 
