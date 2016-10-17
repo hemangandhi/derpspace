@@ -17,7 +17,7 @@ typedef struct{
     int size;
     cmpFn cmp;
     HeapNode * min;
-    /* HashMap * key2node; */
+    /* HashMap * nd->key = key2node; */
 } FibHeap;
 
 FibHeap * makeHeap(cmpFn cmp/* , eqFn cSucks, hashFn hash */){
@@ -153,8 +153,82 @@ void * deleteMin(FibHeap * heap){
     temp->left->right = temp->right;
     temp->right->left = temp->left;
 
+
+    if(temp->child != NULL){
+        HeapNode * rr = heap->min->right, * ll = temp->child->left;
+        heap->min->right = temp->child;
+        temp->child->right = rr;
+        ll->right = rr;
+        rr->left = ll;
+    }
+
     void * key = temp->key;
     free(temp);
     consolidate(heap);
     return key;
+}
+
+void * updateValue(FibHeap * heap, HeapNode * nd, void * value){
+    int v = heap->cmp(nd->key, value);
+    if(v <= 0) return NULL;
+
+    void * oldVal = nd->key;
+    nd->key = value;
+
+    if(nd->parent == NULL){
+        if(heap->cmp(value, heap->min->key) < 0)
+            heap->min = nd;
+        return oldVal;
+    }
+
+    if(nd->parent->child == nd){
+        nd->parent->child = nd->right;
+    }
+
+    nd->right->left = nd->left;
+    nd->left->right = nd->right;
+    
+    nd->right = heap->min->right;
+    nd->left = heap->min;
+    heap->min->right = nd;
+    nd->right->left = nd;
+
+
+    HeapNode * par = nd->parent;
+    if(nd->parent->degree == 1)
+        nd->parent->child = NULL;
+    nd->parent = NULL;
+    nd->marked = False;
+    par->degree--;
+
+    while(par->marked && par->parent != NULL){
+        HeapNode * parpar = par->parent;
+        par->parent = NULL;
+
+        if(parpar->degree == 1){
+            parpar->child = NULL;
+        }else{
+            if(parpar->child == par){
+                parpar->child = parpar->child->right;
+            }
+            par->left->right = par->right;
+            par->right->left = par->left;
+            par->right = heap->min->right;
+            par->left = heap->min;
+            heap->min->right = nd;
+            nd->right->left = nd;
+        }
+        parpar->degree--;
+        par->marked = False;
+        par = parpar;
+    }
+    return oldVal;
+}
+
+void ** delete(FibHeap * heap, HeapNode * nd, void * (* predecessor)(const void * v)){
+    void * old = updateValue(heap, nd, predecessor(heap->min->key));
+    void * tmp = deleteMin(heap);
+    void ** rv = (void **) malloc(sizeof(void *) * 2);
+    rv[0] = old; rv[1] = tmp;
+    return rv;
 }
