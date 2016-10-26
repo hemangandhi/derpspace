@@ -8,7 +8,12 @@
 
 (defn poss-to-mat [mat]
   "Replace those with only 1 possibility to that possibility."
-  (util/for-each-in-mat mat (list (if (and (coll? v) (= 1 (count v))) (first v) v))))
+  (util/for-each-in-mat mat (list (if (coll? v) 
+                                    (condp = (count v)
+                                      0 nil
+                                      1 (first v)
+                                      v)
+                                    v))))
 
 (defn filter-mat-poss [mat validator]
   "Filter out invalid possibilities."
@@ -28,17 +33,20 @@
 
 (defn poss-to-mat-vec [mat validator exclude-max]
   "Takes a matrix of possibilities and returns every possibility."
-  (let [p (poss-to-mat (filter-mat-poss mat validator))]
-    (if (every? #(not %) (flatten (util/for-each-in-mat p (list (coll? v)))))
-      [p]
-      (let [l (least-poss-in-mat p exclude-max)]
-        (conj  (poss-to-mat-vec (update-in p l rest) validator exclude-max)
-              (update-in p l first ))))))
+  (let [p (poss-to-mat (filter-mat-poss mat validator))
+        fp (flatten p)]
+    (if (some nil? fp)
+      []
+      (if (every? #(not (coll? %)) fp)
+        [p]
+        (let [l (least-poss-in-mat p exclude-max)]
+          (conj  (poss-to-mat-vec (update-in p l rest) validator exclude-max)
+                (update-in p l first )))))))
 
 (defn solve [validator states known]
   "Return all possible solutions of the matrix puzzle, given the validator, states, and matrix
    of known values."
-  (filter validator (poss-to-mat-vec (if (some? nil? (flatten known))
-                                       (mat-to-poss known) 
+  (filter validator (poss-to-mat-vec (if (some nil? (flatten known))
+                                       (mat-to-poss known states) 
                                        known)
                                      validator (inc (count states)))))
