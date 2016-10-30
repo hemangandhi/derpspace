@@ -60,3 +60,7 @@ pack (x:xs) = tail $ myReverse $ loop xs [x] [[]]
           loop (x:xs) (t:ts) acc
              | x == t = loop xs (x:(t:ts)) acc
              | otherwise = loop xs [x] ((t:ts):acc)
+
+--Problem 10
+encode :: Eq a => [a] -> [(Int, a)]
+encode arr = map (\pk -> (myLength pk, head pk)) $ pack arr
