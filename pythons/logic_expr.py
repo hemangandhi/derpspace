@@ -8,8 +8,8 @@ class Operators(Enum):
     OR = ("|", "left or right", 3, lambda x: x[0] or x[1])
     IF = (">", "if left then right", 4, lambda x: x[0] == x[1] or not x[0])
     IFF = ("=", "left if and only if right", 5, lambda x: x[0] == x[1])
-    
     def __init__(self, symbol, name, presid, func):
+
         self.symbol = symbol
         self.string = name
         self.func = func
@@ -71,7 +71,7 @@ def evaluate(expr,**bindings):
         return lst_op(evaluate(expr[lst + 1:], **bindings))
     else:
         return lst_op([evaluate(expr[:lst], **bindings),evaluate(expr[lst + 1:], **bindings)])
-                
+
 
 def all_t_f(num_vars):
     """Gets all permutations of True and False for num_vars variables."""
@@ -82,7 +82,7 @@ def flatten(lst):
     r = []
     for i in lst:
         r += list(i)
-    return r    
+    return r
 
 def get_vars(expr):
     """Gets all the variables from an expression.
@@ -116,7 +116,7 @@ def print_ops():
     print("The operators are as follows (in order of precedence):")
     for i in sorted(Operators, reverse=True):
         print(i.symbol,":",repr(i))
-    print("where 'left' and 'right' stand for any expressions.")    
+    print("where 'left' and 'right' stand for any expressions.")
     print("'(' and ')' can be used to change the precedence, giving the expression contained the highest precedence.")
     print("Note that all spaces are ignored entirely, so 'a b' would be treated as 'ab'.")
     print("Besides this, expressions are evaluated from the right to the left, meaning that a&b&c is treated as a&(b&c).")
@@ -125,7 +125,7 @@ def main():
     """Main UI: runs the program."""
     print("Welcome to a logical expression evaluator.")
     print("Enter expressions to get the logical result.")
-    
+
     print_ops()
 
     #main loop
