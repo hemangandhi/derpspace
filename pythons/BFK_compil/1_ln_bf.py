@@ -1,0 +1,5 @@
+from functools import reduce
+from itertools import cycle
+from sys import argv, exit
+
+(lambda st: reduce(lambda s, v: exit() if s[3] == len(s[2]) else {'+': lambda s, n: [s[0].__setitem__(s[1], s[0].get(s[1], 0) + 1), (s[0], s[1], s[2], s[3] + 1)][1], '-': lambda s, n: [s[0].__setitem__(s[1], s[0].get(s[1], 0) - 1), (s[0], s[1], s[2], s[3] + 1)][1], '>': lambda s, n: (s[0], s[1] + 1, s[2], s[3] + 1), '<': lambda s, n: (s[0], s[1] - 1, s[2], s[3] + 1), '.': lambda s, n: [print(chr(s[0].get(s[1], 0))), (s[0], s[1], s[2], s[3] + 1)][1], ',': lambda s, n: [s[0].__setitem__(s[1], ord(input()[0])), (s[0], s[1], s[2], s[3] + 1)][1], '[': lambda s, n: (s[0], s[1], s[2], n if s[0].get(s[1], 0) == 0 else s[3] + 1), ']': lambda s, n: (s[0], s[1], s[2], n if s[0].get(s[1], 0) != 0 else s[3] + 1)}.get(s[2][s[3]][0], lambda x, y: (x[0], x[1], x[2], x[3] + 1))(s, s[2][s[3]][1]), cycle(range(1)), ({}, 0, reduce(lambda s, v: ([v[0]] + s[0] if v[1] == '[' else (s[0][1:] if v[1] == ']' else s[0]), s[1] + [[v[1], [s[1].__setitem__(s[0][0], [s[1][s[0][0]][0], v[0]]) ,s[0][0]][1] if v[1] == ']' else -1]]), enumerate(st), ([], []))[1], 0)))(open(argv[1]).read())
