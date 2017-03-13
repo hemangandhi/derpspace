@@ -1,0 +1,19 @@
+(ns better-q)
+
+(defn generate [len]
+  (if (= 0 len) [[]]
+      (for [x (range len)] (conj x (generate (dec len))))))
+
+(defn not-checking [q qs]
+  (and (not (.contains qs q))
+       (some (fn [[idx v]] (= (Math/abs (- q v))
+                              idx))
+             (map-indexed vector qs))))
+
+(defn test-q [qs]
+  (if (empty? qs) true
+      (and (not-checking (first qs) (rest qs))
+           (test-q (rest-qs)))))
+
+(defn n-queens [n]
+  (filter test-q (generate n)))
