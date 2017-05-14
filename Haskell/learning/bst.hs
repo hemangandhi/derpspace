@@ -37,5 +37,24 @@ has_elt :: (Ord a) => (BST a) -> a -> Bool
 has_elt Edge _        = False
 has_elt (BST v l r) k
         | v == k      = True
-        | v <  k      = has_elt k l
-        | v >  k      = has_elt k r
+        | v >  k      = has_elt l k
+        | v <  k      = has_elt r k
+
+delete_node :: (Ord a) => (BST a) -> a -> BST a
+delete_node Edge _           = Edge
+delete_node (BST v Edge r) i
+            | v == i         = r
+            | v >  i         = Edge
+            | v <  i         = BST v Edge $ delete_node r i
+delete_node (BST v l Edge) i
+            | v == i         = l
+            | v >  i         = BST v (delete_node l i) Edge
+            | v <  i         = Edge
+delete_node (BST v l r) i
+            | v <  i         = BST v l (delete_node r i)
+            | v >  i         = BST v (delete_node l i) r
+            | v == i         = BST (fst iop) (snd iop) r
+                             where find_iop (BST v_i l_i Edge) = (v_i, l_i)
+                                   find_iop (BST v_i l_i r_i)  = (fst rec, BST v_i l_i (snd rec))
+                                                               where rec = find_iop r_i
+                                   iop = find_iop l
