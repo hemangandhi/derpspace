@@ -25,6 +25,8 @@ class Resizable a b where
     size :: a b -> Int
     add_item :: a b -> b -> Maybe (a b)
     del_item :: a b -> b -> Maybe (a b)
+    maybe_size :: Maybe (a b) -> Int
+    maybe_size = maybe (-1) size
 
 data Sized a b = Sized Int (a b)
 
