@@ -1,3 +1,4 @@
+{-# LANGUAGE MultiParamTypeClasses, FlexibleInstances, TypeOperators#-}
 import Data.Maybe
 
 -- TODO: Generic tree
@@ -20,6 +21,22 @@ to_list :: (BST a) -> [a]
 to_list Edge        = []
 to_list (BST v l r) = to_list l ++ [v] ++ to_list r
 
+class Resizable a b where
+    size :: a b -> Int
+    add_item :: a b -> b -> Maybe (a b)
+    del_item :: a b -> b -> Maybe (a b)
+
+data Sized a b = Sized Int (a b)
+
+instance (Resizable r s) => Resizable (Sized r) s where
+    size (Sized i v)       = i
+    add_item (Sized i v) k = case add_item v k of
+                             Nothing -> Nothing
+                             Just nv -> Just $ Sized (i + 1) nv
+    del_item (Sized i v) k = case del_item v k of
+                             Nothing -> Nothing
+                             Just nv -> Just $ Sized (i - 1) nv
+
 --Before this, BST is just a regular binary tree.
 --Now comes the searching bit...
 
@@ -34,13 +51,13 @@ insert (BST v l r) i
                        Nothing   -> Nothing
                        Just nr   -> Just $ BST v l nr
 
-insert_list :: (Ord a) => [a] -> Maybe (BST a)
-insert_list = foldr (\x n -> case n of Nothing -> Nothing
-                                       Just v  -> insert v x) (Just Edge)
+insert_all :: (Ord a, Foldable t) => t a -> Maybe (BST a)
+insert_all = foldr (\x n -> case n of Nothing -> Nothing
+                                      Just v  -> insert v x) (Just Edge)
 
 tree_sort :: (Ord a) => [a] -> Maybe [a]
 tree_sort = (\mbfs -> case mbfs of Just b  -> Just $ to_list b
-                                   Nothing -> Nothing) . insert_list
+                                   Nothing -> Nothing) . insert_all
 
 has_elt :: (Ord a) => (BST a) -> a -> Bool
 has_elt Edge _        = False
@@ -75,3 +92,8 @@ delete_node (BST v l r) i
                                    find_iop (BST v_i l_i r_i)  = (fst rec, BST v_i l_i (snd rec))
                                                                where rec = find_iop r_i
                                    iop = find_iop l
+
+instance (Ord a) => Resizable BST a where
+    size     = foldr (+) 0 . fmap (\x -> 1 :: Int)
+    add_item = insert
+    del_item = delete_node
