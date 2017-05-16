@@ -96,6 +96,6 @@ delete_node (BST v l r) i
                                    iop = find_iop l
 
 instance (Ord a) => Resizable BST a where
-    size     = foldr (+) 0 . fmap (\x -> 1 :: Int)
+    size     = length
     add_item = insert
     del_item = delete_node
