@@ -40,9 +40,9 @@ class Light(object):
     def toggle_on(self):
         self.set_state("on",not self.state_dict['on'])    
 
-def run():
+def run(ip = "192.168.7.23"):
     print("Welcome to hue cmdln. Type in the light id.")
-    conn = cli.HTTPConnection("192.168.0.107")
+    conn = cli.HTTPConnection(ip)
     l_id = input("id > ")
     conn.request("GET","/api/newdeveloper/lights")
     while l_id not in json.loads(conn.getresponse().read().decode('utf-8')):
@@ -91,4 +91,14 @@ def get_modification_dict():
     return to_ret    
 
 if __name__ == "__main__":
-    run()
+    import sys
+    if len(sys.argv) < 2:
+        print("WARNING: Using default IP: 192.168.7.23")
+        print("Pass in an IP as the first commandline argument to use that instead.")
+        run()
+    elif any((not i.is_digit() or int(i) < 0 or int(i) > 255) for i in sys.argv[1].split('.')):
+        print("ERROR: Invalid IP!")
+        print("WARNING: Using default IP: 192.168.7.23")
+        run()
+    else:
+        run(sys.argv[1])
