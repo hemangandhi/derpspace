@@ -3,11 +3,11 @@ enum Stream<'a, T: 'a>{
     Nil
 }
 
-fn map<'a, 'b, A: 'a, B: 'a, F>(stream: Stream<A>, func: F) -> &'b Stream<B>
-where 'a: 'b, F:  FnMut(&'a A) -> &'a B{
+fn map<A, B, F>(stream: Stream<A>, func: F) -> &Stream<B>
+where F:  FnMut(&A) -> &B{
           match stream{
             Stream::Nil => &Stream::Nil,
-            Stream::Data{value, next} => &Stream::Data{value: func(value), next: &Box::new(|| map(*next(), func)): Box<FnMut() -> &'a Stream<'a, A>>}
+            Stream::Data{value, next} => &Stream::Data{value: func(value), next: &Box::new(|| map(*next(), func))}
           }
 }
 
