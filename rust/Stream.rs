@@ -1,14 +1,15 @@
-enum Stream<T, N: Fn()->Stream<T, N>>{
-    Data{value: T, next: N},
+enum Stream<'a, T: 'a>{
+    Data{value: &'a T, next: &'a Box<(FnMut()->&'a Stream<'a, T>)>},
     Nil
-};
+}
 
-fn<A, B, F, F1, F2> map(stream: Stream<A, F1>, func: F) -> Stream<B, F2>
-where F:  Fn (A) -> B,
-      F1: Fn ()  -> Stream<A, F1>,
-      F2: Fn ()  -> Stream<B, F2>{
+fn map<'a, 'b, A: 'a, B: 'a, F>(stream: Stream<A>, func: F) -> &'b Stream<B>
+where 'a: 'b, F:  FnMut(&'a A) -> &'a B{
+          match stream{
+            Stream::Nil => &Stream::Nil,
+            Stream::Data{value, next} => &Stream::Data{value: func(value), next: &Box::new(|| map(*next(), func)): Box<FnMut() -> &'a Stream<'a, A>>}
+          }
 }
 
 fn main () {
-
 }
