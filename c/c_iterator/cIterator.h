@@ -14,8 +14,8 @@ typedef IterNode * (* NextMaker) (IterNode * this);
 typedef void (* DeallocFn) (void *);
 
 IterNode * makeIterator(void * state, void * value, NextMaker next);
-void freeIterator(IterNode * list, DeallocFn state, DeallocFn value);
-void defaultFreeIter(IterNode * list);
+void freeIterator(IterNode * list, DeallocFn state, DeallocFn value, int backwards);
+void defaultFreeIter(IterNode * list, int backwards);
 
 IterNode * getNext(IterNode * this);
 IterNode * destGetNext(IterNode * this, DeallocFn state, DeallocFn value);
@@ -25,6 +25,8 @@ IterNode * map(IterNode * source, void * (* mapfn)(void *));
 void * reduce(IterNode * source, void * initV, void * (* redFn)(void *, void *));
 
 IterNode * filter(IterNode * source, int (* pred)(void *));
+
+IterNode * take(int n, IterNode * it);
 
 IterNode * intsFromBy(int from, int by);
 #endif

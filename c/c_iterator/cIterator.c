@@ -7,12 +7,13 @@ IterNode * makeIterator(void * state, void * value, NextMaker next){
         in->value = value;
         in->prev = NULL;
         in->getNextValue = next;
-        in->next = NULL
+        in->next = NULL;
         return in;
 }
 
-void freeIterator(IterNode * list, DeallocFn state, DeallocFn value){
+void freeIterator(IterNode * list, DeallocFn state, DeallocFn value, int backwards){
         IterNode * next;
+        IterNode * prev = list->prev;
         for(; list != NULL; list = next){
                 next = list->next;
                 if(list->prev != NULL)
@@ -23,10 +24,18 @@ void freeIterator(IterNode * list, DeallocFn state, DeallocFn value){
                 value(list->value);
                 free(list);
         }
+
+        IterNode * pp;
+        for(; prev != NULL; prev = pp){
+            pp = prev->prev;
+            state(prev->state);
+            value(prev->value);
+            free(prev);
+        }
 }
 
-void defaultFreeIter(IterNode * list){
-        freeIterator(list, free, free);
+void defaultFreeIter(IterNode * list, int backwards){
+        freeIterator(list, free, free, backwards);
 }
 
 IterNode * getNext(IterNode * this){
@@ -41,8 +50,32 @@ IterNode * destGetNext(IterNode * this, DeallocFn state, DeallocFn value){
         IterNode * temp = this->getNextValue(this);
         temp->prev = NULL;
         this->next = NULL;
-        freeIterator(this, state, value);
+        freeIterator(this, state, value, 0);
         return temp;
+}
+
+
+typedef struct {
+    IterNode * underlying;
+    int n;
+} TakeState;
+
+
+IterNode * nextTake(IterNode * this){
+    TakeState * me = (TakeState *) this->state;
+    if(me->n == 0 || !hasNext(me->underlying)) return NULL;
+
+    TakeState * nxt = (TakeState *) malloc(sizeof(TakeState));
+    nxt->underlying = getNext(me->underlying);
+    nxt->n = me->n - 1;
+    return makeIterator(nxt, nxt->underlying->value, nextTake);
+}
+
+IterNode * take(int n, IterNode * it){
+    TakeState * init = malloc(sizeof(TakeState));
+    init->n = n;
+    init->underlying = it;
+    return makeIterator(init, init->underlying->value, nextTake);
 }
 
 int hasNext(IterNode * this){
