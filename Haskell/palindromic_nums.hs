@@ -8,3 +8,6 @@ encode_in_base b x = (x, reverse $ encode_loop b x)
 palindromes_in_base b = filter (is_palindrome . snd) $ map (encode_in_base b) [1..]
 
 seq_of_diffs s = zipWith (-) (map fst $ drop 1 s) $ map fst s
+
+-- chunk_while pred []     = [[]]
+-- chunk_while pred (x:xs) = 
