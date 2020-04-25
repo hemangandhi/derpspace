@@ -19,13 +19,10 @@ def validated_input(prompt, get_error=lambda x: None, converter=lambda x: x):
         v = validator(p)
     return converter(p)
 
-
 class InputModule:
-    def __init__(self, emotes):
-        self.emotes = emotes
-    def get_move(color, board):
+    def get_move(self, color, board):
         print("Enter the piece and then the x and y coordinate of a possible move")
-        pieces = (p for r in board for p in r if p and p.black == color)
+        pieces = [p for r in board for p in r if p and p.black == color]
         moves = {piece: [(idx, x, y) for x, y in piece.get_moves(board)]\
                 for idx, piece in enumerate(pieces)}
         for piece, move in moves:
@@ -39,9 +36,21 @@ class InputModule:
             False: "Enter one of the options above"
             }[all(q.is_digit() for q in p) and tpl(p) in options],
                 tpl)
+        return pieces[user_move[0]], user_move[1:]
+    def print_board(self, board):
+        print(" " * 4 + (" " * 3).join(map(str, range(8))))
+        for idx, row in enumerate(board):
+            print(36 * "-") # TODO: tune hyperparameter
+            print(idx, "|", " | ".join(map(str, row)), "|")
+    def prompt_for_promotion(self):
+        print("It seems you can promote a pawn!")
+        return validated_input(
+                "Choose between (Q)ueen, (R)ook, (B)ishop, or (K)night",
+                lambda p: p.strip().lower() in "qrbk",
+                lambda p: p.strip().lower())
 
 # TODO: interface for castling and promotions
-def board_factory(emotes, input_module_maker):
+def game_factory(emotes, input_module):
 
     class Space:
         def __init__(self, x, y):
@@ -143,7 +152,14 @@ def board_factory(emotes, input_module_maker):
                     if i == 0 or board[self.coords[0] + direction][self.coords[1] + i]:
                         yield (self.coords[0] + direction, self.coords[1] + i)
         def move(self, board, new_coord):
-            pass
+            Piece.move(self, board, new_coord)
+            if new_coord[0] in (0, 7):
+                board[new_coord[0]][new_coord[1]] = {
+                        'q': Queen(*new_coord, not self.black),
+                        'r': Rook(*new_coord, not self.black),
+                        'b': Bishop(*new_coord, not self.black),
+                        'k': Knight(*new_coord, not self.black),
+                        }[input_module.prompt_for_promotion()]
 
     class Knight(Piece):
         def __str__(self):
