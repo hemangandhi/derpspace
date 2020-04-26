@@ -51,28 +51,23 @@ impl<A, Lm1: Nat> FixedList<A, SNat<Lm1>> for ConsList<A, Lm1> {
     }
 }
 
-/*
-// TODO(to make this build): need a proof that all AddNats<_>::Sum: Nat.
+// TODO(to make this build): need an alterate bound to account for the fact that a ConsList<A, n> is a FixedList<A, succ n>.
 pub trait ConcatList<A, L1: Nat + AddNats<L2>, L2: Nat + AddNats<L1>, X: FixedList<A, L1>>: FixedList<A, L2>{
-    type ConcattedList: FixedList<A, Plus<L1, L2>>;
-    fn concat_lists(self, X) -> Self::ConcattedList;
+    fn concat_lists(self, X) -> Box<dyn FixedList<A, Plus<L2, L1>>>;
 }
 impl<A, L1, X> ConcatList<A, L1, ZNat, X> for EmptyList<A>
 where L1: Nat + AddNats<ZNat>,
       X: FixedList<A, L1> {
-    type ConcattedList = ConsList<A, Plus<L1, ZNat>>;
-    fn concat_lists(self, x: X) -> Self::ConcattedList { x }
+    fn concat_lists(self, x: X) -> Box<dyn FixedList<A, Plus<ZNat, L1>>> { Box::new(x) }
 }
-impl<A, L1, L2, X> ConcatList<A, L1, L2, X> for ConsList<A, L2>
-where L1: Nat + AddNats<L2>, L2: Nat + AddNats<L1>,
+impl<A, L1, L2m1, X> ConcatList<A, L1, SNat<L2m1>, X> for ConsList<A, L2m1>
+where L1: Nat + AddNats<SNat<L2m1>>, L2m1: Nat + AddNats<L1>,
       X: FixedList<A, L1> {
-    type ConcattedList = ConsList<A, Plus<L1, L2>>;
-    fn concat_lists(self, l: X) -> Self::ConcattedList {
+    fn concat_lists(self, l: X) -> Box<dyn FixedList<A, Plus<SNat<L2m1>, L1>>> {
 	let Self(x, xs) = self;
-	Self::ConcattedList(x, Box::new(xs.mk_list(l)))
+	Box::new(ConsList(x, xs.concat_lists(l)))
     }
 }
-*/
 
 fn main() {
     println!("{}", SNat::<ZNat>::reify());
