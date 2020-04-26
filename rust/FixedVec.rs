@@ -1,21 +1,20 @@
 use std::marker::PhantomData;
 
 pub trait Nat {
-    fn reify(&self) -> u32;
+    fn reify() -> u32;
 }
 
 // Zero is a number
 pub struct ZNat;
 impl Nat for ZNat {
-    fn reify(&self) -> u32 { 0 }
+    fn reify() -> u32 { 0 }
 }
 
 // 1 + a number is a number (the successor)
 pub struct SNat<A: Nat = ZNat>(A);
 impl<A: Nat> Nat for SNat<A> {
-    fn reify(&self) -> u32 {
-	let Self(n) = self;
-        1 + n.reify()
+    fn reify() -> u32 {
+        1 + A::reify()
     }
 }
 
@@ -76,7 +75,6 @@ where L1: Nat + AddNats<L2>, L2: Nat + AddNats<L1>,
 */
 
 fn main() {
-    let one = SNat(ZNat);
-    let two = SNat(one);
-    println!("{}", two.reify());
+    println!("{}", SNat::<ZNat>::reify());
+    println!("{}", <SNat::<ZNat> as AddNats<SNat::<SNat::<ZNat>>>>::Sum::reify());
 }
