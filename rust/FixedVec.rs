@@ -76,5 +76,7 @@ where L1: Nat + AddNats<L2>, L2: Nat + AddNats<L1>,
 */
 
 fn main() {
-    println!("{}", SNat(ZNat).reify());
+    let one = SNat(ZNat);
+    let two = SNat(one);
+    println!("{}", two.reify());
 }
