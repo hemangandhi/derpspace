@@ -45,28 +45,28 @@ impl<'a, A: 'a, L: Nat> Clone for Box<dyn FixedList<'a, A, L> + 'a> {
     }
 }
 
-#[derive(Clone)]
 pub struct EmptyList<A>(PhantomData<A>); /* surpress unused warning */
 
 impl<'a, A: 'a + Clone> FixedList<'a, A, ZNat> for EmptyList<A> {
     fn reify(&self) -> Vec<A> { vec![] }
     fn box_clone(&self) -> Box<dyn FixedList<'a, A, ZNat> + 'a> {
-	Box::new((*self).clone())
+	let Self(ph) = *self;
+	Box::new(Self(ph))
     }
 }
 
-#[derive(Clone)]
-pub struct ConsList<'a, A: Clone, Lm1: 'static + Nat>(A, Box<dyn FixedList<'a, A, Lm1> + 'a>);
+pub struct ConsList<'a, A: 'a + Clone, Lm1: Nat, Nxt: FixedList<'a, A, Lm1>>(A, Box<&'a Nxt>, PhantomData<Lm1>);
 
-impl<'a, A: 'a + Clone, Lm1: 'static + Nat> FixedList<'a, A, SNat<Lm1>> for ConsList<'a, A, Lm1> {
+impl<'a, A: 'a + Clone, Lm1: 'static + Nat, Nxt: FixedList<'a, A, Lm1>> FixedList<'a, A, SNat<Lm1>> for ConsList<'a, A, Lm1, Nxt> {
     fn reify(&self) -> Vec<A> {
-	let Self(curr, rest) = self;
+	let Self(curr, rest, _) = self;
 	let mut v = rest.reify();
 	v.insert(0, curr.clone());
 	return v;
     }
     fn box_clone(&self) -> Box<dyn FixedList<'a, A, SNat<Lm1>> + 'a> {
-	Box::new((*self).clone())
+	let Self(c, n, l) = *self;
+	Box::new(Self(c, n, l))
     }
 }
 
@@ -79,14 +79,18 @@ where A: 'a + Clone,
       X: 'a + FixedList<'a, A, L1> {
     fn concat_lists(self, x: X) -> Box<dyn FixedList<'a, A, Plus<ZNat, L1>> + 'a> { x.box_clone() }
 }
-impl<'a, A, L1, L2m1, X> ConcatList<'a, A, L1, SNat<L2m1>, X> for ConsList<'a, A, L2m1>
+impl<'a, A, L1, L2m1, X, Nxt> ConcatList<'a, A, L1, SNat<L2m1>, X> for ConsList<'a, A, L2m1, Nxt>
 where A: 'a + Clone,
       L1: Nat + AddNats<SNat<L2m1>> + AddNats<L2m1>,
-      L2m1: Nat + AddNats<L1>,
-      X: 'a + FixedList<'a, A, L1> {
+      L2m1: 'static + Nat + AddNats<L1>,
+      X: 'a + FixedList<'a, A, L1>,
+      Nxt: 'a + FixedList<'a, A, L2m1> + ConcatList<'a, A, L1, L2m1, X> {
     fn concat_lists(self, l: X) -> Box<dyn FixedList<'a, A, Plus<SNat<L2m1>, L1>> + 'a> {
-	let Self(x, xs) = self;
-	Box::new(ConsList(x, (*xs).concat_lists(l)))
+	let Self(x, t_xs, ph) = self;
+	let xs: Nxt = **t_xs;
+	let catted = xs.concat_lists(l);
+	let size: PhantomData<<L2m1 as AddNats<L1>>::Sum>;
+	Box::new(ConsList(x, Box::new(&*catted), size))
     }
 }
 
