@@ -1,17 +1,19 @@
 use std::marker::PhantomData;
 
-pub trait Nat {
+pub trait Nat: Clone {
     fn reify() -> u32;
 }
 
 // Zero is a number
+#[derive(Clone)]
 pub struct ZNat;
 impl Nat for ZNat {
     fn reify() -> u32 { 0 }
 }
 
 // 1 + a number is a number (the successor)
-pub struct SNat<A: Nat = ZNat>(A);
+#[derive(Clone)]
+pub struct SNat<A: Nat = ZNat>(PhantomData<A>);
 impl<A: Nat> Nat for SNat<A> {
     fn reify() -> u32 {
         1 + A::reify()
@@ -32,59 +34,57 @@ impl<T: Nat, U: AddNats<T> + Nat> AddNats<T> for SNat<U> {
 type Plus<X: Nat, Y: Nat> = <X as AddNats<Y>>::Sum;
 
 // A list that knows its length as a type.
-pub trait FixedList<A, L: Nat> {
+pub trait FixedList<'a, A: 'a, L: Nat> {
     fn reify(&self) -> Vec<A>;
-    fn box_clone(&self) -> Box<dyn FixedList<A, L>>;
+    fn box_clone(&self) -> Box<dyn FixedList<'a, A, L> + 'a>;
 }
 
-impl<A, L: Nat> Clone for Box<dyn FixedList<A, L>> {
+impl<'a, A: 'a, L: Nat> Clone for Box<dyn FixedList<'a, A, L> + 'a> {
     fn clone(&self) -> Self {
 	(*self).box_clone()
     }
 }
 
+#[derive(Clone)]
 pub struct EmptyList<A>(PhantomData<A>); /* surpress unused warning */
 
-impl<A: Clone> FixedList<A, ZNat> for EmptyList<A> {
+impl<'a, A: 'a + Clone> FixedList<'a, A, ZNat> for EmptyList<A> {
     fn reify(&self) -> Vec<A> { vec![] }
-    fn box_clone(&self) -> Box<dyn FixedList<A, ZNat>> {
-	let Self(ph) = *self;
-	let rv = Box::new(Self(ph.clone()));
-	rv
+    fn box_clone(&self) -> Box<dyn FixedList<'a, A, ZNat> + 'a> {
+	Box::new((*self).clone())
     }
 }
 
-pub struct ConsList<A: Clone, Lm1: 'static + Nat>(A, Box<dyn FixedList<A, Lm1>>);
+#[derive(Clone)]
+pub struct ConsList<'a, A: Clone, Lm1: 'static + Nat>(A, Box<dyn FixedList<'a, A, Lm1> + 'a>);
 
-impl<A: Clone, Lm1: 'static + Nat> FixedList<A, SNat<Lm1>> for ConsList<A, Lm1> {
+impl<'a, A: 'a + Clone, Lm1: 'static + Nat> FixedList<'a, A, SNat<Lm1>> for ConsList<'a, A, Lm1> {
     fn reify(&self) -> Vec<A> {
 	let Self(curr, rest) = self;
 	let mut v = rest.reify();
 	v.insert(0, curr.clone());
 	return v;
     }
-    fn box_clone(&self) -> Box<dyn FixedList<A, SNat<Lm1>>> {
-	let Self(x, xs) = *self;
-        let rv = Box::new(Self(x.clone(), (*xs).box_clone()));
-	rv
+    fn box_clone(&self) -> Box<dyn FixedList<'a, A, SNat<Lm1>> + 'a> {
+	Box::new((*self).clone())
     }
 }
 
-pub trait ConcatList<A, L1: Nat + AddNats<L2>, L2: Nat + AddNats<L1>, X: FixedList<A, L1>>: FixedList<A, L2>{
-    fn concat_lists(self, X) -> Box<dyn FixedList<A, Plus<L2, L1>>>;
+pub trait ConcatList<'a, A: 'a, L1: Nat + AddNats<L2>, L2: Nat + AddNats<L1>, X: 'a + FixedList<'a, A, L1>>: FixedList<'a, A, L2>{
+    fn concat_lists(self, X) -> Box<dyn FixedList<'a, A, Plus<L2, L1>> + 'a>;
 }
-impl<A, L1, X> ConcatList<A, L1, ZNat, X> for EmptyList<A>
-where A:Clone,
+impl<'a, A, L1, X> ConcatList<'a, A, L1, ZNat, X> for EmptyList<A>
+where A: 'a + Clone,
       L1: Nat + AddNats<ZNat>,
-      X: FixedList<A, L1> {
-    fn concat_lists(self, x: X) -> Box<dyn FixedList<A, Plus<ZNat, L1>>> { x.box_clone() }
+      X: 'a + FixedList<'a, A, L1> {
+    fn concat_lists(self, x: X) -> Box<dyn FixedList<'a, A, Plus<ZNat, L1>> + 'a> { x.box_clone() }
 }
-impl<A, L1, L2m1, X> ConcatList<A, L1, SNat<L2m1>, X> for ConsList<A, L2m1>
-where A:Clone,
+impl<'a, A, L1, L2m1, X> ConcatList<'a, A, L1, SNat<L2m1>, X> for ConsList<'a, A, L2m1>
+where A: 'a + Clone,
       L1: Nat + AddNats<SNat<L2m1>> + AddNats<L2m1>,
       L2m1: Nat + AddNats<L1>,
-      X: FixedList<A, L1> {
-    fn concat_lists(self, l: X) -> Box<dyn FixedList<A, Plus<SNat<L2m1>, L1>>> {
+      X: 'a + FixedList<'a, A, L1> {
+    fn concat_lists(self, l: X) -> Box<dyn FixedList<'a, A, Plus<SNat<L2m1>, L1>> + 'a> {
 	let Self(x, xs) = self;
 	Box::new(ConsList(x, (*xs).concat_lists(l)))
     }
