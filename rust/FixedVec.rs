@@ -55,9 +55,9 @@ impl<'a, A: 'a + Clone> FixedList<'a, A, ZNat> for EmptyList<A> {
     }
 }
 
-pub struct ConsList<'a, A: 'a + Clone, Lm1: Nat, Nxt: FixedList<'a, A, Lm1>>(A, Box<&'a Nxt>, PhantomData<Lm1>);
+pub struct ConsList<'a, A: 'a + Clone, Lm1: Nat, Nxt: ?Sized + FixedList<'a, A, Lm1>>(A, Box<&'a Nxt>, PhantomData<Lm1>);
 
-impl<'a, A: 'a + Clone, Lm1: 'static + Nat, Nxt: FixedList<'a, A, Lm1>> FixedList<'a, A, SNat<Lm1>> for ConsList<'a, A, Lm1, Nxt> {
+impl<'a, A: 'a + Clone, Lm1: 'static + Nat, Nxt: ?Sized + FixedList<'a, A, Lm1>> FixedList<'a, A, SNat<Lm1>> for ConsList<'a, A, Lm1, Nxt> {
     fn reify(&self) -> Vec<A> {
 	let Self(curr, rest, _) = self;
 	let mut v = rest.reify();
@@ -88,7 +88,7 @@ where A: 'a + Clone,
     fn concat_lists(self, l: X) -> Box<dyn FixedList<'a, A, Plus<SNat<L2m1>, L1>> + 'a> {
 	let Self(x, t_xs, ph) = self;
 	let xs: Nxt = **t_xs;
-	let catted = xs.concat_lists(l);
+	let catted: Box<dyn FixedList<'a, A, Plus<L2m1, L1>> + 'a> = xs.concat_lists(l);
 	let size: PhantomData<<L2m1 as AddNats<L1>>::Sum>;
 	Box::new(ConsList(x, Box::new(&*catted), size))
     }
