@@ -3,6 +3,8 @@
 #include <functional>
 #include <optional>
 
+namespace pre_20 {
+
 template <class T>
 class Subset{
     public:
@@ -37,7 +39,7 @@ class Subset{
                 SubsetIter<T2> operator-- (int n){
                     this -= 1;
                     return this;
-                }
+n                }
                 SubsetIter<T2> operator- (int n){
                     return SubsetIter(this->set, this->loc - n, this->len);
                 }
@@ -100,6 +102,7 @@ Myterator<T> concat(Myterator<T> left, Myterator<T> right){
     
 }
 
-int main(){
-    
-}
+
+} // namespace pre_20
+
+int main () {}

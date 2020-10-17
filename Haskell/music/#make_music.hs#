@@ -76,7 +76,7 @@ waveOfTone s bpm b (Chord ps)     = map (flip (/) $ length ps)
 
 data PlayingStyle = Regular | Accented | Staccato | Vibrato | Tremolo
     deriving (Eq, Show, Ord, Enum)
-type Melody = [(Tone, PlayingStyle, Beats)]
+data Melody = [(Tone, PlayingStyle, Beats)]
 type PlayStyleMap = Map PlayingStyle NoteEnvelope
 
 data PieceConfig = Config { sampleRate :: SampleRate
@@ -86,4 +86,8 @@ data PieceConfig = Config { sampleRate :: SampleRate
                           }
 
 waveOfMelody :: PieceConfig -> Melody -> Wave
-waveOfMelody Config{sampleRate=r, pieceBpm=bpm, playStyles=styles} melody = 
+waveOfMelody config melody = map (waveForOneNote config) melody
+  where waveForOneNote Config{sampleRate=r
+                             , pieceBpm=bpm
+                             , playStyles=styles
+                             , volume=v}         (tone, style, b) = 
