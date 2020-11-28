@@ -1,10 +1,10 @@
-father(chirag,heman).
-mother(trupti,heman).
+father(dad,heman).
+mother(mom,heman).
 male(heman).
 
-father(chirag,tanvi).
-mother(trupti,tanvi).
-female(tanvi).
+father(dad,sister).
+mother(mom,sister).
+female(sister).
 
 male(X):- father(X,Y).
 female(X):- mother(X,Y).
@@ -37,11 +37,11 @@ husband(X,Y):-
 	married(X,Y),
 	male(X).
 
-mother(shobana, chirag).
-father(sharat, chirag).
+mother(grandma, dad).
+father(grandpa, dad).
 
-mother(shobana, prachi).
-father(sharat, prachi).
+mother(grandma, aunt1).
+father(grandpa, aunt1).
 
 grandparent(X,Y):-
 	parent(Z,Y),
@@ -71,9 +71,9 @@ uncle(X,Y):-
 	aunt(Z,Y),
 	husband(X,Z).
 
-mother(prachi, ketaki).
-father(kiran, ketaki).
-female(ketaki).
+mother(aunt1, cousin1).
+father(uncle1, cousin1).
+female(cousin1).
 
 cousin(X,Y):-
 	aunt(Z,Y),
@@ -106,23 +106,23 @@ nephew(X,Y):-
 son(X,Y) :- parent(Y,X), male(X).
 daughter(X,Y) :- parent(Y,X), female(X).
 
-father(chandrakant, trupti).
-mother(heera, trupti).
+father(mgrandpa, mom).
+mother(mgrandma, mom).
 
-father(chandrakant, deepak).
-mother(heera, deepak).
+father(mgrandpa, uncle2).
+mother(mgrandma, uncle2).
 
-father(deepak, dhara).
-father(deepak, neel).
-father(deepak, keya).
+father(uncle2, cousin2).
+father(uncle2, cousin3).
+father(uncle2, cousin4).
 
-mother(heena, dhara).
-mother(heena, neel).
-mother(heena, keya).
+mother(aunt2, cousin2).
+mother(aunt2, cousin3).
+mother(aunt2, cousin4).
 
-female(dhara).
-female(keya).
-male(neel).
+female(cousin2).
+female(cousin4).
+male(cousin3).
 
 
 
