@@ -13,6 +13,8 @@ vt ← -54
 El ← -74
 taum ← 10
 taue ← 5
+⍝ Synapse constants
+w ← 1
 
 ⍝ I have no clue if the precedence makes those parens superfluous
 times ← (sample_freq∘×)⍳training_samples
@@ -31,3 +33,6 @@ next_izikhevich ← {
     sample_freq × ((pge × (Ee - vr) + El - v)÷taum ¯ge÷taue)
     }
 
+synapse ← {
+    
+}
