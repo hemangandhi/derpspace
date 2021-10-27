@@ -3,7 +3,7 @@
 
 #define CLASS struct
 
-#define DEFINE_CLASS(name, ...) typedef struct name { __VA_ARGS__ } name;
+#define DEFINE_CLASS(name, ...) typedef struct name { __VA_ARGS__ } name
 
 #define ADD_CLASS_METHOD(return_type, typename, name, ...) return_type name(typename* this, __VA_ARGS__)
 
