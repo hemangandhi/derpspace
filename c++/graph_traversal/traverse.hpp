@@ -49,6 +49,17 @@ class GraphTraversal {
           neighbor_fn_(neighbor_fn),
           deepest_iter_(0) {}
 
+    template <template <typename> typename C>
+    static void InitializeFringe(const C<V>& container, Fringe* fringe,
+                                 Visitor* visitor) {
+        for (const V& vertex : container) {
+            if (const auto [add_to_fringe, weight] = visitor->visit(vertex);
+                add_to_fringe) {
+                fringe->push(vertex, weight);
+            }
+        }
+    }
+
     // An iterator over the traversal. This actually does the "traversing."
     // For use by STL algorithms, this class implements the entire interface
     // for the std::forward_iterator_tag (so it's copyable and assignable).

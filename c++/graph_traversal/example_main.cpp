@@ -34,7 +34,7 @@ class ListFringe {
         }
     }
 
-    V& peek() { return fringe_.front(); }
+    V& peek() { return fringe_.back(); }
 
     void push(const V& v, std::monostate w) { fringe_.push_back(v); }
 
@@ -51,23 +51,32 @@ std::vector<int> collatz(const int& x) {
 }
 
 int main(int argc, char** argv) {
+    using CollatzDFSTraversal =
+        GraphTraversal<int, std::monostate, ListFringe<int, true>,
+                       OncePerVertexVisitor<int>>;
+    using CollatzBFSTraversal =
+        GraphTraversal<int, std::monostate, ListFringe<int, false>,
+                       OncePerVertexVisitor<int>>;
+
     std::function<std::vector<int>(const int&)> cp = collatz;
+    std::vector<int> starting_fringe;
+    starting_fringe.push_back(2);
+
     OncePerVertexVisitor<int> dfs_visits;
     ListFringe<int, true> dfs_fringe;
-    dfs_fringe.push(2, std::monostate());
+    CollatzDFSTraversal::InitializeFringe(starting_fringe, &dfs_fringe,
+                                          &dfs_visits);
     for (std::optional<int> v :
-         GraphTraversal<int, std::monostate, ListFringe<int, true>,
-                        OncePerVertexVisitor<int>>(&dfs_fringe, &dfs_visits,
-                                                   &cp)) {
+         CollatzDFSTraversal(&dfs_fringe, &dfs_visits, &cp)) {
         std::cout << "DFS visiting : " << v.value_or(-8) << std::endl;
     }
+
     OncePerVertexVisitor<int> bfs_visits;
     ListFringe<int, false> bfs_fringe;
-    bfs_fringe.push(2, std::monostate());
+    CollatzBFSTraversal::InitializeFringe(starting_fringe, &bfs_fringe,
+                                       &bfs_visits);
     for (std::optional<int> v :
-         GraphTraversal<int, std::monostate, ListFringe<int, false>,
-                        OncePerVertexVisitor<int>>(&bfs_fringe, &bfs_visits,
-                                                   &cp)) {
+         CollatzBFSTraversal(&bfs_fringe, &bfs_visits, &cp)) {
         std::cout << "BFS visiting : " << v.value_or(-8) << std::endl;
     }
     return 0;
