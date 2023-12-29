@@ -10,8 +10,7 @@ macro_rules! parse_input {
 
 #[derive(Clone, Copy)]
 enum Instruction {
-    // TODO: s/u32/i32/
-    Move(u32, u32, bool),
+    Move(i32, i32, bool),
     Wait(bool),
 }
 
@@ -171,6 +170,9 @@ impl Player {
         foe: &Self,
         already_scanned: &HashSet<i32>,
     ) -> i32 {
+        if already_scanned.contains(&creature.id) || self.scanned_creatures.contains(&creature.id) {
+            return 0;
+        }
         let type_base_score = creature.c_type + 1;
         let has_first_creature_bonus = !self.scanned_creatures.contains(&creature.id)
             && !foe.scanned_creatures.contains(&creature.id)
@@ -181,8 +183,7 @@ impl Player {
                 return true;
             }
             k == creature.id || self.scanned_creatures.contains(&k)
-        }) && !self.scanned_creatures.contains(&creature.id)
-            && !already_scanned.contains(&creature.id);
+        });
         let foe_has_all_of_color = creature_map.iter().all(|(&k, v)| {
             if v.color != creature.color {
                 return true;
@@ -195,8 +196,7 @@ impl Player {
                 return true;
             }
             k == creature.id || self.scanned_creatures.contains(&k) || already_scanned.contains(&k)
-        }) && !self.scanned_creatures.contains(&creature.id)
-            && !already_scanned.contains(&creature.id);
+        });
         let foe_has_all_of_type = creature_map.iter().all(|(&k, v)| {
             if v.c_type != creature.c_type {
                 return true;
@@ -241,16 +241,23 @@ impl Player {
     // TODO: we actually will have to worry about allocating drones.
     fn best_move_greedy_fish(
         &self,
+        drone: &Drone,
         creature_map: &HashMap<i32, Creature>,
         foe: &Self,
     ) -> Instruction {
         creature_map
             .values()
-            .max_by_key(|c| self.score_one_creature(c, creature_map, foe, &HashSet::default()))
+            .max_by_key(|c| {
+                let fx = c.x + c.vx;
+                let fy = c.y + c.vy;
+                let dist = (drone.x - fx) * (drone.x - fx) + (drone.y - fy) * (drone.y - fy);
+                (self.score_one_creature(c, creature_map, foe, &HashSet::default()), -dist)
+            })
             .and_then(|c| {
+                eprintln!("Thinking {} (at ({}, {})) is best", c.id, c.x, c.y);
                 Some(Instruction::Move(
-                    (c.x + c.vx).try_into().unwrap(),
-                    (c.x + c.vy).try_into().unwrap(),
+                    (c.x + c.vx).try_into().unwrap_or(0),
+                    (c.y + c.vy).try_into().unwrap_or(0),
                     false,
                 ))
             })
@@ -271,8 +278,8 @@ impl Player {
             .max_by_key(|v| self.score_one_creature(v, creature_map, foe, &HashSet::default()))
             .and_then(|c| {
                 Some(Instruction::Move(
-                    (c.x + c.vx).try_into().unwrap(),
-                    (c.x + c.vy).try_into().unwrap(),
+                    (c.x + c.vx).try_into().unwrap_or(0),
+                    (c.y + c.vy).try_into().unwrap_or(0),
                     large_scan,
                 ))
             })
@@ -325,7 +332,7 @@ impl Player {
                 Some(((fx as f64) * score, (fy as f64) * score))
             })
             .fold((0., 0.), |(tx, ty), (nx, ny)| (tx + nx, ty + ny));
-        Instruction::Move(px as u32, py as u32, false)
+        Instruction::Move(px as i32, py as i32, false)
     }
 
     fn instruct_drone(
@@ -338,7 +345,7 @@ impl Player {
         // order it provides the drone states in.
         let (drone_key, drone) = self.drones.iter().next().unwrap();
         let best_move = self
-            .best_move_greedy_fish(&creature_map, &foe)
+            .best_move_greedy_fish(drone, &creature_map, &foe)
             .flip_light_for_drone_greedily(drone, creature_map, self, foe);
         if let Some(greedy_move) = self
             .best_move_greedy_reachable_fish(*drone_key, &creature_map, &foe, false)
@@ -369,6 +376,7 @@ impl Player {
                 foe,
             );
             if expected_greedy_score > expected_fish_score {
+                eprintln!("Local greed trumps global");
                 return greedy_move;
             }
         }
