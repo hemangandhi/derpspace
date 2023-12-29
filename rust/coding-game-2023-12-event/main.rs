@@ -13,11 +13,20 @@ enum Instruction {
     Wait(bool),
 }
 
-fn print_instruction(i: Instruction) {
-    match (i) {
-        Instruction::Move(x, y, l) => println!("MOVE {} {} {}", x, y, if l { 1 } else { 0 }),
-        Instruction::Wait(true) => println!("WAIT 1"),
-        Instruction::Wait(false) => println!("WAIT 0"),
+impl Instruction {
+    fn print_instruction(self) {
+        match self {
+            Instruction::Move(x, y, l) => println!("MOVE {} {} {}", x, y, if l { 1 } else { 0 }),
+            Instruction::Wait(true) => println!("WAIT 1"),
+            Instruction::Wait(false) => println!("WAIT 0"),
+        }
+    }
+
+    fn with_big_light(self, big_light: bool) -> Self {
+        match self {
+            Instruction::Move(x, y, _l) => Instruction::Move(x, y, big_light),
+            Instruction::Wait(_b) => Instruction::Wait(big_light)
+        }
     }
 }
 
@@ -40,6 +49,25 @@ struct Drone {
     battery: i32,
 }
 
+impl Drone {
+    fn get_scan(&self, creature_map: &HashMap<i32, Creature>, large: bool) -> HashSet<i32> {
+        let radius = if large { 2000 } else { 800 };
+        creature_map
+            .iter()
+            .filter_map(|(&k, v)| {
+                let fx = v.x + v.vx;
+                let fy = v.y + v.vy;
+                let dist = (fx - self.x) * (fx - self.x) + (fy - self.y) * (fy - self.y);
+                if dist <= radius * radius {
+                    Some(k)
+                } else {
+                    None
+                }
+            })
+            .collect()
+    }
+}
+
 #[derive(Default)]
 struct Player {
     score: i32,
@@ -50,35 +78,34 @@ struct Player {
 impl Player {
     fn score_one_creature(
         &self,
-        creature_id: i32,
+        creature: &Creature,
         creature_map: &HashMap<i32, Creature>,
         foe: &Self,
     ) -> i32 {
-        let creature = creature_map.get(&creature_id).unwrap();
         let type_base_score = creature.c_type + 1;
-        let has_first_creature_bonus = (&self.scanned_creatures.contains(&creature_id)
-            || &foe.scanned_creatures.contains(&creature_id));
+        let has_first_creature_bonus = self.scanned_creatures.contains(&creature.id)
+            || foe.scanned_creatures.contains(&creature.id);
 
-        let has_all_of_color = creature_map.iter().all(|(&k, &v)| {
+        let has_all_of_color = creature_map.iter().all(|(&k, v)| {
             if v.color != creature.color {
                 return false;
             }
-            k == creature_id || self.scanned_creatures.contains(&k)
+            k == creature.id || self.scanned_creatures.contains(&k)
         });
-        let foe_has_all_of_color = creature_map.iter().all(|(&k, &v)| {
+        let foe_has_all_of_color = creature_map.iter().all(|(&k, v)| {
             if v.color != creature.color {
                 return false;
             }
             self.scanned_creatures.contains(&k)
         });
 
-        let has_all_of_type = creature_map.iter().all(|(&k, &v)| {
+        let has_all_of_type = creature_map.iter().all(|(&k, v)| {
             if v.c_type != creature.c_type {
                 return false;
             }
-            k == creature_id || self.scanned_creatures.contains(&k)
+            k == creature.id || self.scanned_creatures.contains(&k)
         });
-        let foe_has_all_of_type = creature_map.iter().all(|(&k, &v)| {
+        let foe_has_all_of_type = creature_map.iter().all(|(&k, v)| {
             if v.c_type != creature.c_type {
                 return false;
             }
@@ -100,8 +127,64 @@ impl Player {
         foe: &Self,
     ) -> i32 {
         scan.iter()
-            .map(|&c| self.score_one_creature(c, creature_map, foe))
+            .map(|&c| self.score_one_creature(creature_map.get(&c).unwrap(), creature_map, foe))
             .sum()
+    }
+
+    fn get_closest_drone_dist(&self, creature: &Creature) -> i32 {
+        let cx = creature.x + creature.vx;
+        let cy = creature.y + creature.vy;
+        self.drones
+            .iter()
+            .map(|(&_k, v)| (v.x - cx) * (v.x - cx) + (v.y - cy) * (v.y - cy))
+            .min()
+            .unwrap()
+    }
+
+    fn best_move_centroid(
+        &self,
+        drone_id: i32,
+        creature_map: &HashMap<i32, Creature>,
+        foe: &Self,
+        creature_set: Option<HashSet<i32>>,
+    ) -> Instruction {
+        let drone = self.drones.get(&drone_id).unwrap();
+        let drone_fish_map = creature_map
+            .iter()
+            .map(|(&k, v)| {
+                let fx = v.x + v.vx;
+                let fy = v.y + v.vy;
+                let dist = (drone.x - fx) * (drone.x - fx) + (drone.y - fy) * (drone.y - fy);
+                (k, dist)
+            })
+            .collect::<HashMap<i32, i32>>();
+        let furthest_fish = drone_fish_map.values().max().unwrap();
+        let heuristic_map = creature_map
+            .iter()
+            .map(|(&k, v)| {
+                let my_dist = furthest_fish - drone_fish_map.get(&k).unwrap();
+                let foe_dist = foe.get_closest_drone_dist(v);
+                let score = self.score_one_creature(v, creature_map, foe);
+                (k, score * 1000 + my_dist + foe_dist)
+            })
+            .collect::<HashMap<i32, i32>>();
+        let total_heuristic: i32 = heuristic_map.values().sum();
+        let (px, py) = creature_map
+            .iter()
+            .filter_map(|(&k, v)| {
+                if !creature_set
+                    .as_ref()
+                    .and_then(|s| Some(s.contains(&k)))
+                    .unwrap_or(true)
+                {
+                    return None;
+                }
+                let (fx, fy) = (v.x + v.vx, v.y + v.vy);
+                let score = (*heuristic_map.get(&k).unwrap() as f64) / (total_heuristic as f64);
+                Some(((fx as f64) * score, (fy as f64) * score))
+            })
+            .fold((0., 0.), |(tx, ty), (nx, ny)| (tx + nx, ty + ny));
+        Instruction::Move(px as u32, py as u32, false)
     }
 }
 
@@ -210,7 +293,9 @@ fn main() {
             io::stdin().read_line(&mut input_line).unwrap();
             let inputs = input_line.split(" ").collect::<Vec<_>>();
             let creature_id = parse_input!(inputs[0], i32);
-            let mut creature = creature_map.entry(creature_id).or_insert(Creature::default());
+            let mut creature = creature_map
+                .entry(creature_id)
+                .or_insert(Creature::default());
             creature.x = parse_input!(inputs[1], i32);
             creature.y = parse_input!(inputs[2], i32);
             creature.vx = parse_input!(inputs[3], i32);
@@ -230,8 +315,31 @@ fn main() {
         for i in 0..my_drone_count as usize {
             // Write an action using println!("message...");
             // To debug: eprintln!("Debug message...");
-
-            println!("WAIT 1"); // MOVE <x> <y> <light (1|0)> | WAIT <light (1|0)>
+            // TODO: understand what order the game actually expects drone instructions and what
+            // order it provides the drone states in.
+            let drone = me
+                .drones
+                .values()
+                .next()
+                .unwrap();
+            let reachable_creatures = drone.get_scan(&creature_map, false);
+            let mut use_big_light = false;
+            if reachable_creatures.is_empty() && drone.battery > 10 {
+                let mut use_big_light = true;
+                let reachable_creatures = drone.get_scan(&creature_map, false);
+            }
+            me.best_move_centroid(
+                *me.drones.keys().next().unwrap(),
+                &creature_map,
+                &foe,
+                if reachable_creatures.is_empty() {
+                    None
+                } else {
+                    Some(reachable_creatures)
+                },
+            )
+            .with_big_light(use_big_light)
+            .print_instruction();
         }
     }
 }
