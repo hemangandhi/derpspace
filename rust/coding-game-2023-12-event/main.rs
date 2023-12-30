@@ -66,15 +66,48 @@ impl Instruction {
     }
 }
 
+enum RadarBlip {
+    TopLeftOf(i32, i32),
+    TopRightOf(i32, i32),
+    BottomLeftOf(i32, i32),
+    BottomRightOf(i32, i32),
+}
+
+enum CreatuePositionData {
+    None,
+    KnownPosition{
+        position: (i32, i32),
+        velocity: (i32, i32)
+    },
+    PredictedPosition{
+        position: (i32, i32),
+        velocity: (i32, i32),
+        supporting_blips: Vec<RadarBlip>
+    },
+    RadarBlips(Vec<RadarBlip>)
+}
+
+impl Default for CreatuePositionData {
+    fn default() {
+        CreatuePositionData::None
+    }
+}
+
+impl CreatuePositionData {
+    fn get_next_epoch_position(&self) -> Option<(i32, i32)> {
+        if let CreatuePositionData::KnownPosition { position: (x, y), velocity: (vx, vy) } = self {
+            Some((x + vx, y + vy))
+        }
+        None
+    }
+}
+
 #[derive(Default)]
 struct Creature {
     id: i32,
     color: i32,
     c_type: i32,
-    x: i32,
-    y: i32,
-    vx: i32,
-    vy: i32,
+    latest_position: CreatuePositionData
 }
 
 #[derive(Default)]
@@ -95,8 +128,7 @@ impl Drone {
         creature_map
             .iter()
             .filter_map(|(&k, v)| {
-                let fx = v.x + v.vx;
-                let fy = v.y + v.vy;
+                let (fx, fy) = v.latest_position.get_next_epoch_position()?;
                 let dist = (fx - x) * (fx - x) + (fy - y) * (fy - y);
                 if dist <= radius * radius {
                     Some(k)
@@ -143,8 +175,7 @@ impl Drone {
         let sx = self.x;
         let sy = self.y;
         creature_map.values().filter_map(move |v| {
-            let fx = v.x + v.vx;
-            let fy = v.y + v.vy;
+            let (fx, fy) = v.latest_position.get_next_epoch_position()?;
             let dist = (fx - sx) * (fx - sx) + (fy - sy) * (fy - sy);
             if dist <= radius * radius {
                 Some(v)
@@ -228,14 +259,14 @@ impl Player {
             .1
     }
 
-    fn get_closest_drone_dist(&self, creature: &Creature) -> i32 {
+    fn get_closest_drone_dist(&self, creature: &Creature) -> Option<i32> {
+        let (cx, cy) = creature.latest_position.get_next_epoch_position();
         let cx = creature.x + creature.vx;
         let cy = creature.y + creature.vy;
         self.drones
             .iter()
-            .map(|(&_k, v)| (v.x - cx) * (v.x - cx) + (v.y - cy) * (v.y - cy))
+            map(|(&_k, v)| (v.x - cx) * (v.x - cx) + (v.y - cy) * (v.y - cy))
             .min()
-            .unwrap()
     }
 
     // TODO: we actually will have to worry about allocating drones.
@@ -405,10 +436,7 @@ fn main() {
                 id: creature_id,
                 color,
                 c_type: _type,
-                x: 0,
-                y: 0,
-                vx: 0,
-                vy: 0,
+                latest_position: CreatuePositionData::None
             },
         );
     }
