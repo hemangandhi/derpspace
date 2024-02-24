@@ -1,10 +1,11 @@
 /- Test? -/
 
-variable (α : Type)
+/- α is implicit now so this lets it mostly hide. -/
+variable {α : Type}
 
-def doOnceMore (nTimes f : α → α) : (α → α) :=
-  λ x => f (nTimes x)
+def doOnceMore (f nTimes : α → α) x := f (nTimes x)
 
-/- Lesson: you need a α here explicitly. Weird. -/
-def doTwice (f : α → α) : (α → α) := doOnceMore α f f
+def doTwice (f : α → α) := doOnceMore f f
 
+#check @doOnceMore
+#check doTwice
