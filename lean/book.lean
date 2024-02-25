@@ -18,9 +18,6 @@ section chapter_4_exercises
 section constructive
 variable (p q r : Prop)
 
--- Double-negation implies LEM (from the text)
-example:  ( ¬ ¬ p → p) → (p ∨ ¬ p) := sorry
-
 -- commutativity of ∧ and ∨
 example : p ∧ q ↔ q ∧ p :=
   Iff.intro
@@ -148,7 +145,14 @@ example : (p → q) → (¬q → ¬p) := λ hpiq => λ hnq => λ hp => hnq (hpiq
 example : ¬ (p ↔ ¬ p) :=
   λ hpenp =>
     have hpinp := hpenp.mp; have hnpip := hpenp.mpr
-    sorry
+    have hnp : ¬p := (λ hp => (hpinp hp) hp)
+    absurd (hnpip hnp) hnp
+
+-- Double-negation implies LEM (from the text)
+example: ({x : Prop} → ¬¬x → x) → (p ∨ ¬p) := λ dne =>
+  suffices hdd : ¬¬(p ∨ ¬p) from dne hdd
+  (λ hnlem => hnlem (Or.inr (λ hp => absurd (Or.inl hp) hnlem)))
+
 
 end constructive
 section non_constructive
