@@ -157,20 +157,44 @@ open Classical
 
 variable (p q r : Prop)
 
-example : (p → q ∨ r) → ((p → q) ∨ (p → r)) := sorry
+example : (p → q ∨ r) → ((p → q) ∨ (p → r)) := λ hpiqr =>
+  byCases
+    (fun h : q => Or.inl (λ _h : p => h))
+    (fun h : ¬q => Or.inr (λ hq : p => Or.elim (hpiqr hq)
+      (fun hq: q => False.elim (h hq))
+      (fun hr: r => hr)))
 
 example : ¬(p ∧ q) → ¬p ∨ ¬q := λ hnpaq =>
   byCases
-    (fun hnp : ¬p => Or.inl)
     (fun hp : p => byCases
-      (fun hnq : ¬q => Or.inr)
-      (fun hq : q => hnpaq ⟨p, q⟩)
+      (fun hq : q => show ¬p ∨ ¬q from False.elim (hnpaq ⟨hp, hq⟩))
+      (fun hnq : ¬q => Or.inr hnq))
+    (fun hnp : ¬p => Or.inl hnp)
 
-example : ¬(p → q) → p ∧ ¬q := sorry
-example : (p → q) → (¬p ∨ q) := sorry
-example : (¬q → ¬p) → (p → q) := sorry
-example : p ∨ ¬p := sorry
-example : (((p → q) → p) → p) := sorry
+example : ¬(p → q) → p ∧ ¬q := λ hnpiq =>
+  byCases
+    (fun hq : q => absurd (λ _h => hq) hnpiq)
+    (fun hnq : ¬q => byCases
+      (fun hp : p => ⟨hp, hnq⟩)
+      (fun hnp : ¬p => absurd (λ hp₂ => absurd hp₂ hnp) hnpiq))
+
+example : (p → q) → (¬p ∨ q) := λ hpiq =>
+  byCases
+    (fun hp : p => Or.inr (hpiq hp))
+    (fun hnp : ¬p => Or.inl hnp)
+
+example : (¬q → ¬p) → (p → q) := fun hnqinp =>
+  λ hp : p => byCases
+    (fun hq : q => hq)
+    (fun hnq : ¬q => absurd hp (hnqinp hnq))
+
+-- Circular?
+example : p ∨ ¬p := byCases Or.inl Or.inr
+
+example : (((p → q) → p) → p) := λ hpqp =>
+  byCases
+    (fun hp : p => hp)
+    (fun hnp : ¬p => absurd (hpqp (λ hp₂ => absurd hp₂ hnp)) hnp)
 
 end non_constructive
 end chapter_4_exercises
