@@ -113,18 +113,42 @@ example : ((p ∨ q) → r) ↔ (p → r) ∧ (q → r) := Iff.intro
     have hprfn := hprqrfn.left; have hqrfn := hprqrfn.right
     λ hporq => Or.elim hporq hprfn hqrfn)
 
-example : ¬(p ∨ q) ↔ ¬p ∧ ¬q := sorry
-example : ¬p ∨ ¬q → ¬(p ∧ q) := sorry
-example : ¬(p ∧ ¬p) := sorry
-example : p ∧ ¬q → ¬(p → q) := sorry
-example : ¬p → (p → q) := sorry
-example : (¬p ∨ q) → (p → q) := sorry
-example : p ∨ False ↔ p := sorry
-example : p ∧ False ↔ False := sorry
-example : (p → q) → (¬q → ¬p) := sorry
+example : ¬(p ∨ q) ↔ ¬p ∧ ¬q := Iff.intro
+  (fun hnpq => ⟨fun hp => hnpq (Or.inl hp), fun hq => hnpq (Or.inr hq)⟩)
+  (fun hnpnq =>
+    have hnp := hnpnq.left; have hnq := hnpnq.right
+    (fun hpq => Or.elim hpq hnp hnq))
+
+example : ¬p ∨ ¬q → ¬(p ∧ q) :=
+  λ hnprnq => Or.elim hnprnq
+    (fun hnp => λ hpandq => hnp hpandq.left)
+    (fun hnq => λ hpandq => hnq hpandq.right)
+
+example : ¬(p ∧ ¬p) := λ hpanp => hpanp.right hpanp.left
+
+example : p ∧ ¬q → ¬(p → q) := λ hpanq => λ hpiq => hpanq.right (hpiq hpanq.left)
+
+example : ¬p → (p → q) := λ hnp => λ hp => False.elim (hnp hp)
+
+example : (¬p ∨ q) → (p → q) := λ hnprq => Or.elim hnprq
+  (fun hnp => λ hp => False.elim (hnp hp))
+  (fun hq => λ _hp => hq)
+
+example : p ∨ False ↔ p := Iff.intro
+  (fun hprf => Or.elim hprf (fun hp => hp) False.elim)
+  Or.inl
+
+example : p ∧ False ↔ False := Iff.intro
+  (fun hpaf => False.elim hpaf.right)
+  (fun hf => ⟨False.elim hf, hf⟩)
+
+example : (p → q) → (¬q → ¬p) := λ hpiq => λ hnq => λ hp => hnq (hpiq hp)
 
 -- From the bottom, after the classical exercises
-example : ¬ (p ↔ ¬ p) := sorry
+example : ¬ (p ↔ ¬ p) :=
+  λ hpenp =>
+    have hpinp := hpenp.mp; have hnpip := hpenp.mpr
+    sorry
 
 end constructive
 section non_constructive
@@ -134,7 +158,14 @@ open Classical
 variable (p q r : Prop)
 
 example : (p → q ∨ r) → ((p → q) ∨ (p → r)) := sorry
-example : ¬(p ∧ q) → ¬p ∨ ¬q := sorry
+
+example : ¬(p ∧ q) → ¬p ∨ ¬q := λ hnpaq =>
+  byCases
+    (fun hnp : ¬p => Or.inl)
+    (fun hp : p => byCases
+      (fun hnq : ¬q => Or.inr)
+      (fun hq : q => hnpaq ⟨p, q⟩)
+
 example : ¬(p → q) → p ∧ ¬q := sorry
 example : (p → q) → (¬p ∨ q) := sorry
 example : (¬q → ¬p) → (p → q) := sorry
