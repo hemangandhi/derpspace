@@ -222,4 +222,32 @@ example : (∀ x, p x) ∨ (∀ x, q x) → ∀ x, p x ∨ q x := fun hxpxq =>
     (fun hxq => λ x => Or.inr (hxq x))
 
 end exercise_1
+
+section exercise_2
+
+variable (α : Type) (p q : α → Prop)
+variable (r : Prop)
+
+example : α → ((∀ _x : α, r) ↔ r) := fun x =>
+  Iff.intro
+    (fun fx => fx x)
+    (fun r => λ _xx => r)
+
+open Classical
+
+example : (∀ x, p x ∨ r) ↔ (∀ x, p x) ∨ r := Iff.intro
+  (fun fx => byCases Or.inr
+    (fun hnr => Or.inl (
+      λ x => Or.elim (fx x)
+        (fun px => px)
+        (fun hr => absurd hr hnr))))
+  (fun fxhr => Or.elim fxhr
+    (fun fx => λ x => Or.inl (fx x))
+    (fun hr => λ _x => Or.inr hr))
+
+example : (∀ x, r → p x) ↔ (r → ∀ x, p x) := Iff.intro
+  (fun hxhrp => λ hr => λ hx => hxhrp hx hr)
+  (fun hrxp => λ hx => λ hr => hrxp hr hx)
+
+end exercise_2
 end chpater_5_exercises
