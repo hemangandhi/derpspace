@@ -202,3 +202,24 @@ example : (((p → q) → p) → p) := λ hpqp =>
 
 end non_constructive
 end chapter_4_exercises
+
+section chpater_5_exercises
+section exercise_1
+
+variable (α : Type) (p q : α → Prop)
+
+-- TODO: consider just calling hx x?
+example : (∀ x, p x ∧ q x) ↔ (∀ x, p x) ∧ (∀ x, q x) := Iff.intro
+  (fun hxpq => ⟨λ hx => (hxpq hx).left, λ hx => (hxpq hx).right⟩)
+  (fun ⟨hxp, hxq⟩ => λ hx => ⟨hxp hx, hxq hx⟩)
+
+example : (∀ x, p x → q x) → (∀ x, p x) → (∀ x, q x) :=
+  fun hxpq => fun hxp => λ x => hxpq x (hxp x)
+
+example : (∀ x, p x) ∨ (∀ x, q x) → ∀ x, p x ∨ q x := fun hxpxq =>
+  Or.elim hxpxq
+    (fun hxp => λ x => Or.inl (hxp x))
+    (fun hxq => λ x => Or.inr (hxq x))
+
+end exercise_1
+end chpater_5_exercises
