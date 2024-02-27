@@ -250,4 +250,17 @@ example : (∀ x, r → p x) ↔ (r → ∀ x, p x) := Iff.intro
   (fun hrxp => λ hx => λ hr => hrxp hr hx)
 
 end exercise_2
+section exercise_3
+
+variable (men : Type) (barber : men)
+variable (shaves : men → men → Prop)
+
+example (h : ∀ x : men, shaves barber x ↔ ¬ shaves x x) : False :=
+  have who_shaves_barber := h barber
+  have not_barber := who_shaves_barber.mp
+  have not_himself := who_shaves_barber.mpr
+  have if_barber_himself := λ bb => (not_barber bb) bb
+  if_barber_himself (not_himself if_barber_himself)
+
+end exercise_3
 end chpater_5_exercises
