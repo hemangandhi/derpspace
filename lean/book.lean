@@ -263,4 +263,29 @@ example (h : ∀ x : men, shaves barber x ↔ ¬ shaves x x) : False :=
   if_barber_himself (not_himself if_barber_himself)
 
 end exercise_3
+section exercise_4
+
+def even (n : Nat) : Prop := ∃ k : Nat, 2 * k = n
+
+def prime (n : Nat) : Prop :=
+  n > 1 ∧ (∀ p : Nat, 1 < p ∧ p < n → (¬ ∃ m, m * p = n))
+
+def infinitely_many_primes : Prop := ∀ n : Nat, ∃ p : Nat, prime p ∧ p > n
+
+def Fermat_prime (n : Nat) : Prop := prime n ∧ ∃ k, 2 ^ (2^k) + 1 = n
+
+def infinitely_many_Fermat_primes : Prop :=
+  ∀ n : Nat, ∃ p : Nat, Fermat_prime p ∧ p > n
+
+def Goldbach_conjecture : Prop :=
+  ∀ n : Nat, n ≤ 2 ∨ (∃ p q, prime p ∧ prime q ∧ p + q = n)
+
+def Goldbach's_weak_conjecture : Prop :=
+  let odd_prime := (fun (n : Nat) => (¬ even n) ∧ (prime n));
+   ∀ n : Nat, n ≤ 7 ∨ (∃ p q r, odd_prime p ∧ odd_prime q ∧ odd_prime r ∧ p + q + r = n)
+
+def Fermat's_last_theorem : Prop :=
+  ∀ n a b c : Nat, (a^n + b^n = c^n → n ≤ 2)
+
+end exercise_4
 end chpater_5_exercises
