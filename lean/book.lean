@@ -282,10 +282,57 @@ def Goldbach_conjecture : Prop :=
 
 def Goldbach's_weak_conjecture : Prop :=
   let odd_prime := (fun (n : Nat) => (¬ even n) ∧ (prime n));
-   ∀ n : Nat, n ≤ 7 ∨ (∃ p q r, odd_prime p ∧ odd_prime q ∧ odd_prime r ∧ p + q + r = n)
+  ∀ n : Nat, n ≤ 7 ∨ (∃ p q r, odd_prime p ∧ odd_prime q ∧ odd_prime r ∧ p + q + r = n)
 
 def Fermat's_last_theorem : Prop :=
   ∀ n a b c : Nat, (a^n + b^n = c^n → n ≤ 2)
 
 end exercise_4
+section exercise_5
+
+open Classical
+
+variable (α : Type) (p q : α → Prop)
+variable (r : Prop)
+
+example : (∃ _x : α, r) → r := λ ⟨_ex, hr⟩ => hr
+
+example (a : α) : r → (∃ _x : α, r) := λ hr => ⟨a, hr⟩
+
+example : (∃ x, p x ∧ r) ↔ (∃ x, p x) ∧ r := Iff.intro
+  (fun ⟨x, px, r⟩ => ⟨⟨x, px⟩, r⟩)
+  (fun ⟨⟨x, px⟩, r⟩ => ⟨x, px, r⟩)
+
+example : (∃ x, p x ∨ q x) ↔ (∃ x, p x) ∨ (∃ x, q x) := Iff.intro
+  (fun ⟨x, pq⟩ => Or.elim pq
+    (fun hp => Or.inl ⟨x, hp⟩)
+    (fun hq => Or.inr ⟨x, hq⟩))
+  (fun xpq => Or.elim xpq
+    (fun ⟨x, hp⟩ => ⟨x, Or.inl hp⟩)
+    (fun ⟨x, hq⟩ => ⟨x, Or.inr hq⟩))
+
+
+example : (∀ x, p x) ↔ ¬ (∃ x, ¬ p x) := Iff.intro
+  (fun all => λ ⟨x, npx⟩ => absurd (all x) npx)
+  (fun nex => λ x => byCases
+    (fun px => px)
+    (fun npx => absurd ⟨x, npx⟩ nex))
+
+example : (∃ x, p x) ↔ ¬ (∀ x, ¬ p x) := Iff.intro
+  (fun ⟨x, px⟩ => λ all => absurd px (all x))
+  (fun nall => byContradiction
+    (fun nex =>
+      suffices all : (∀ x, ¬ p x) from (absurd all nall)
+      λ x => byCases
+        (fun px => absurd ⟨x, px⟩ nex)
+        (fun npx => npx)))
+
+example : (¬ ∃ x, p x) ↔ (∀ x, ¬ p x) := sorry
+example : (¬ ∀ x, p x) ↔ (∃ x, ¬ p x) := sorry
+
+example : (∀ x, p x → r) ↔ (∃ x, p x) → r := sorry
+example (a : α) : (∃ x, p x → r) ↔ (∀ x, p x) → r := sorry
+example (a : α) : (∃ x, r → p x) ↔ (r → ∃ x, p x) := sorry
+
+end exercise_5
 end chpater_5_exercises
