@@ -327,12 +327,48 @@ example : (∃ x, p x) ↔ ¬ (∀ x, ¬ p x) := Iff.intro
         (fun px => absurd ⟨x, px⟩ nex)
         (fun npx => npx)))
 
-example : (¬ ∃ x, p x) ↔ (∀ x, ¬ p x) := sorry
-example : (¬ ∀ x, p x) ↔ (∃ x, ¬ p x) := sorry
+example : (¬ ∃ x, p x) ↔ (∀ x, ¬ p x) := Iff.intro
+  (fun nex => λ x => λ px => nex ⟨x, px⟩)
+  (fun all => λ ⟨x, px⟩ => (all x) px)
 
-example : (∀ x, p x → r) ↔ (∃ x, p x) → r := sorry
-example (a : α) : (∃ x, p x → r) ↔ (∀ x, p x) → r := sorry
-example (a : α) : (∃ x, r → p x) ↔ (r → ∃ x, p x) := sorry
+example : (¬ ∀ x, p x) ↔ (∃ x, ¬ p x) := Iff.intro
+  (fun nall => byContradiction
+    (fun nex => suffices all : (∀ x, p x) from (absurd all nall)
+      λ x => byCases (fun px => px) (fun npx => absurd ⟨x, npx⟩ nex)))
+  (fun ⟨x, npx⟩ => λ all => npx (all x))
+
+
+example : (∀ x, p x → r) ↔ (∃ x, p x) → r := Iff.intro
+  (fun all => λ ⟨x, px⟩ => all x px)
+  (fun epr => λ x => λ px => epr ⟨x, px⟩)
+
+example (a : α) : (∃ x, p x → r) ↔ (∀ x, p x) → r := Iff.intro
+  (fun ⟨x, pr⟩ => λ all => pr (all x))
+  -- Gave up and copied because... WTF
+  (fun h1 : (∀ x, p x) → r => show ∃ x, p x → r from
+    byCases
+      (fun hap : ∀ x, p x => ⟨a, λ _h' => h1 hap⟩)
+      -- Really we just use a prior exercise here.
+      (fun hnap : ¬ ∀ x, p x =>
+        byContradiction
+          (fun hnex : ¬ ∃ x, p x → r =>
+            have hap : ∀ x, p x := fun x => byContradiction
+              (fun hnp : ¬ p x => have hex : ∃ x, p x → r := ⟨x, (fun hp => absurd hp hnp)⟩
+                 show False from hnex hex)
+              show False from hnap hap)))
+
+example (a : α) : (∃ x, r → p x) ↔ (r → ∃ x, p x) := Iff.intro
+  (fun ⟨x, rp⟩ => λ hr => ⟨x, rp hr⟩)
+  (fun rep => show (∃ x, r → p x) from byCases
+    (fun hr : r => have ⟨x, px⟩ := rep hr; ⟨x, λ _hr => px⟩)
+    (fun hnr : ¬r => byContradiction
+      (fun hnex : ¬(∃ x, r → p x) =>
+        have alln : (∀ x, ¬(r → p x)) := λ x => λ px => hnex ⟨x, px⟩
+        have nrpa : ¬(r → p a) := alln a
+        suffices hrp : (r ∧ ¬ (p a)) from hnr hrp.left
+        ⟨byContradiction (fun hnr => nrpa (λ hr => absurd hr hnr)),
+         byContradiction (fun nnpa => nrpa (λ _hr => byCases
+           (fun pa => pa) (fun npa => absurd npa nnpa)))⟩)))
 
 end exercise_5
 end chpater_5_exercises
