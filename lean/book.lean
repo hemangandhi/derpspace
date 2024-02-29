@@ -13,7 +13,7 @@ def doTwice (f : α → α) := doOnceMore f f
 
 end chapter_2_experiment
 
-section chapter_4_exercises
+section chapter_3_exercises
 
 section constructive
 variable (p q r : Prop)
@@ -201,9 +201,9 @@ example : (((p → q) → p) → p) := λ hpqp =>
     (fun hnp : ¬p => absurd (hpqp (λ hp₂ => absurd hp₂ hnp)) hnp)
 
 end non_constructive
-end chapter_4_exercises
+end chapter_3_exercises
 
-section chpater_5_exercises
+section chpater_4_exercises
 section exercise_1
 
 variable (α : Type) (p q : α → Prop)
@@ -371,4 +371,4 @@ example (a : α) : (∃ x, r → p x) ↔ (r → ∃ x, p x) := Iff.intro
            (fun pa => pa) (fun npa => absurd npa nnpa)))⟩)))
 
 end exercise_5
-end chpater_5_exercises
+end chpater_4_exercises
