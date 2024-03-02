@@ -34,7 +34,7 @@ Tactics summary:
 | `cases <term> with | <ctor> <args> => <term>` | Elimination. Can just use `apply` to go into an eliminator. |
 | `<left tactic> \<;\> <right tactic>` | Apply a right tactic to each goal of left. |
 | `constructor <tactics>` | Apply the constructor with tactics per parameter. |
-| `<combinator> | <tactic> | <tactics ...>` | Apply each of the tactics until one succeeds. |
+| `<combinator> \| <tactic> \| <tactics ...>` | Apply each of the tactics until one succeeds. |
 | `skip` | Do nothing, just succeed. |
 | `try <tactic>` | Do the argument, but just succeed. |
 | `all_goals <tactic>` | Apply the argument to all goals. |
