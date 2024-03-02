@@ -372,3 +372,175 @@ example (a : α) : (∃ x, r → p x) ↔ (r → ∃ x, p x) := Iff.intro
 
 end exercise_5
 end chpater_4_exercises
+
+section chapter_5_exercises
+section chapter_3_redo
+
+variable (p q r : Prop)
+
+example : (p ∨ q) ↔ (q ∨ p) := by
+  apply Iff.intro
+  . intro
+    | Or.inl hp => exact Or.inr hp
+    | Or.inr hq => exact Or.inl hq
+  . intro
+    | Or.inl hq => exact Or.inr hq
+    | Or.inr hp => exact Or.inl hp
+
+example : (p ∧ q) ∧ r ↔ p ∧ (q ∧ r) := by
+  apply Iff.intro
+  . intro ⟨⟨hp, hq⟩, hr⟩
+    exact ⟨hp, ⟨hq, hr⟩⟩
+  . intro ⟨hp, ⟨hq, hr⟩⟩
+    exact ⟨⟨hp, hq⟩, hr⟩
+
+example : (p ∨ q) ∨ r ↔ p ∨ (q ∨ r) := by
+  apply Iff.intro
+  . intro
+    | Or.inl (Or.inl hp) => exact Or.inl hp
+    | Or.inl (Or.inr hq) => apply Or.inr; exact (Or.inl hq)
+    | Or.inr hr => apply Or.inr; exact (Or.inr hr)
+  . intro
+    | Or.inl hp => apply Or.inl; exact Or.inl hp
+    | Or.inr (Or.inl hq) => apply Or.inl; exact (Or.inr hq)
+    | Or.inr (Or.inr hr) => exact Or.inr hr
+
+example : p ∧ (q ∨ r) ↔ (p ∧ q) ∨ (p ∧ r) := by
+  apply Iff.intro
+  . intro
+    | ⟨hp, Or.inl hq⟩ => exact Or.inl ⟨hp, hq⟩
+    | ⟨hp, Or.inr hr⟩ => exact Or.inr ⟨hp, hr⟩
+  . intro
+    | Or.inl ⟨hp, hq⟩ => exact ⟨hp, Or.inl hq⟩
+    | Or.inr ⟨hp, hr⟩ => exact ⟨hp, Or.inr hr⟩
+
+example : p ∨ (q ∧ r) ↔ (p ∨ q) ∧ (p ∨ r) := by
+  apply Iff.intro
+  . intro
+    | Or.inl hp => apply And.intro <;> exact Or.inl hp
+    | Or.inr ⟨hq, hr⟩ => apply And.intro; exact Or.inr hq; exact Or.inr hr
+  . intro
+    | ⟨Or.inr hq, Or.inr hr⟩ => exact Or.inr ⟨hq, hr⟩
+    -- TODO: is there a way to write this so that the two below can be like <;>
+    | ⟨Or.inl hp, _⟩ => apply Or.inl; assumption
+    | ⟨_, Or.inl hp⟩ => apply Or.inl; assumption
+
+
+end chapter_3_redo
+section chapter_4_redo
+
+variable (α : Type) (p q : α → Prop)
+variable (r : Prop)
+
+open Classical
+
+example : (∀ x, p x ∨ r) ↔ (∀ x, p x) ∨ r := by
+  apply Iff.intro
+  . intro fx
+    apply byCases
+    case hpq => exact Or.inr
+    case hnpq =>
+      intro hnr
+      apply Or.inl
+      . intro x
+        cases (fx x) with
+        | inl hpx => exact hpx
+        | inr hr => exact absurd hr hnr
+  . intro
+    | Or.inl fxp => intro x; exact Or.inl (fxp x)
+    | Or.inr r => intros; apply Or.inr; exact r
+
+example : (∃ x, p x ∨ q x) ↔ (∃ x, p x) ∨ (∃ x, q x) := by
+  apply Iff.intro
+  . intro
+    | ⟨x, Or.inl hp⟩ => exact Or.inl ⟨x, hp⟩
+    | ⟨x, Or.inr hq⟩ => exact Or.inr ⟨x, hq⟩
+  . intro
+    | Or.inl ⟨x, hp⟩ => exact ⟨x, Or.inl hp⟩
+    | Or.inr ⟨x, hq⟩ => exact ⟨x, Or.inr hq⟩
+
+
+example : (∀ x, p x) ↔ ¬ (∃ x, ¬ p x) := by
+  apply Iff.intro
+  . intro all; exact λ ⟨x, npx⟩ => absurd (all x) npx
+  . intro nex; exact (λ x => by
+      apply byCases
+      case hpq => exact λ px => px
+      case hnpq => exact λ npx => absurd ⟨x, npx⟩ nex)
+
+example : (∃ x, p x) ↔ ¬ (∀ x, ¬ p x) := by
+  apply Iff.intro
+  . intro ⟨x, px⟩; exact λ all => absurd px (all x)
+  . intro nall; apply byContradiction
+    . intro nex
+      suffices all : (∀ x, ¬ p x) from (absurd all nall)
+      intro x
+      apply byCases
+      case hpq => exact (fun px => absurd ⟨x, px⟩ nex)
+      case hnpq => exact (fun npx => npx)
+
+example : (¬ ∀ x, p x) ↔ (∃ x, ¬ p x) := by
+  apply Iff.intro
+  case mpr => intro ⟨x, npx⟩; exact λ all => npx (all x)
+  . intro nall
+    apply byContradiction
+    intro nex
+    suffices all : (∀ x, p x) from (absurd all nall)
+    exact (λ x => by
+      apply byCases
+      case hpq => intro px; assumption
+      case hnpq => intro npx; exact absurd ⟨x, npx⟩ nex)
+
+example (a : α) : (∃ x, p x → r) ↔ (∀ x, p x) → r := by
+  apply Iff.intro
+  . intro ⟨x, pr⟩; exact λ all => pr (all x)
+  . intro h1
+    show ∃ x, p x → r
+    apply byCases
+    case hpq => intro hap; exact ⟨a, λ _h' => h1 hap⟩
+    case hnpq =>
+      intro hnap
+      apply byContradiction
+      intro hnex
+      suffices hap : ∀ x, p x from hnap hap
+      intro x
+      apply byContradiction
+      intro hnp
+      have hex : ∃ x, p x → r := ⟨x, (fun hp => absurd hp hnp)⟩
+      exact hnex hex
+
+example (a : α) : (∃ x, r → p x) ↔ (r → ∃ x, p x) := by
+  apply Iff.intro
+  . intro ⟨x, rp⟩; exact λ hr => ⟨x, rp hr⟩
+  . intro rep
+    show (∃ x, r → p x)
+    apply byCases
+    . intro hr
+      have ⟨x, px⟩ := rep hr;
+      exact ⟨x, λ _hr => px⟩
+    . intro hnr
+      apply byContradiction
+      intro hnex
+      have alln : (∀ x, ¬(r → p x)) := λ x => λ px => hnex ⟨x, px⟩
+      have nrpa : ¬(r → p a) := alln a
+      suffices hrp : (r ∧ ¬ (p a)) from hnr hrp.left
+      apply And.intro
+      . apply byContradiction
+        intro hnr
+        exact nrpa (λ hr => absurd hr hnr)
+      . apply byContradiction
+        intro nnpa
+        apply nrpa
+        intros
+        apply byCases
+        . intro pa; assumption
+        . intro npa; exact absurd npa nnpa
+
+end chapter_4_redo
+
+
+example (p q r : Prop) (hp : p)
+        : (p ∨ q ∨ r) ∧ (q ∨ p ∨ r) ∧ (q ∨ r ∨ p) := by
+  exact ⟨Or.inl hp, Or.inr (Or.inl hp), Or.inr (Or.inr hp)⟩
+
+end chapter_5_exercises
