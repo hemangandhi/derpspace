@@ -31,7 +31,7 @@ Tactics summary:
 | `generalize <hypothesis name> : <term>` | Replace a term with a variable. |
 | `admit` | Weak sorry. |
 | `rw [<hypotheses, ← to reverse>]` | Rewrite. |
-| `cases <term> with | <ctor> <args> => <term>` | Elimination. Can just use `apply` to go into an eliminator. |
+| `cases <term> with \| <ctor> <args> => <term>` | Elimination. Can just use `apply` to go into an eliminator. |
 | `<left tactic> \<;\> <right tactic>` | Apply a right tactic to each goal of left. |
 | `constructor <tactics>` | Apply the constructor with tactics per parameter. |
 | `<combinator> \| <tactic> \| <tactics ...>` | Apply each of the tactics until one succeeds. |
