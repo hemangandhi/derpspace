@@ -22,7 +22,7 @@ Tactics summary:
 | `exact <term>` | Not sure why you'd use this. Identity function? |
 | `case <tag> => <tactics>` | Useful for permuting the cases. |
 | `intro <hypotheses>` | For lambdas? Again, why? |
-| `intro | <case> => <tactics>` | For eliminators. |
+| `intro \| <case> => <tactics>` | For eliminators. |
 | `assumption` | Apply an appropriate hypothesis. |
 | `intros` | Introduces various variables anonymously. |
 | `rfl` | `exact rfl` |
