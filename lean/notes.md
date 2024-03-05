@@ -21,6 +21,7 @@ Tactics summary:
 | `apply <term>` | Not sure why you'd use this. |
 | `exact <term>` | Not sure why you'd use this. Identity function? |
 | `case <tag> => <tactics>` | Useful for permuting the cases. |
+| `calc \n <lhs or _> <relation> <rhs> := <reason>` | Useful for repeated substitutions. |
 | `intro <hypotheses>` | For lambdas? Again, why? |
 | `intro \| <case> => <tactics>` | For eliminators. |
 | `assumption` | Apply an appropriate hypothesis. |

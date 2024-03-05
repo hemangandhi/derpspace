@@ -544,3 +544,68 @@ example (p q r : Prop) (hp : p)
   exact ⟨Or.inl hp, Or.inr (Or.inl hp), Or.inr (Or.inr hp)⟩
 
 end chapter_5_exercises
+
+section chapter_7_exercises
+-- Hide the Nat stuff.
+namespace exercise_1
+
+variable (x y z : Nat)
+
+def mult (x y : Nat) : Nat :=
+  match x, y with
+  | Nat.zero,     _ => Nat.zero
+  | (Nat.succ x), y => y + (mult x y)
+
+theorem zero_mult : mult 0 y = 0 := by rfl
+
+theorem mult_zero : mult x 0 = 0 :=
+  Nat.recOn (motive := λ n => mult n 0 = 0) x
+    (show mult 0 0 = 0 by rfl)
+    (fun (x : Nat) (ih : mult x 0 = 0) =>
+      show mult (Nat.succ x) 0 = 0 by
+      calc mult (Nat.succ x) 0
+        _ = 0 + (mult x 0) := rfl
+        _ = 0 + 0          := by rw [ih]
+        _ = 0              := by rw [Nat.add_zero])
+
+theorem mult_succ : mult x (Nat.succ y) = (mult x y) + x :=
+  Nat.recOn (motive := λ n => mult n (Nat.succ y) = (mult n y) + n) x
+    (show mult 0 (Nat.succ y) = (mult 0 y) + 0 by rfl)
+    (fun (x : Nat) (ih : mult x (Nat.succ y) = (mult x y) + x) =>
+      show mult (Nat.succ x) (Nat.succ y) = (mult (Nat.succ x) y) + (Nat.succ x) by
+      calc mult (Nat.succ x) (Nat.succ y)
+        _ = (Nat.succ y) + mult x (Nat.succ y)   := rfl
+        _ = (Nat.succ y) + (mult x y) + x        := by rw [ih, Nat.add_assoc]
+        _ = y + 1 + (mult x y) +  x              := by rw [Nat.succ_eq_add_one]
+        _ = y + ((mult x y) + (x + 1))           := by rw [Nat.add_assoc, Nat.add_right_comm, Nat.add_assoc, Nat.add_assoc]
+        _ = y + (mult x y) + (Nat.succ x)        := by rw [←Nat.succ_eq_add_one, ←Nat.add_assoc]
+        _ = (mult (Nat.succ x) y) + (Nat.succ x) := rfl)
+
+theorem mult_comm (x y : Nat) : mult x y = mult y x :=
+  Nat.recOn (motive := λ n => mult x n = mult n x) y
+    (show mult x 0 = mult 0 x by rw [mult_zero, zero_mult])
+    (fun (y: Nat) (ih : mult x y = mult y x) =>
+      show mult x (Nat.succ y) = mult (Nat.succ y) x by
+      calc mult x (Nat.succ y)
+        _ = x + mult x y        := by rw [Nat.add_comm, ←mult_succ]
+        _ = x + mult y x        := by rw [ih]
+        _ = mult (Nat.succ y) x := by rfl)
+
+theorem mult_right_distr : (mult x z + mult y z) = mult (x + y) z :=
+  Nat.recOn (motive := λ n => (mult x n + mult y n) = mult (x + y) n) z
+    (show (mult x 0 + mult y 0) = mult (x + y) 0 by
+     calc mult x 0 + mult y 0
+      _ = 0 + 0 := by rw [mult_zero, mult_zero]
+      _ = 0 := by rw [Nat.zero_add]
+      _ = mult (x + y) 0 := by rw [mult_zero])
+    (fun (z: Nat) (ih: (mult x z + mult y z) = mult (x + y) z) =>
+      show mult x (Nat.succ z) + mult y (Nat.succ z) = mult (x + y) (Nat.succ z) by
+      calc mult x (Nat.succ z) + mult y (Nat.succ z)
+        _ = (mult x z) + x + ((mult y z) + y) := by rw [mult_succ, mult_succ]
+        _ = (mult x z) + (mult y z) + y + x   := by rw [Nat.add_right_comm, ←Nat.add_assoc]
+        _ = (mult (x + y) z) + y + x          := by rw [ih]
+        _ = mult (x + y) (Nat.succ z)         := by rw [Nat.add_right_comm, Nat.add_assoc, mult_succ])
+
+
+end exercise_1
+end chapter_7_exercises
