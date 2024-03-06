@@ -610,4 +610,55 @@ theorem mult_right_distr : (mult x z + mult y z) = mult (x + y) z :=
 
 
 end exercise_1
+section exercise_2
+
+variable (α : Type)
+variable (as bs : List α)
+
+theorem part_a : List.length (as ++ bs) = List.length as + List.length bs :=
+  List.recOn (motive := λ xs => List.length (xs ++ bs) = List.length xs + List.length bs ) as
+    (show List.length (List.nil ++ bs) = List.length List.nil + List.length bs by
+    calc List.length (List.nil ++ bs)
+      _ = List.length bs := by rw [List.nil_append]
+      _ = 0 + List.length bs := by rw [Nat.zero_add]
+      _ = List.length List.nil + List.length bs := rfl)
+    (fun (a : α) (as : List α) (ih : List.length (as ++ bs) = List.length as + List.length bs) =>
+      show List.length ((List.cons a as) ++ bs) = List.length (List.cons a as) + List.length bs by
+      calc List.length ((List.cons a as) ++ bs)
+        _ = List.length (List.cons a (as ++ bs))          := by rw [List.cons_append]
+        _ = Nat.succ (List.length (as ++ bs))             := by rw [List.length_cons]
+        _ = Nat.succ (List.length as + List.length bs)    := by rw [ih]
+        _ = List.length as + 1 + List.length bs           := by rw [Nat.succ_eq_add_one,
+                                                                    Nat.add_comm,
+                                                                    Nat.add_left_comm,
+                                                                    ←Nat.add_assoc]
+        _ = Nat.succ (List.length as) + (List.length bs)  := by rw [←Nat.succ_eq_add_one]
+        _ = List.length (List.cons a as) + List.length bs := by rw [←List.length_cons])
+
+theorem part_b : List.length (List.reverse as) = List.length as :=
+  List.recOn (motive := λ xs => List.length (List.reverse xs) = List.length xs) as
+    (show List.length (List.reverse List.nil) = List.length List.nil by rfl)
+    (fun (a : α) (as : List α) (ih : List.length (List.reverse as) = List.length as) =>
+      show List.length (List.reverse (List.cons a as)) = List.length (List.cons a as) by
+      calc List.length (List.reverse (List.cons a as))
+        _ = List.length ((List.reverse as) ++ (List.cons a List.nil))          := by rw [List.reverse_cons]
+        _ = List.length (List.reverse as) + List.length (List.cons a List.nil) := by rw [part_a]
+        _ = List.length as + List.length (List.cons a List.nil)                := by rw [ih]
+        _ = List.length as + 1                                                 := rfl
+        _ = List.length (List.cons a as)                                       := by rw [←Nat.succ_eq_add_one,
+                                                                                         ←List.length_cons])
+
+theorem part_c: List.reverse (List.reverse as) = as :=
+  List.recOn (motive := λ xs => List.reverse (List.reverse xs) = xs) as
+    (show List.reverse (List.reverse List.nil) = List.nil by rfl)
+    (fun (a : α) (as : List α) (ih : List.reverse (List.reverse as) = as) =>
+      show List.reverse (List.reverse (List.cons a as)) = List.cons a as by
+      calc List.reverse (List.reverse (List.cons a as))
+        _ = List.reverse (List.reverse as ++ (List.cons a List.nil))              := by rw [List.reverse_cons]
+        _ = List.reverse (List.cons a List.nil) ++ List.reverse (List.reverse as) := by rw [List.reverse_append]
+        _ = List.reverse (List.nil) ++ (List.cons a List.nil) ++ as               := by rw [ih,
+                                                                                            List.reverse_cons]
+        _ = List.cons a as                                                        := rfl)
+
+end exercise_2
 end chapter_7_exercises
