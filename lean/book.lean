@@ -577,7 +577,8 @@ theorem mult_succ : mult x (Nat.succ y) = (mult x y) + x :=
         _ = (Nat.succ y) + mult x (Nat.succ y)   := rfl
         _ = (Nat.succ y) + (mult x y) + x        := by rw [ih, Nat.add_assoc]
         _ = y + 1 + (mult x y) +  x              := by rw [Nat.succ_eq_add_one]
-        _ = y + ((mult x y) + (x + 1))           := by rw [Nat.add_assoc, Nat.add_right_comm, Nat.add_assoc, Nat.add_assoc]
+        _ = y + ((mult x y) + (x + 1))           := by rw [Nat.add_assoc, Nat.add_right_comm,
+                                                           Nat.add_assoc, Nat.add_assoc]
         _ = y + (mult x y) + (Nat.succ x)        := by rw [←Nat.succ_eq_add_one, ←Nat.add_assoc]
         _ = (mult (Nat.succ x) y) + (Nat.succ x) := rfl)
 
@@ -604,7 +605,8 @@ theorem mult_right_distr : (mult x z + mult y z) = mult (x + y) z :=
         _ = (mult x z) + x + ((mult y z) + y) := by rw [mult_succ, mult_succ]
         _ = (mult x z) + (mult y z) + y + x   := by rw [Nat.add_right_comm, ←Nat.add_assoc]
         _ = (mult (x + y) z) + y + x          := by rw [ih]
-        _ = mult (x + y) (Nat.succ z)         := by rw [Nat.add_right_comm, Nat.add_assoc, mult_succ])
+        _ = mult (x + y) (Nat.succ z)         := by rw [Nat.add_right_comm, Nat.add_assoc,
+                                                        mult_succ])
 
 
 end exercise_1
