@@ -698,4 +698,65 @@ def evalExpr (e : Expr) (binds : List Nat) : Expr :=
 #eval evalExpr (Expr.times (Expr.plus (Expr.var 0) (Expr.const 4)) (Expr.var 1)) (List.cons 5 (List.cons 4 List.nil))
 
 end exercise_3
+section exercise_4
+
+inductive PropForm where
+  | const : Bool → PropForm
+  | var   : Nat → PropForm
+  | not   : PropForm → PropForm
+  | and   : PropForm → PropForm → PropForm
+  | or    : PropForm → PropForm → PropForm
+  | imply : PropForm → PropForm → PropForm
+  | equiv : PropForm → PropForm → PropForm
+  deriving Repr
+
+def evalProp : PropForm → PropForm
+  | PropForm.const c => (PropForm.const c)
+  | PropForm.var n   => (PropForm.var n)
+  | PropForm.not e   => match evalProp e with
+    | PropForm.const c => PropForm.const (not c)
+    | e                => PropForm.not e
+  | PropForm.and p q => match evalProp p, evalProp q with
+    | PropForm.const false, _ => PropForm.const false
+    | PropForm.const true,  x => x
+    | p,                    q => PropForm.and p q
+  | PropForm.or  p q => match evalProp p, evalProp q with
+    | PropForm.const true,  _ => PropForm.const true
+    | PropForm.const false, x => x
+    | p,                    q => PropForm.or p q
+  | PropForm.imply p q => match evalProp p, evalProp q with
+    | PropForm.const false, _ => PropForm.const true
+    | PropForm.const true,  x => x
+    | p,           q          => PropForm.imply p q
+  | PropForm.equiv p q => match evalProp p, evalProp q with
+    | PropForm.const false, PropForm.const false => PropForm.const true
+    | PropForm.const true,  PropForm.const true  => PropForm.const true
+    | PropForm.const true,  PropForm.const false => PropForm.const false
+    | PropForm.const false, PropForm.const true  => PropForm.const false
+    | p,           q                             => PropForm.equiv p q
+
+def substProp (subs : Nat → PropForm) : PropForm → PropForm
+  | PropForm.const  c   => PropForm.const c
+  | PropForm.var    v   => subs v
+  | PropForm.not    p   => PropForm.not (substProp subs p)
+  | PropForm.and    p q => PropForm.and (substProp subs p) (substProp subs q)
+  | PropForm.or     p q => PropForm.or (substProp subs p) (substProp subs q)
+  | PropForm.imply  p q => PropForm.imply (substProp subs p) (substProp subs q)
+  | PropForm.equiv  p q => PropForm.equiv (substProp subs p) (substProp subs q)
+
+def testNthVar (n : Nat) (p : PropForm) : PropForm :=
+  PropForm.and (substProp (subsN n true) p) (substProp (subsN n false) p)
+  where subsN (n : Nat) (b : Bool) : Nat → PropForm := λ x => if n == x then PropForm.const b
+                                                                        else PropForm.var   x
+
+-- Look at me, I am the theorem prover now.
+#eval evalProp (testNthVar 0 (PropForm.or (PropForm.var 0) (PropForm.not (PropForm.var 0))))
+#eval evalProp (testNthVar 1 (testNthVar 0 (PropForm.equiv
+  (PropForm.imply (PropForm.var 0) (PropForm.var 1))
+  (PropForm.or (PropForm.not (PropForm.var 0)) (PropForm.var 1)))))
+#eval evalProp (testNthVar 1 (testNthVar 0 (PropForm.equiv
+  (PropForm.imply (PropForm.var 0) (PropForm.var 1))
+  (PropForm.or (PropForm.var 0) (PropForm.var 1)))))
+
+end exercise_4
 end chapter_7_exercises
