@@ -661,4 +661,41 @@ theorem part_c: List.reverse (List.reverse as) = as :=
         _ = List.cons a as                                                        := rfl)
 
 end exercise_2
+section exercise_3
+
+inductive Expr where
+  | const  : (n : Nat) → Expr
+  | var    : (id : Nat) → Expr
+  | plus   : Expr → Expr → Expr
+  | times  : Expr → Expr → Expr
+  deriving Repr
+
+def convertedNthOrElse {α β : Type} (xs : List α) (n : Nat) (conv : α → β) (default : β) : β :=
+  match xs, n with
+  | List.nil,       _           => default
+  | List.cons x _xs, Nat.zero   => conv x
+  | List.cons _x xs, Nat.succ n => convertedNthOrElse xs n conv default
+
+def applyIfBothConstElse (x y : Expr) (ap : Nat → Nat → Nat) (el : Expr → Expr → Expr) : Expr :=
+  match x, y with
+  | Expr.const x, Expr.const y => Expr.const (ap x y)
+  | l,            r            => el l r
+
+def evalExpr (e : Expr) (binds : List Nat) : Expr :=
+  match e with
+  | Expr.const x   => Expr.const x
+  | Expr.var x     => convertedNthOrElse binds x Expr.const (Expr.var x)
+  | Expr.plus x y  => applyIfBothConstElse (evalExpr x binds) (evalExpr y binds)
+                                           (λ x y => x + y) Expr.plus
+  | Expr.times x y => applyIfBothConstElse (evalExpr x binds) (evalExpr y binds)
+                                           (λ x y => x * y) Expr.times
+
+#eval evalExpr (Expr.const 4) List.nil
+#eval evalExpr (Expr.var 0) (List.cons 5 List.nil)
+#eval evalExpr (Expr.plus (Expr.var 0) (Expr.const 4)) (List.cons 5 List.nil)
+#eval evalExpr (Expr.plus (Expr.var 1) (Expr.const 4)) (List.cons 5 List.nil)
+#eval evalExpr (Expr.times (Expr.plus (Expr.var 0) (Expr.const 4)) (Expr.var 1)) (List.cons 5 List.nil)
+#eval evalExpr (Expr.times (Expr.plus (Expr.var 0) (Expr.const 4)) (Expr.var 1)) (List.cons 5 (List.cons 4 List.nil))
+
+end exercise_3
 end chapter_7_exercises
