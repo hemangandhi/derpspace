@@ -760,3 +760,13 @@ def testNthVar (n : Nat) (p : PropForm) : PropForm :=
 
 end exercise_4
 end chapter_7_exercises
+namespace chapter_8_exercises
+section exercise_1
+
+def add : Nat → Nat → Nat
+  | 0,   x => x
+  | x+1, y => (add x y) + 1
+
+
+end exercise_1
+end chapter_8_exercises
