@@ -45,7 +45,12 @@ class FactorialInt:
         indices = list(range(len(self.digits) + 1))
         for digit, cycle_size in zip(self.digits[::-1], range(2, len(self.digits) + 2)):
             cycle = indices[:cycle_size]
-            indices = cycle[:digit]  + cycle[digit:]  + indices[cycle_size:]
+            num = self.digit_representation.from_digit(digit)
+            if num is None:
+                raise ValueError(f"{digit} could not be converted to an int.")
+            if num < 0:
+                raise ValueError(f"{digit} (converted to {num}) is negative.")
+            indices = cycle[num:] + cycle[:num] + indices[cycle_size:]
         return indices
 
     @classmethod
