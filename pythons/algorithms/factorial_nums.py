@@ -43,7 +43,7 @@ class FactorialInt:
     @cached_property
     def permutation(self):
         indices = list(range(len(self.digits) + 1))
-        for digit, cycle_size in zip(self.digits, range(len(self.digits), 1, -1)):
+        for digit, cycle_size in zip(self.digits[::-1], range(2, len(self.digits) + 2)):
             cycle = indices[:cycle_size]
             indices = cycle[:digit]  + cycle[digit:]  + indices[cycle_size:]
         return indices
