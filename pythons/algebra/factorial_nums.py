@@ -61,11 +61,11 @@ class FactorialInt:
 
     def __int__(self) -> int:
         acc = 0
-        for digit, base in zip(self.digits[::-1], yield_factorials(2)):
-            num = self.representation.from_digit(digit)
+        for digit, base in zip(self.digits[::-1], yield_factorials(1)):
+            num = self.digit_representation.from_digit(digit)
             if num is None:
                 raise ValueError(f"{digit} could not be converted to an int.")
-            if num >= base:
+            if num > base:
                 raise ValueError(f"{digit} (converted to {num}) is too large.")
             if num < 0:
                 raise ValueError(f"{digit} (converted to {num}) is negative.")
@@ -106,6 +106,7 @@ def run_prompt():
         arg = int(arg_str)
         if fn == '!':
             state[ctr] = FactorialInt.from_int(arg)
+            print(f"Added {state[ctr]} at {ctr}")
             return None
         perm = state.get(arg)
         if perm is None:
