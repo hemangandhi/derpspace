@@ -1,6 +1,6 @@
 # Being even more interested in https://xkcd.com/2835/
 
-from typing import Protocol, TypeVar, Optional, Callable
+from typing import Protocol, TypeVar, Optional, Callable, Union
 from collections.abc import Iterable
 import functools
 
@@ -86,6 +86,23 @@ class FactorialInt:
 
     def __str__(self) -> str:
         return f"{self.digits} ({int(self)})"
+
+    def __add__(self, other: Union[int, FactorialInt]):
+        if isinstance(other, int):
+            return FactorialInt.from_int(int(self) + other)
+        if not isinstance(other, FactorialInt):
+            raise TypeError(f"Cannot add {other} to a FactorialInt. It must be an int or a FactorialInt instead of {type(other)}")
+        return FactorialInt.from_int(int(self) + int(other))
+
+
+def permute_list(lst: list[T]) -> Iterable[list[T]]:
+    if len(lst) < 2:
+        yield lst
+        return
+    perm = FactorialInt.from_int(0)
+    while len(perm) + 2 <= len(lst):
+        yield perm(lst)
+        perm = perm + 1
 
 
 def ensure_prompt(prompt: str, validate: Callable[[str], Optional[str]]):
