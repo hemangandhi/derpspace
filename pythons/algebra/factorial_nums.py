@@ -43,7 +43,7 @@ class FactorialInt:
     @functools.cached_property
     def permutation(self):
         indices = list(range(len(self.digits) + 1))
-        for digit, cycle_size in zip(self.digits[::-1], range(2, len(self.digits) + 2)):
+        for digit, cycle_size in zip(self.digits, range(2, len(self.digits) + 2)):
             cycle = indices[:cycle_size]
             num = self.digit_representation.from_digit(digit)
             if num is None:
@@ -62,11 +62,11 @@ class FactorialInt:
                 raise ValueError(f"{num % (len(digits) + 2)} is too large to be represented.")
             num = num // (len(digits) + 2)
             digits.append(next_digit)
-        return cls(digits[::-1], representation)
+        return cls(digits, representation)
 
     def __int__(self) -> int:
         acc = 0
-        for digit, base in zip(self.digits[::-1], yield_factorials(1)):
+        for digit, base in zip(self.digits, yield_factorials(1)):
             num = self.digit_representation.from_digit(digit)
             if num is None:
                 raise ValueError(f"{digit} could not be converted to an int.")
@@ -85,7 +85,7 @@ class FactorialInt:
         return [items[i] for i in self.permutation] + items[len(self.digits):]
 
     def __str__(self) -> str:
-        return f"{self.digits} ({int(self)})"
+        return f"{self.digits[::-1]} ({int(self)})"
 
     def __add__(self, other: Union[int, FactorialInt]):
         if isinstance(other, int):
