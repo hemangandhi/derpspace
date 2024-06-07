@@ -80,9 +80,9 @@ class FactorialInt:
     def __call__(self, items: list[T]) -> list[T]:
         if len(items) < 2:
             return items[:]
-        if len(items) < len(self.digits):
+        if len(items) < len(self.permutation):
             return [items[i] for i in self.permutation[:len(items)]]
-        return [items[i] for i in self.permutation] + items[len(self.digits):]
+        return [items[i] for i in self.permutation] + items[len(self.permutation):]
 
     def __str__(self) -> str:
         return f"{self.digits[::-1]} ({int(self)})"
@@ -103,7 +103,7 @@ def permute_list(lst: list[T]) -> Iterable[list[T]]:
         yield lst
         return
     perm = FactorialInt.from_int(0)
-    while len(perm) + 2 <= len(lst):
+    while len(perm) + 1 <= len(lst):
         yield perm(lst)
         perm = perm + 1
 
