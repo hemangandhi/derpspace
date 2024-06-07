@@ -94,6 +94,9 @@ class FactorialInt:
             raise TypeError(f"Cannot add {other} to a FactorialInt. It must be an int or a FactorialInt instead of {type(other)}")
         return FactorialInt.from_int(int(self) + int(other))
 
+    def __len__(self):
+        return len(self.digits)
+
 
 def permute_list(lst: list[T]) -> Iterable[list[T]]:
     if len(lst) < 2:
@@ -113,35 +116,92 @@ def ensure_prompt(prompt: str, validate: Callable[[str], Optional[str]]):
     return response
 
 
-def run_prompt():
-    state: dict[int, FactorialInt[int]] = {}
-    ctr: int = 0
+class CommandRegistry:
+    registry: dict[str, Callable[[str, int, dict[int, 'FactorialInt[int]']], Optional[str]]]
+    docs: dict[str, str]
+    ctr: int
+    state: dict[int, 'FactorialInt[int]']
+    should_exit: bool
 
-    def check_command(command: str) -> Optional[str]:
+    def __init__(self) -> None:
+        self.ctr = 0
+        self.state = {}
+        self.should_exit = False
+        self.registry = {"q": lambda c, i, s: self.set_exit()}
+        self.docs = {"q": "Quit"}
+
+    def set_exit(self, should_exit: bool = True):
+        self.should_exit = should_exit
+
+    def __bool__(self):
+        return not self.should_exit
+
+    def __call__(self, prefix: str, doc: str):
+        def wrapper(fn):
+            self.registry[prefix] = fn
+            self.docs[prefix] = doc
+            return fn
+        return wrapper
+
+    def register_int_fn(self, prefix: str, doc: str):
+        registerer = self(prefix, doc)
+        def wrapper(fn):
+            @functools.wraps(fn)
+            def wrapped(response: str, ctr: int, state):
+                if not response.isdigit():
+                    return f"Expected numeric value, got '{response}' instead."
+                return fn(int(response), ctr, state)
+            return registerer(wrapped)
+        return wrapper
+
+    def register_state_reader(self, prefix: str, doc: str):
+        registerer = self(prefix, doc)
+        def wrapper(fn):
+            @functools.wraps(fn)
+            def wrapped(response: str, ctr: int, state):
+                if not response.isdigit():
+                    return f"Expected numeric value, got '{response}' instead."
+                computed = state.get(int(response))
+                if computed is None:
+                    keys = ", ".join(map(str, state.keys()))
+                    return f"Value {response} has not been computed, try one of {keys}"
+                return fn(computed, ctr, state)
+            return registerer(wrapped)
+        return wrapper
+
+    def handle_prompt(self, command: str) -> Optional[str]:
+        if len(command) < 1:
+            return "Please provide a command."
         fn, arg_str = command[0], command[1:]
-        if fn not in ['!', 'S', 'q']:
+        if fn not in self.registry:
             return f"Cannot handle function {fn}"
-        if fn == 'q':
-            return None
-        if not arg_str.isdigit():
-            return f"Cannot handle arg {arg_str}"
-        arg = int(arg_str)
-        if fn == '!':
-            state[ctr] = FactorialInt.from_int(arg)
-            print(f"Added {state[ctr]} at {ctr}")
-            return None
-        perm = state.get(arg)
-        if perm is None:
-            keys = ", ".join(map(str, state.keys()))
-            return f"Value {arg} has not been computed, try one of {keys}"
-        print(f"Permutation of {perm} is {perm.permutation}")
-        state[ctr] = perm
+        return self.registry[fn](arg_str, self.ctr, self.state)
 
-    print("! = int->factorial base, S = get permutation of nth, q = quit")
-    while ensure_prompt(f"Enter command {ctr} > ", check_command) != "q":
-        ctr += 1
-        print("! = int->factorial base, S = get permutation of nth, q = quit")
+    def __str__(self) -> str:
+        return ", ".join(f"{key} = {doc}" for key, doc in self.docs.items())
+
+    def run_main(self):
+        while self:
+            print(str(self))
+            ensure_prompt("Enter command > ", self.handle_prompt)
+            self.ctr += 1
 
 
 if __name__ == "__main__":
-    run_prompt()
+    main = CommandRegistry()
+
+    @main.register_int_fn("!", "Convert int to factorial int")
+    def convert_int(i: int, ctr: int, state):
+        state[ctr] = FactorialInt.from_int(i)
+        print(f"{i} is {state[ctr]} as a factorial int")
+
+    @main.register_state_reader("S", "Get the permutation of the nth output")
+    def get_perm(s: 'FactorialInt[int]', ctr: int, state):
+        print(f"Perm({s}) = {s.permutation}")
+
+    @main.register_int_fn("A", "Get all the permutations of n numbers")
+    def all_perms(n: int, ctr: int, state):
+        for i, perm in enumerate(permute_list(list(range(n)))):
+            print(f"The {i}th permutation ({FactorialInt.from_int(i)}) is {perm}")
+
+    main.run_main()
