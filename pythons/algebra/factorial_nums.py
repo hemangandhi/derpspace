@@ -87,7 +87,7 @@ class FactorialInt:
     def __str__(self) -> str:
         return f"{self.digits[::-1]} ({int(self)})"
 
-    def __add__(self, other: Union[int, FactorialInt]):
+    def __add__(self, other: Union[int, 'FactorialInt']):
         if isinstance(other, int):
             return FactorialInt.from_int(int(self) + other)
         if not isinstance(other, FactorialInt):
