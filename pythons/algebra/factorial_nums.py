@@ -92,7 +92,26 @@ class FactorialInt:
             return FactorialInt.from_int(int(self) + other)
         if not isinstance(other, FactorialInt):
             raise TypeError(f"Cannot add {other} to a FactorialInt. It must be an int or a FactorialInt instead of {type(other)}")
-        return FactorialInt.from_int(int(self) + int(other))
+        carry = 0
+        new_digits = []
+        for i, l, r in enumerate(zip(self.digits, other.digits)):
+            l_num = self.digit_representation.from_digit(l)
+            r_num = self.digit_representation.from_digit(r)
+            if l_num is None:
+                raise ValueError(f"Invalid digit {l}")
+            if r_num is None:
+                raise ValueError(f"Invalid digit {r}")
+            total = l_num + r_num + carry
+            if total >= i + 2:
+                carry = total // (i + 2)
+                total = total % (i + 2)
+            else:
+                carry = 0
+            converted = self.digit_representation.to_digit(total)
+            if converted is None:
+                raise ValueError(f"{total} is too large to be represented")
+            new_digits.append(converted)
+        return FactorialInt(new_digits, self.digit_representation)
 
     def __len__(self):
         return len(self.digits)
