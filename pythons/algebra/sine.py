@@ -1,6 +1,8 @@
 
 def truncate_num_to(num, to):
     tos = int(num / to)
+    if num < 0:
+        tos -= 1
     return num - to * tos
 
 def turtle_sine(resolution):
