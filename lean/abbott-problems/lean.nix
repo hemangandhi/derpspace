@@ -11,7 +11,12 @@ let
         vimtex
       ];
     };
-    extraRC = "let &runtimepath = &runtimepath . ',/home/heman/dot-files/nix-envs/nvim-lua-inits/lean-init'";
+    extraRC = ''
+      let &runtimepath = &runtimepath . ',/home/heman/dot-files/nix-envs/nvim-lua-inits/lean-init'
+      " VimTex confs
+      let g:vimtex_view_method = 'zathura'
+      let g:vimtex_compiler_method = 'tectonic'
+    '';
   }); in
 nixpkgs.stdenv.mkDerivation {
   name = "lean-env";
