@@ -8,16 +8,12 @@ variable (a b n : Nat)
 theorem mod_3_012 :  (∃ x : Nat, (n = 3 * x) ∨ (n = 3 * x + 1) ∨ (n = 3 * x + 2)) :=
   Nat.recOn (motive := λ n => ∃ x : Nat, (n = 3 * x) ∨ (n = 3 * x + 1) ∨ (n = 3 * x + 2)) n
   (⟨0, Or.inl (eq_comm.mp (Nat.mul_zero 3))⟩)
-  (fun (n : Nat) (ih: ∃ x : Nat, (n = 3 * x) ∨ (n = 3 * x + 1) ∨ (n = 3 * x + 2)) =>
+  (fun (n : Nat) (ih: ∃ x : Nat, (n = 3 * x) ∨ (n = 3 * x + 1) ∨ (n = 3 * x + 2)) => by
     have ⟨x, mod3⟩ := ih
-    Or.elim mod3
-      (fun mod3_0 =>
-        ⟨x, Or.inr (Or.inl (show Nat.succ n = 3 * x + 1 by rw [mod3_0, Nat.succ_eq_add_one]))⟩)
-      (fun mod3_12 => Or.elim mod3_12
-        (fun mod3_1 =>
-          ⟨x, Or.inr (Or.inr (show Nat.succ n = 3 * x + 2 by rw [mod3_1, Nat.succ_eq_add_one]))⟩)
-        (fun mod3_2 =>
-          ⟨x + 1, Or.inl (show Nat.succ n = 3 * (x + 1) by rw [mod3_2, Nat.succ_eq_add_one, Nat.mul_succ])⟩)))
+    match mod3 with
+    | Or.inl mod3_0          => exact ⟨x, Or.inr (Or.inl (show Nat.succ n = 3 * x + 1 by rw [mod3_0, Nat.succ_eq_add_one]))⟩
+    | Or.inr (Or.inl mod3_1) => exact ⟨x, Or.inr (Or.inr (show Nat.succ n = 3 * x + 2 by rw [mod3_1, Nat.succ_eq_add_one]))⟩
+    | Or.inr (Or.inr mod3_2) => exact ⟨x + 1, Or.inl (show Nat.succ n = 3 * (x + 1) by rw [mod3_2, Nat.succ_eq_add_one, Nat.mul_succ])⟩)
 
 theorem mult3_no_remainder : ¬ (3 ∣ n) ↔ ∃ x : Nat, n = 3 * x + 1 ∨ n = 3 * x + 2 := by
   apply Iff.intro
@@ -51,8 +47,6 @@ theorem mult3_no_remainder : ¬ (3 ∣ n) ↔ ∃ x : Nat, n = 3 * x + 1 ∨ n =
           ).mpr (show 3 * y = 2 + 3 * x by rw [xy_eq, Nat.add_comm])
       have three_div_two := (⟨y - x, (show 2 = 3 * (y - x) by rw [two_is_3yx.symm, Nat.mul_sub_left_distrib])⟩: 3 ∣ 2)
       exact absurd (Nat.le_of_dvd (show 0 < 2 by simp) three_div_two) (show ¬(3 ≤ 2) by simp)
-
-#check absurd
 
 theorem primality_ish_of_3 : 3 ∣ a * b → (3 ∣ a ∨ 3 ∣ b) := by
   intro div_3_ab
