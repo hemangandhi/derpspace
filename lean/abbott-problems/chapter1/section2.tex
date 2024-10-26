@@ -49,7 +49,7 @@ We can prove the forward direction by the above statement: since $3x = n$ would 
 the assumption that $3 \nmid n$.
 
 The reverse direction is simplest by contradiction: if we have the $x$ with
-remainder 1 or 2, we cannot find some $y$ so that $3y = n$, since we'd for the equation $3(y - x) = r$ for $r$
+remainder 1 or 2, we cannot find some $y$ so that $3y = n$, since we'd form the equation $3(y - x) = r$ for $r$
 being 1 or 2, which is absurd since 3 cannot divide a non-zero number less than itself.
 \end{proof}
 
@@ -73,9 +73,15 @@ In all the cases, we can express $ab = 3y + r$ for $y \in \N$ and $r \in \{1, 2\
 the lemma above to conclude $3 \nmid ab$, showing the contrapositive.
 \end{proof}
 
+\begin{lemma}
+$\sqrt{3}$ is irrational.
+\end{lemma}
+
+\begin{proof}
 For contradiction, let $a, b \in \N$ and ${a^2 \over b^2} = 3$. Without loss of generality, we can assume that $a$ and $b$ don't
 share factors. Rewriting this as $a^2 = 3 b^2$, we see that $3 \mid a^2$, so the above gives us that $3 \mid a$.
 Hence, we write $a = 3d$, so $a^2 = 9 d^2 = 3 b^2$, which means that $b^2 = 3 d^2$, so $3 \mid b$. This contradicts the assumption
 that $a$ and $b$ don't share factors.
+\end{proof}
 
 \end{document}
