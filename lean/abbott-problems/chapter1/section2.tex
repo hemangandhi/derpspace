@@ -121,4 +121,30 @@ However, we can show that all such powers of 2 are even whereas all powers of 3 
 cannot exist.
 \end{proof}
 
+\subsubsection*{Exercise 1.2.3-a}
+
+We use $A_n = \{ 2 ^ {(n + k)} : k \in \N \}$.
+The $\cap_{n=1}^{\infty} A_n = \emptyset$.
+
+\subsubsection*{Exercise 1.2.3-b}
+
+\textit{I couldn't find the well-ordering principle in the text, but I think that's clearly the way to prove this.}
+
+Since all $A_n$ are finite, and each $A_n$ is a subset of the prior ones, there must be one of a minimal cardinality $c$,
+and $c \geq 1$ since even the smallest set must be nonempty.
+All sets will contain this smallest set, so it will be the intersection, which is, therefore, finite and nonempty.
+
+\subsubsection*{Exercise 1.2.3-c}
+
+Take $A = \{1, 2, 3\}, B = \{2, 4\},$ and $C = \{3, 6\}$ to observe that $A \cap (B \cup C) = \{2, 3\} \neq (A \cap B) \cup C = \{2, 3, 6\}$.
+
+\subsubsection*{Exercise 1.2.3-d}
+
+Yes: if $x \in A \cap (B \cap C)$, $x$ is in all of $A, B,$ and $C$, so $x \in (A \cap B) \cap C$ and similarly in the reverse direction.
+
+\subsubsection*{Exercise 1.2.3-e}
+
+Yes: if $x \in A \cap (B \cup C)$, we know $x \in A$ and $x \in B$ or $x \in C$, so either $x \in A \cap B$ since $x \in B$, or $x \in A \cap C$ otherwise.
+In reverse, if $x \in A \cap B$, in $x \in A$ and $B$, so $x \in A \cap (B \cup C)$ and similarly if $x \in C$.
+
 \end{document}
