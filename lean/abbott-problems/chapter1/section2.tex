@@ -84,4 +84,33 @@ Hence, we write $a = 3d$, so $a^2 = 9 d^2 = 3 b^2$, which means that $b^2 = 3 d^
 that $a$ and $b$ don't share factors.
 \end{proof}
 
+The proof would more-or-less work for $\sqrt{6}$.
+
+\textit{The proof below is kept brief, emphasizing the differences between the case for $\sqrt{3}$ and $\sqrt{6}$. Lean has all the details.}
+
+\begin{lemma}
+$\sqrt{6}$ is irrational.
+\end{lemma}
+
+\begin{proof}
+We follow the above structure of the proof for $\sqrt{3}$: we have that for $n \in \N$,
+there is an $x \in \N$ and $0 \leq r \leq 5$ with $r \in \N$. Futhermore, $r = 0$ if and only if $6 \mid n$.
+Finally, instead of the prior lemma, we show $6 \mid a^2$ implies $6 \mid a$.
+If we attempt the contrapositive, we have 5 cases for $a = 6x + r$, where we rewrite $a^2 = 6 (6x^2 + 2rx) + r^2 = 6y + r^2$:
+\begin{enumerate}
+    \item if $r = 1$, $r^2 = 1$, so $a^2 = 6y + 1$;
+    \item if $r = 2$, $r^2 = 4$, so $a^2 = 6y + 4$;
+    \item if $r = 3$, $r^2 = 9$, so $a^2 = 6(y + 1) + 3$;
+    \item if $r = 4$, $r^2 = 16$, so $a^2 = 6(y + 2) + 4$;
+    \item if $r = 5$, $r^2 = 25$, so $a^2 = 6(y + 4) + 1$.
+\end{enumerate}
+This shows that if $a \nmid 6$, $a^2 \nmid 6$. We can proceed with this, showing that if $a^2 = 6b^2$ and
+$a$ and $b$ don't share factors, we get $6 \mid a$ and $6 \mid b$.
+\end{proof}
+
+\subsubsection*{Exercise 1.2.1-b}
+
+The proof of theorem 1.1.1 breaks down at the first supposition that $p^2 = 4q^2$ as $p = 2, q = 1$ already suffices.
+Furthermore, $4 \mid 6^2$ but $4 \nmid 6$, so in the next step, we cannot conclude anything from the fact that $4 \mid p^2$.
+
 \end{document}
