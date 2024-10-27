@@ -319,3 +319,48 @@ theorem sqrt_6_irrational_coprime: (a.gcd b = 1) → (a * a ≠ 6 * (b * b)) := 
 
 
 end exercise_1_2_1
+
+section exercise_1_2_2
+
+open Classical
+
+variable (a b n : Nat)
+
+-- OK, I thought I could do something fancy with "suppose a = 0 but we know 1 ≤ a, so absurd."
+-- But one_le_iff_ne_zero is in mathlib, so may be later.
+theorem pow_2_odd : (1 ≤ a) → ∃ x : N, 2 ^ a = 2 * n := by
+  intro a_ge_1
+  cases a with
+  | zero => exact absurd rfl ((Nat.one_le_iff_ne_zero 0).mp a_ge_1)
+  | succ n => exact ⟨2 ^ n, Nat.pow_succ' 2 n⟩
+
+end exercise_1_2_2
+
+section exercise_1_2_3
+
+-- TODO: figure out how to have these be types and do this in something that's actually
+-- kind of about sets?
+variable (α β γ : Prop)
+
+theorem part_d : α ∧ β ∧ γ ↔ α ∧ (β ∧ γ) := by
+  apply Iff.intro
+  . intro ⟨a, b, c⟩
+    exact ⟨a, ⟨b, c⟩⟩
+  . intro ⟨a, ⟨b, c⟩⟩
+    exact ⟨a, b, c⟩
+
+
+theorem part_e : α ∧ (β ∨ γ) ↔ (α ∧ β) ∨ (α ∧ γ) := by
+  apply Iff.intro
+  . intro ⟨a, b_or_c⟩
+    cases b_or_c with
+    | inl b =>  exact Or.inl ⟨a, b⟩
+    | inr c =>  exact Or.inr ⟨a, c⟩
+  . intro a_and_b_or_a_and_c
+    match a_and_b_or_a_and_c with
+    | Or.inl ⟨a, b⟩ => exact ⟨a, Or.inl b⟩
+    | Or.inr ⟨a, c⟩ => exact ⟨a, Or.inr c⟩
+
+
+
+end exercise_1_2_3
