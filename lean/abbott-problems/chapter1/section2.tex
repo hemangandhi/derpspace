@@ -153,4 +153,25 @@ Let $A_i$ be the subset of $\N$ formed by numbers with $i$ prime factors (forget
 Then, by unique factorization, each $n \in \N$ is in exactly one $A_i$. Hence, if $i \neq j$, $A_i \cap A_j = \emptyset$,
 and $\cup_{i=1}^{\infty} A_i = \N$.
 
+\subsubsection*{Exercise 1.2.5-a}
+
+\begin{proof}
+Let $x \in (A \cap B)^c$. Then, $x \not\in A \cap B$, so it is not the case that $x \in A$ and $x \in B$; therefore, by the propositional DeMorgan's rule,
+$x \not\in A$ or $x \not\in B$, so $x \in A^c \cup B^c$.
+\end{proof}
+
+\subsubsection*{Exercise 1.2.5-b}
+
+\begin{proof}
+Put $x \in A^c \cup B^c$. Then, $x \not\in A$ or $x \not\in B$, which, by the propositional DeMorgan's rule, gives $x \not\in (A \cap B)^c$.
+\end{proof}
+
+\subsubsection*{Exercise 1.2.5-c}
+
+\begin{proof}
+If $x \in (A \cup B)^c$, then $x$ is not in $A$ or $B$, so by the propositional DeMorgan's rule, $x \in A^c \cap B^c$.
+Similarly, if $x \in A^c \cap B^c$, $x \not\in A$ and $x \not\in B$, so by DeMorgan's rule, $x \not\in A \cap B$, thus, $x \in (A \cap B)^c$.
+\end{proof}
+
+
 \end{document}
