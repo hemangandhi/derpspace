@@ -173,5 +173,41 @@ If $x \in (A \cup B)^c$, then $x$ is not in $A$ or $B$, so by the propositional 
 Similarly, if $x \in A^c \cap B^c$, $x \not\in A$ and $x \not\in B$, so by DeMorgan's rule, $x \not\in A \cap B$, thus, $x \in (A \cap B)^c$.
 \end{proof}
 
+\subsubsection*{Exercise 1.2.6-a}
+
+\begin{proof}
+Suppose $a, b \geq 0$. Then $|a + b| = a + b = |a| + |b|$ so $|a + b| \leq |a| + |b|$.
+If $a, b \leq 0$, then we can rewrite $a = -x$ and $b = -y$ where $x, y \geq 0$, so $|- x - y| = |-1||x + y| = x + y = |-x| + |-y|$,
+so $|a + b| \leq |a| + |b|$.
+\end{proof}
+
+\subsubsection*{Exercise 1.2.6-b}
+
+\begin{proof}
+If $a, b \geq 0$, $|a| = a$, $|b| = b$, so $(a + b)^2 = (|a| + |b|)^2$.
+
+If $a, b \leq 0$, we can factor out the -1, so $(-a -b)^2 = (a + b)^2$ and since $|a| = -a$ and $|b| = -b$, we get $(a + b)^2 = (|a| + |b|)^2$.
+
+Finally suppose that $a$ and $b$ have different signs. Then, without loss of generality, suppose $a \geq 0$ and $b \leq 0$, so that $b = -c$ for $c \geq 0$.
+Then $(a + b)^2 = a^2 -2bc + c^2$ while $(|a| + |b|)^2 = a^2 + 2ac + c^2$, and since $a, c \geq 0$, we know that $(a + b)^2 \leq (|a| + |b|)^2$.
+
+$0 \leq a \leq b$ if and only if $0 \leq a^2 \leq b^2$, so because $|a + b| \geq 0$ and $|a| + |b| \geq 0$,
+$|a + b| \leq |a| + |b|$ if and only if $|a + b|^2 \leq (|a| + |b|)^2$.
+Then, since $(a + b)^2 \leq (|a| + |b|)^2$ and $|a + b|^2 = (a + b)^2$ (because if $a + b < 0$, the -1 multiplies out), we know that $|a + b| \leq |a| + |b|$.
+
+\end{proof}
+
+\subsubsection*{Exercise 1.2.6-c}
+
+\begin{proof}
+$a - b = a - c + c - d + d - b$, applying $|\cdot|$ to both sides, $|a - b| \leq |a - c| + |c - d + d - b|$ by the triangle inequality, and the triangle
+inequality gives $|c - b| \leq |c - d| + |d - b|$, so $|a - b| \leq |a - c + c - d + d - b|$.
+\end{proof}
+
+\subsubsection*{Exercise 1.2.6-d}
+
+\begin{proof}
+$||a| - |b|| = ||a - b + b| - |b|| \leq ||a - b| + |b| - |b|| = ||a - b|| = |a - b|$, where the inequality is fron the triangle inequality.
+\end{proof}
 
 \end{document}
