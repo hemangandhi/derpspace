@@ -210,4 +210,30 @@ inequality gives $|c - b| \leq |c - d| + |d - b|$, so $|a - b| \leq |a - c + c -
 $||a| - |b|| = ||a - b + b| - |b|| \leq ||a - b| + |b| - |b|| = ||a - b|| = |a - b|$, where the inequality is fron the triangle inequality.
 \end{proof}
 
+\subsubsection*{Exercise 1.2.7-a}
+
+$f(A) = [0, 4]$ and $f(B) = [1, 16]$. $f(A \cap B) = [1, 4] = f(A) \cap f(B)$. $f(A \cup B) = [0, 16] = [0, 4] \cup [1, 16]$.
+
+\subsubsection*{Exercise 1.2.7-b}
+
+$A = [-1, 0]$ and $B = [0, 1]$. Then while $f(A \cap B) = \{0\}$ but $f(A) \cap f(B) = [0, 1]$.
+
+\subsubsection*{Exercise 1.2.7-c}
+
+\begin{proof}
+If $x \in g(A \cap B)$, then for some $y \in A$ and $y \in B$, $y = g(x)$, so $x \in g(A)$ and $x \in g(B)$, so $x \in g(A) \cap g(B)$.
+\end{proof}
+
+\subsubsection*{Exercise 1.2.7-d}
+
+\begin{lemma}
+Let $g: \R \to \R$ and $A, B \subset \R$. Then, $g(A \cup B) = g(A) \cup g(B)$.
+\end{lemma}
+
+\begin{proof}
+If $x \in g(A \cup B)$, then for some $y \in A$ or $y \in B$, $y = g(x)$, so $x \in g(A)$ or $x \in g(B)$, so $x \in g(A) \cup g(B)$.
+
+In reverse, without loss of generality, suppose $x \in g(A)$, so there is a $y \in A$ so that $g(y) = x$, and so $y \in A \cup B$, putting $x \in g(A \cup B)$.
+\end{proof}
+
 \end{document}
