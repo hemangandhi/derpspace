@@ -236,4 +236,19 @@ If $x \in g(A \cup B)$, then for some $y \in A$ or $y \in B$, $y = g(x)$, so $x 
 In reverse, without loss of generality, suppose $x \in g(A)$, so there is a $y \in A$ so that $g(y) = x$, and so $y \in A \cup B$, putting $x \in g(A \cup B)$.
 \end{proof}
 
+\subsubsection*{Exercise 1.2.8-a}
+
+Let $f(x) = x + 1$. Then if $f(x) = f(y)$ for $x, y \in \N$, $x + 1 = y + 1$, so $x = y$; meaning $f$ is 1-1.
+Furthermore, there is no $x \in \N$ so that $x + 1 = 0$, so $f$ is not onto.
+
+\subsubsection*{Exercise 1.2.8-b}
+
+Let $f(x) = \begin{cases} {x \over 2} & 2 \mid x \\ {x - 1 \over 2} & 2 \nmid x\end{cases}$, then $f(2y) = y$ for $y \in \N$ so $f$ is onto but $f(0) = f(1) = 0$ so $f$ is not 1-1.
+
+\subsubsection*{Exercise 1.2.8-b}
+
+Put $f(x) = \begin{cases} {x \over 2} & 2 \mid x \\ - {x + 1 \over 2} & 2 \nmid x\end{cases}$. $f$ is onto since if $y \in \Z$, $y \geq 0$, $f(2y) = y$ and if $y < 0$, $f(-2y - 1) = y$.
+Let $x, y \in \N$ such that $f(x) = f(y)$. Then $2 \mid x$ if and only if $2 \mid y$. If $2 \mid x$, ${x \over 2} = {y \over 2}$ so that $x = y$.
+Similarly, if $2 \nmid x$, $- {x + 1 \over 2} = - {y + 1 \over 2}$, so $x + 1 = y + 1$ meaning $x = y$. Hence $f$ is 1-1.
+
 \end{document}
