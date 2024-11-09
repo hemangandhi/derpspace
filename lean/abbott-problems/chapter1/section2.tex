@@ -12,6 +12,7 @@
 \newcommand{\Q}{\mathbb{Q}}
 \newcommand{\diag}{\text{diag}}
 \newcommand{\rad}{\text{rad\ }}
+\newcommand{\e}{\epsilon}
 
 \newtheorem*{lemma}{Lemma}
 
@@ -278,5 +279,18 @@ $g^{-1}(A \cup B) = g^{-1}(A) \cup g^{-1}(B)$.
 \begin{proof}
 $x \in g^{-1}(A \cup B)$ if and only if $f(x) \in A \cup B$ meaning $x \in f^{-1}(A)$ or $x \in f^{-1}(B)$ so $x \in g^{-1}(A) \cup g^{-1}(B)$ by definition.
 \end{proof}
+
+\subsubsection*{Exercise 1.2.10-a}
+
+This is false in the reverse direction. While if $a < b$, for all $\e > 0$, $a < b + \e$, if $a = b$, for all $\e > 0$, we have $a < b + \e$.
+
+\subsubsection*{Exercise 1.2.10-b}
+
+Similar to the above, if $a = b$, we still have that $a < b + \e$ for all $\e > 0$.
+
+\subsubsection*{Exercise 1.2.10-c}
+
+Suppose $a \leq b$ and $\e > 0$. Then since $a - b \leq 0$, $a - b < \e$, so $a < b + \e$.
+Conversely, suppose $a > b$. Then $a - b > 0$, and we can take $\e = {a - b \over 2} > 0$ and find that $b + \e = {a + b \over 2} < a$.
 
 \end{document}
