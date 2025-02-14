@@ -10,7 +10,8 @@ typedef struct {
     EqFn eq;
 
     // n, and which of the A_n we're allowed to probe until.
-    unsigned int capacity, batch_;
+    unsigned long int capacity;
+    unsigned int batch_;
 
     void ** map_;
 } ElasticHashMap;
