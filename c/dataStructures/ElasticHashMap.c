@@ -61,6 +61,44 @@ static unsigned long int Phi_(unsigned short i, unsigned short j) {
     return result;
 }
 
+ElasticHashMap * ElasticMap_Initialize(HashFn hash, EqFn eq, unsigned long int capacity) {
+    void ** map_array = (void **) calloc(capacity, sizeof(void *));
+    if (map_array == NULL) {
+        goto err_null;
+    }
+    unsigned long int * subarray_loads = (unsigned long int *) calloc(
+            sizeof(unsigned long int), IndexOfHighestBitLong_(capacity));
+    if (subarray_loads == NULL) {
+        goto err_array;
+    }
+    ElasticHashMap * map = (ElasticHashMap *) malloc(sizeof(ElasticHashMap));
+    if (map == NULL) {
+        goto err_loads;
+    }
+    map->hash = hash;
+    map->eq = eq;
+    map->capacity = capacity;
+    map->batch_endpoint_ = map->capacity / 2;
+    map->next_batch_length_ = map->capacity / 4;
+    map->map_ = map_array;
+    map->subarray_loads_ = subarray_loads;
+    return map;
+
+    // RAII or defer are so much better.
+err_loads:
+    free(subarray_loads);
+err_array:
+    free(map_array);
+err_null:
+    return NULL;
+}
+
+void ElasticMap_Free(ElasticHashMap* map) {
+    free(map->subarray_loads_);
+    free(map->map_);
+    free(map);
+}
+
 #ifdef UNIT_TEST
 
 #include <stdio.h>
