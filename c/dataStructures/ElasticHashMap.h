@@ -9,6 +9,9 @@ typedef struct {
     HashFn hash;
     EqFn eq;
 
+    // Load factor times 100.
+    unsigned char load_factor;
+
     // n, and which of the A_n we're allowed to probe until.
     unsigned long int capacity;
     // Batch endpoint will be a running total while the length gives the size of the latest batch.
@@ -21,7 +24,7 @@ typedef struct {
 
 // Allocates an ElasticHashMap.
 // TODO: make a version that only allocates the sub arrays?
-ElasticHashMap * ElasticMap_Initialize(HashFn hash, EqFn eq, unsigned long int capacity);
+ElasticHashMap * ElasticMap_Initialize(HashFn hash, EqFn eq, unsigned long int capacity, unsigned char load_factor);
 
 void ElasticMap_Free(ElasticHashMap* map);
 

@@ -61,7 +61,7 @@ static unsigned long int Phi_(unsigned short i, unsigned short j) {
     return result;
 }
 
-ElasticHashMap * ElasticMap_Initialize(HashFn hash, EqFn eq, unsigned long int capacity) {
+ElasticHashMap * ElasticMap_Initialize(HashFn hash, EqFn eq, unsigned long int capacity, unsigned char load_factor) {
     void ** map_array = (void **) calloc(capacity, sizeof(void *));
     if (map_array == NULL) {
         goto err_null;
@@ -78,6 +78,7 @@ ElasticHashMap * ElasticMap_Initialize(HashFn hash, EqFn eq, unsigned long int c
     map->hash = hash;
     map->eq = eq;
     map->capacity = capacity;
+    map->load_factor = load_factor;
     map->batch_endpoint_ = map->capacity / 2;
     map->next_batch_length_ = map->capacity / 4;
     map->map_ = map_array;
