@@ -119,6 +119,7 @@ ElasticMap_InsertionStatus ElasticMap_Insert(ElasticHashMap* map, void* key) {
             unsigned long int index = ProbeOfHash_(key_hash, map->capacity/2, 1, j);
             if (map->map_[index] == NULL) {
                 map->map_[index] = key;
+                (*map->subarray_loads_)++;
                 return ElasticMap_InsertionStatus_INSERTED;
             } else if (map->eq(key, map->map_[index])) {
                 return ElasticMap_InsertionStatus_EQUAL_ELEMENT_FOUND;
