@@ -99,6 +99,37 @@ void ElasticMap_Free(ElasticHashMap* map) {
     free(map);
 }
 
+static unsigned long int ProbeOfHash_(
+    unsigned long int hash,
+    unsigned long int batch_size,
+    unsigned long int i,
+    unsigned long int j
+) {
+    // TODO: better hash function?
+    // It's not like Phi has a good distribution of bits?
+    return (hash ^ Phi_(i, j)) % batch_size;
+}
+
+ElasticMap_InsertionStatus ElasticMap_Insert(ElasticHashMap* map, void* key) {
+    unsigned long int key_hash = map->hash(key);
+    // If the first array isn't yet 75% full, we're in the first batch.
+    // 75% of first array = 3/4 * capacity / 2, which works out to the below.
+    if (*map->subarray_loads_ * 8 <= map->capacity * 3) {
+        for (unsigned long int j = 1; j < map->capacity/2; j++) {
+            unsigned long int index = ProbeOfHash_(key_hash, map->capacity/2, 1, j);
+            if (map->map_[index] == NULL) {
+                map->map_[index] = key;
+                return ElasticMap_InsertionStatus_INSERTED;
+            } else if (map->eq(key, map->map_[index])) {
+                return ElasticMap_InsertionStatus_EQUAL_ELEMENT_FOUND;
+            }
+        }
+
+        // Probably only happens with capacity = 1 or something ludicrous like that.
+        return ElasticMap_InsertionStatus_FULL;
+    }
+}
+
 #ifdef UNIT_TEST
 
 #include <stdio.h>
