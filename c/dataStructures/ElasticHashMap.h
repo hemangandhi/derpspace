@@ -26,7 +26,7 @@ typedef struct {
 // TODO: make a version that only allocates the sub arrays?
 ElasticHashMap * ElasticMap_Initialize(HashFn hash, EqFn eq, unsigned long int capacity, unsigned char load_factor);
 
-void ElasticMap_Free(ElasticHashMap* map);
+void ElasticMap_Free(ElasticHashMap* map, Deallocator deallocator);
 
 typedef enum InsertionStatus {
     ElasticMap_InsertionStatus_INSERTED,
