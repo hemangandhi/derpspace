@@ -96,8 +96,8 @@ err_null:
 
 void ElasticMap_Free(ElasticHashMap* map, Deallocator deallocator) {
     free(map->subarray_loads_);
-    for (void * datum = map->map_; datum < map->map_ + map->capacity_; datum++) {
-        deallocator(datum);
+    for (void ** datum = map->map_; datum < map->map_ + map->capacity; datum++) {
+        deallocator(*datum);
     }
     free(map->map_);
     free(map);
