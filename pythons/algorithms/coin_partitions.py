@@ -26,8 +26,8 @@ def wrap_log(fn):
     return Wrapper()
 
 
-@lru_cache
-@wrap_log
+@lru_cache(maxsize=10000)
+# @wrap_log
 def num_decreasing_partitions_of_parts(n: int, parts: int, upper: int) -> int:
     if parts > n:
         return 0
@@ -45,3 +45,14 @@ def num_decreasing_partitions_of_parts(n: int, parts: int, upper: int) -> int:
 
 def num_decreasing_partitions(n: int) -> int:
     return sum(num_decreasing_partitions_of_parts(n, i, n) for i in range(1, n + 1))
+
+
+def coin_mod_thingy(mod_target: int) -> int:
+    try:
+        i = 1
+        while num_decreasing_partitions(i) % mod_target != 0:
+            i += 1
+        return i
+    except:
+        print(f"Naive got to i = {i}")
+        raise
