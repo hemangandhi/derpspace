@@ -79,9 +79,10 @@ ElasticHashMap * ElasticMap_Initialize(HashFn hash, EqFn eq, unsigned long int c
     map->eq = eq;
     map->capacity = capacity;
     map->load_factor = load_factor;
-    map->batch_endpoint_ = map->capacity / 2;
-    map->next_batch_length_ = map->capacity / 4;
     map->map_ = map_array;
+    map->current_batch_number_ = 0;
+    map->current_batch_inserts_ = 0;
+    map->current_batch_subarray_start_ = map_array;
     map->subarray_loads_ = subarray_loads;
     return map;
 
@@ -106,6 +107,7 @@ void ElasticMap_Free(ElasticHashMap* map, Deallocator deallocator) {
 static unsigned long int ProbeOfHash_(
     unsigned long int hash,
     unsigned long int batch_size,
+    // TODO: what to do about the fact that these get truncated?
     unsigned long int i,
     unsigned long int j
 ) {
@@ -133,11 +135,49 @@ ElasticMap_InsertionStatus ElasticMap_Insert(ElasticHashMap* map, void* key) {
         // Probably only happens with capacity = 1 or something ludicrous like that.
         return ElasticMap_InsertionStatus_FULL;
     }
+
+    unsigned long int current_subarray_size = map->capacity >> (map->current_batch_number_ + 1);
+    // A1 > 75% full, the first time, so we're merely moving from batch 0 to 1,
+    // but the subarrays are still A1 and A2.
+    if (map->current_batch_number_ == 0) {
+        map->current_batch_number_++;
+    // Otherwise, we migth be moving from batch i to batch i + 1.
+    } else if (9 * current_subarray_size / 2 < 8 * map->current_batch_inserts_ - 8 * current_subarray_size + (current_subarray_size >> (map->load_factor - 2))) {
+        map->current_batch_number_++;
+        map->current_batch_inserts_ = 0;
+        map->current_batch_subarray_start_ += current_subarray_size;
+        current_subarray_size >>= 1;
+
+        if (map->current_batch_subarray_start_ + current_subarray_size >= map->map_ + map->capacity) {
+            return ElasticMap_InsertionStatus_FULL;
+        }
+    }
+
 }
 
 #ifdef UNIT_TEST
 
 #include <stdio.h>
+
+#if defined(TEST_INSERTIONS_INTO_FIRST_HALF)
+unsigned long int daftIntHash(const void * p) {
+    return *(unsigned long int*) p;
+}
+
+unsigned int intEq(const void * p, const void * q) {
+    return (*(unsigned long int*) p) == (*(unsigned long int*) q);
+}
+
+void doNothingDealloc(void * p) {}
+
+const unsigned long int kInsertions[50] = {
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+    10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+    20, 21, 22, 23, 24, 25, 26, 27, 28, 29,
+    30, 31, 32, 33, 34, 35, 36, 37, 38, 39,
+    40, 41, 42, 43, 44, 45, 46, 47, 48, 49
+};
+#endif
 
 int main(int argc, char** argv) {
 #ifdef TEST_INDEX_OF_BIT
@@ -159,6 +199,15 @@ int main(int argc, char** argv) {
             printf("phi(%x, %x) = %lx\n", i, j, Phi_(i, j));
         }
     }
+#endif
+#ifdef TEST_INSERTIONS_INTO_FIRST_HALF
+    ElasticHashMap * test_map = ElasticMap_Initialize(daftIntHash, intEq, 300, 50);
+    if (test_map == NULL) {
+        puts("Failed to allocate map.");
+        return 1;
+    }
+    ElasticMap_Free(test_map, doNothingDealloc);
+    return 0;
 #endif
 }
 #endif

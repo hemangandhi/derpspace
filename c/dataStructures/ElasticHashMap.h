@@ -1,7 +1,7 @@
 #ifndef __ElasticHashMap__header
 #define __ElasticHashMap__header
 
-typedef unsigned int (*HashFn) (const void * in);
+typedef unsigned long int (*HashFn) (const void * in);
 typedef unsigned int (*EqFn)(const void * obj1, const void * obj2);
 typedef void (*Deallocator) (void * obj);
 
@@ -9,16 +9,15 @@ typedef struct {
     HashFn hash;
     EqFn eq;
 
-    // Load factor times 100.
+    // Load factor's exponent (delta = 2^(-load_factor)).
     unsigned char load_factor;
 
     // n, and which of the A_n we're allowed to probe until.
     unsigned long int capacity;
-    // Batch endpoint will be a running total while the length gives the size of the latest batch.
-    unsigned long int batch_endpoint_, next_batch_length_;
+    unsigned long int current_batch_number_, current_batch_inserts_;
 
     unsigned long int * subarray_loads_;
-
+    void ** current_batch_subarray_start_;
     void ** map_;
 } ElasticHashMap;
 
