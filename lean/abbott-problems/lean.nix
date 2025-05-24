@@ -1,6 +1,6 @@
 let
   nixpkgs = import <nixpkgs> {};
-  nvim = import ./nvim.nix ( rec {
+  nvim = import ../../nvim.nix ( rec {
     nixPkgs = nixpkgs;
     neovim = nixpkgs.neovim;
     customPackages = with nixpkgs.vimPlugins; {
