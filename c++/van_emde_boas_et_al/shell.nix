@@ -1,7 +1,7 @@
 let
   nixpkgs = import <nixpkgs> {};
   cppFlags = [
-    "-std=c++17" # Or c++20, c++23 etc.
+    "-std=c++20"
     "-Wall"
     "-Wextra"
     "-pedantic"
