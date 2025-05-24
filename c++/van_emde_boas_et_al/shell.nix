@@ -20,6 +20,9 @@ let
         vim-clang-format
       ];
     };
+    extraRC = ''
+      let &runtimepath = &runtimepath . ',/home/heman/dot-files/nix-envs/nvim-lua-inits/cpp-init'
+    '';
   }); in
 nixpkgs.mkShell {
   buildInputs = with nixpkgs; [
