@@ -11,7 +11,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -pedantic")
 find_package(GTest REQUIRED)
 
 # Add your tests
-add_executable(van_emde_boas_et_al_tests tests/test_my_library.cpp)
+add_executable(van_emde_boas_et_al_tests tests/test_van_embde_boas.cpp)
 target_link_libraries(van_emde_boas_et_al_tests GTest::gtest_main)
 target_include_directories(van_emde_boas_et_al_tests PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
