@@ -16,6 +16,7 @@ let
         vim-lsp
         vim-nix
         nvim-treesitter
+        nvim-lspconfig
         vim-clang-format
       ];
     };
@@ -33,6 +34,8 @@ nixpkgs.mkShell {
     nvim
     # coc needs this
     nixpkgs.nodejs
+    # LSP needs this
+    clang-tools
   ];
 
   # Environment variables for your shell
