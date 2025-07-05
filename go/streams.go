@@ -106,6 +106,8 @@ func main() {
 			return is[0] + is[1]
 		}, ones, nats)
 	}}
-	first10 := StreamTakeN(&nats, 10)
-	fmt.Printf("Nats: %s", StreamGetArray(first10))
+	first10 := StreamGetArray(StreamTakeN(&nats, 10))
+	fmt.Printf("Nats: %q", first10)
+	subsets := StreamOfSubsets(first10)
+	fmt.Printf("Subsets: %q", StreamGetArray(&subsets))
 }
