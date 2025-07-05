@@ -87,6 +87,15 @@ func StreamTakeN[T any](s *Stream[T], n int) *Stream[T] {
 	}
 }
 
+func StreamGetArray[T any](s *Stream[T]) []T {
+	a := []T{}
+	while s != nil {
+		a = append(s.next, a)
+		s = s.s.next()
+	}
+	return a
+}
+
 func main() {
 	var ones, nats Stream[int]
 	ones = Stream[int]{1, func() *Stream[int] {
