@@ -88,8 +88,14 @@ func StreamTakeN[T any](s *Stream[T], n int) *Stream[T] {
 }
 
 func main() {
-	var ones Stream[int]
+	var ones, nats Stream[int]
 	ones = Stream[int]{1, func() *Stream[int] {
 		return &ones
 	}}
+	nats = Stream[int]{1, func() *Stream[int] {
+		return StreamMap(func(is ...int) int {
+			return is[0] + is[1]
+		}, ones, nats)
+	}}
+
 }
