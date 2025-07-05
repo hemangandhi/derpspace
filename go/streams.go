@@ -9,37 +9,38 @@ type Stream struct {
 	next  func() Stream
 }
 
-func streamMap(fn func(...VoidPtr) VoidPtr, str ...Stream) {
-	getNexts := func(ss ...Stream) []Stream {
-		sts := []Stream()
+func streamMap(fn func(...VoidPtr) VoidPtr, str ...Stream) Stream {
+	getNexts := func(ss []Stream) []Stream {
+		sts := []Stream{}
 		for _, s := range ss {
-			append(sts, s.next())
+			sts = append(sts, s.next())
 		}
 		return sts
 	}
 
-	getValues := func(ss ...Stream) []VoidPtr {
-		sts := []Stream()
+	getValues := func(ss []Stream) []VoidPtr {
+		sts := []VoidPtr{}
 		for _, s := range ss {
-			append(sts, s.value)
+			sts = append(sts, s.value)
 		}
 		return sts
 	}
 
 	nextStream := func() Stream {
 		val := fn(getValues(str)...)
-		composition = func() Stream {
+		composition := func() Stream {
 			return streamMap(fn, getNexts(str)...)
 		}
 
 		return Stream{val, composition}
 	}
 
-	nextStream()
+	return nextStream()
 }
 
 func main() {
-	ones = Stream{1, func() {
+	var ones Stream
+	ones = Stream{1, func() Stream {
 		return ones
 	}}
 }
