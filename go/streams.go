@@ -4,16 +4,20 @@ import "fmt"
 
 type Stream[T any] struct {
 	value T
-	next  func() Stream[T]
+	next  func() *Stream[T]
 }
 
-func streamMap[T any](fn func(...T) T, str ...Stream[T]) Stream[T] {
-	getNexts := func(ss []Stream[T]) []Stream[T] {
+func streamMap[T any](fn func(...T) T, str ...Stream[T]) *Stream[T] {
+	getNexts := func(ss []Stream[T]) *[]Stream[T] {
 		sts := []Stream[T]{}
 		for _, s := range ss {
-			sts = append(sts, s.next())
+			next := s.next()
+			if next == nil {
+				return nil
+			}
+			sts = append(sts, *next)
 		}
-		return sts
+		return &sts
 	}
 
 	getValues := func(ss []Stream[T]) []T {
@@ -24,13 +28,17 @@ func streamMap[T any](fn func(...T) T, str ...Stream[T]) Stream[T] {
 		return sts
 	}
 
-	nextStream := func() Stream[T] {
+	nextStream := func() *Stream[T] {
 		val := fn(getValues(str)...)
-		composition := func() Stream[T] {
-			return streamMap(fn, getNexts(str)...)
+		composition := func() *Stream[T] {
+			nexts := getNexts(str)
+			if nexts == nil {
+				return nil
+			}
+			return streamMap(fn, *nexts...)
 		}
 
-		return Stream[T]{val, composition}
+		return &Stream[T]{val, composition}
 	}
 
 	return nextStream()
@@ -38,7 +46,7 @@ func streamMap[T any](fn func(...T) T, str ...Stream[T]) Stream[T] {
 
 func main() {
 	var ones Stream[int]
-	ones = Stream[int]{1, func() Stream[int] {
-		return ones
+	ones = Stream[int]{1, func() *Stream[int] {
+		return &ones
 	}}
 }
