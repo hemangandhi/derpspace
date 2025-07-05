@@ -1,6 +1,8 @@
 package main
 
 import "fmt"
+import "iter"
+import "math"
 
 type Stream[T any] struct {
 	value T
@@ -98,6 +100,25 @@ func StreamGetArray[T any](s *Stream[T]) []T {
 	return a
 }
 
+func IterSubsets[T any](ts []T) iter.Seq[[]T] {
+	return func(yield func([]T) bool) {
+		setIndex := 0
+		max := int(math.Pow(2.0, float64(len(ts))))
+		for setIndex < max {
+			s := []T{}
+			for i, t := range ts {
+				if setIndex&(1<<i) > 0 {
+					s = append(s, t)
+				}
+			}
+			if !yield(s) {
+				return
+			}
+			setIndex += 1
+		}
+	}
+}
+
 func main() {
 	var ones, nats Stream[int]
 	ones = Stream[int]{1, func() *Stream[int] {
@@ -108,8 +129,11 @@ func main() {
 			return is[0] + is[1]
 		}, ones, nats)
 	}}
-	first10 := StreamGetArray(StreamTakeN(&nats, 10))
-	fmt.Printf("Nats: %q", first10)
+	first10 := StreamGetArray(StreamTakeN(&nats, 4))
+	fmt.Printf("Nats: %q\n", first10)
 	subsets := StreamOfSubsets(first10)
-	fmt.Printf("Subsets: %q", StreamGetArray(&subsets))
+	fmt.Printf("Subsets: %q\n", StreamGetArray(&subsets))
+	for s := range IterSubsets(first10) {
+		fmt.Printf("Subset: %q\n", s)
+	}
 }
