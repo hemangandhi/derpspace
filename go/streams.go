@@ -50,9 +50,11 @@ func StreamConcat[T any](strs ...*Stream[T]) *Stream[T] {
 	return &Stream[T]{
 		strs[0].value,
 		func() *Stream[T] {
-			// TODO: be sure that the below copies.
-			strs[0] = strs[0].next()
-			return StreamConcat(strs...)
+			new_streams := []*Stream[T]{strs[0].next()}
+			for _, s := range strs[1:] {
+				new_streams = append(new_streams, s)
+			}
+			return StreamConcat(new_streams...)
 		},
 	}
 }
