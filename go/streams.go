@@ -71,6 +71,18 @@ func streamOfSubsets[T any](set []T, offset int) Stream[[]T] {
 	}, next_sets))
 }
 
+func StreamTakeN[T any](s *Stream[T], n int) *Stream[T] {
+	if n == 0 || s == nil {
+		return nil
+	}
+	return &Stream[T]{
+		s.value,
+		func() *Stream[T] {
+			return StreamTakeN(s.next(), n-1)
+		},
+	}
+}
+
 func StreamOfSubsets[T any](set []T) Stream[[]T] {
 	return streamOfSubsets(set, 0)
 }
