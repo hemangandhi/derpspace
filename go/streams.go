@@ -22,15 +22,12 @@ func streamMap[T any](fn func(...T) T, str ...Stream[T]) *Stream[T] {
 		return &sts
 	}
 
-	getValues := func(ss []Stream[T]) []T {
-		sts := []T{}
-		for _, s := range ss {
-			sts = append(sts, s.value)
-		}
-		return sts
+	vals := []T{}
+	for _, s := range str {
+		vals = append(vals, s.value)
 	}
 
-	val := fn(getValues(str)...)
+	val := fn(vals...)
 	composition := func() *Stream[T] {
 		nexts := getNexts(str)
 		if nexts == nil {
