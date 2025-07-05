@@ -9,7 +9,7 @@ type Stream[T any] struct {
 
 // Maps the fn over all the streams provided, returns a stream of the output.
 // The returned stream ends when any input stream ends.
-func streamMap[T any](fn func(...T) T, str ...Stream[T]) *Stream[T] {
+func StreamMap[T any](fn func(...T) T, str ...Stream[T]) *Stream[T] {
 	getNexts := func(ss []Stream[T]) *[]Stream[T] {
 		sts := []Stream[T]{}
 		for _, s := range ss {
@@ -33,26 +33,26 @@ func streamMap[T any](fn func(...T) T, str ...Stream[T]) *Stream[T] {
 		if nexts == nil {
 			return nil
 		}
-		return streamMap(fn, *nexts...)
+		return StreamMap(fn, *nexts...)
 	}
 
 	return &Stream[T]{val, composition}
 
 }
 
-func streamConcat[T any](strs ...*Stream[T]) *Stream[T] {
+func StreamConcat[T any](strs ...*Stream[T]) *Stream[T] {
 	if len(strs) == 0 {
 		return nil
 	}
 	if strs[0] == nil {
-		return streamConcat(strs[1:]...)
+		return StreamConcat(strs[1:]...)
 	}
 	return &Stream[T]{
 		strs[0].value,
 		func() *Stream[T] {
 			// TODO: be sure that the below copies.
 			strs[0] = strs[0].next()
-			return streamConcat(strs...)
+			return StreamConcat(strs...)
 		},
 	}
 }
