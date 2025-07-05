@@ -2,45 +2,43 @@ package main
 
 import "fmt"
 
-type VoidPtr interface{}
-
-type Stream struct {
-	value VoidPtr
-	next  func() Stream
+type Stream[T any] struct {
+	value T
+	next  func() Stream[T]
 }
 
-func streamMap(fn func(...VoidPtr) VoidPtr, str ...Stream) Stream {
-	getNexts := func(ss []Stream) []Stream {
-		sts := []Stream{}
+func streamMap[T any](fn func(...T) T, str ...Stream[T]) Stream[T] {
+	getNexts := func(ss []Stream[T]) []Stream[T] {
+		sts := []Stream[T]{}
 		for _, s := range ss {
 			sts = append(sts, s.next())
 		}
 		return sts
 	}
 
-	getValues := func(ss []Stream) []VoidPtr {
-		sts := []VoidPtr{}
+	getValues := func(ss []Stream[T]) []T {
+		sts := []T{}
 		for _, s := range ss {
 			sts = append(sts, s.value)
 		}
 		return sts
 	}
 
-	nextStream := func() Stream {
+	nextStream := func() Stream[T] {
 		val := fn(getValues(str)...)
-		composition := func() Stream {
+		composition := func() Stream[T] {
 			return streamMap(fn, getNexts(str)...)
 		}
 
-		return Stream{val, composition}
+		return Stream[T]{val, composition}
 	}
 
 	return nextStream()
 }
 
 func main() {
-	var ones Stream
-	ones = Stream{1, func() Stream {
+	var ones Stream[int]
+	ones = Stream[int]{1, func() Stream[int] {
 		return ones
 	}}
 }
