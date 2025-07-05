@@ -40,6 +40,23 @@ func streamMap[T any](fn func(...T) T, str ...Stream[T]) *Stream[T] {
 
 }
 
+func streamConcat[T any](strs ...*Stream[T]) *Stream[T] {
+	if len(strs) == 0 {
+		return nil
+	}
+	if strs[0] == nil {
+		return streamConcat(strs[1:]...)
+	}
+	return &Stream[T]{
+		strs[0].value,
+		func() *Stream[T] {
+			// TODO: be sure that the below copies.
+			strs[0] = strs[0].next()
+			return streamConcat(strs...)
+		},
+	}
+}
+
 func main() {
 	var ones Stream[int]
 	ones = Stream[int]{1, func() *Stream[int] {
