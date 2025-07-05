@@ -57,6 +57,24 @@ func StreamConcat[T any](strs ...*Stream[T]) *Stream[T] {
 	}
 }
 
+func streamOfSubsets[T any](set []T, offset int) Stream[[]T] {
+	if offset >= len(set) {
+		return Stream[[]T]{
+			[]T{},
+			func() *Stream[[]T] { return nil },
+		}
+	}
+	next_sets := streamOfSubsets(set, offset+1)
+	// NOTE: concat can't return nil for non-nil args.
+	return *StreamConcat(&next_sets, StreamMap(func(strs ...[]T) []T {
+		return append(strs[0], set[offset])
+	}, next_sets))
+}
+
+func StreamOfSubsets[T any](set []T) Stream[[]T] {
+	return streamOfSubsets(set, 0)
+}
+
 func main() {
 	var ones Stream[int]
 	ones = Stream[int]{1, func() *Stream[int] {
