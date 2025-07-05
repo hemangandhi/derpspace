@@ -100,6 +100,17 @@ func StreamGetArray[T any](s *Stream[T]) []T {
 	return a
 }
 
+func IterStream[T any](s *Stream[T]) iter.Seq[T] {
+	return func(yield func(T) bool) {
+		for s != nil {
+			if !yield(s.value) {
+				return
+			}
+			s = s.next()
+		}
+	}
+}
+
 func IterSubsets[T any](ts []T) iter.Seq[[]T] {
 	return func(yield func([]T) bool) {
 		setIndex := 0
