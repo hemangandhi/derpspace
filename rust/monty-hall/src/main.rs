@@ -235,7 +235,7 @@ impl MontyHallState {
     }
 }
 
-fn tabluate_plays(n_doors: usize) -> Metrics {
+fn tabulate_plays(n_doors: usize) -> Metrics {
     (1..(n_doors - 1))
         .fold(
             MontyHallState::initial_states_for_doors(n_doors),
@@ -252,5 +252,5 @@ fn tabluate_plays(n_doors: usize) -> Metrics {
 }
 
 fn main() {
-    println!("Monty hall 6: {}", tabluate_plays(6));
+    println!("Monty hall 6: {}", tabulate_plays(6));
 }
