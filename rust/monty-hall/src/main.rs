@@ -105,12 +105,6 @@ mod ratio {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
-struct DoorState {
-    is_opened: bool,
-    is_prize: bool,
-}
-
 #[derive(Default)]
 struct Metrics {
     runs: usize,
@@ -179,15 +173,15 @@ struct MontyHallState {
     previous_door: usize,
     swapped_at_plays: HashSet<usize>,
 
-    door_states: Vec<DoorState>,
+    n_doors: usize,
+    open_doors: HashSet<usize>,
     win_index: usize,
 }
 
 impl MontyHallState {
     fn to_metric(self) -> Metrics {
         let is_win = self.win_index == self.previous_door;
-        let swapiness =
-            ratio::Ratio::from((self.swapped_at_plays.len(), self.door_states.len() - 2));
+        let swapiness = ratio::Ratio::from((self.swapped_at_plays.len(), self.n_doors - 2));
         Metrics {
             runs: 1,
             wins: if is_win { 1 } else { 0 },
@@ -204,28 +198,22 @@ impl MontyHallState {
                     used_doors: HashSet::from([first_guess]),
                     previous_door: first_guess,
                     swapped_at_plays: HashSet::new(),
-                    door_states: (0usize..n_doors)
-                        .map(|i| DoorState {
-                            is_opened: false,
-                            is_prize: i == win_index,
-                        })
-                        .collect(),
+                    open_doors: HashSet::new(),
                     win_index,
+                    n_doors,
                 })
             })
             .collect()
     }
 
     fn generate_plays(&self, pick_index: usize) -> Vec<MontyHallState> {
-        (0usize..(self.door_states.len()))
+        (0usize..self.n_doors)
+            .filter(|host_open| {
+                *host_open != self.win_index && !self.open_doors.contains(&host_open)
+            })
             .flat_map(|host_open| {
-                (0usize..(self.door_states.len())).filter_map(move |next_pick| {
-                    // TODO: filter these earlier?
-                    if self.door_states[host_open].is_opened || self.door_states[host_open].is_prize
-                    {
-                        return None;
-                    }
-                    if next_pick == host_open || self.door_states[next_pick].is_opened {
+                (0usize..self.n_doors).filter_map(move |next_pick| {
+                    if next_pick == host_open || self.open_doors.contains(&next_pick) {
                         return None;
                     }
                     Some(MontyHallState {
@@ -237,15 +225,8 @@ impl MontyHallState {
                             } else {
                                 HashSet::from([pick_index])
                             }),
-                        door_states: self
-                            .door_states
-                            .iter()
-                            .enumerate()
-                            .map(|(i, d)| DoorState {
-                                is_opened: d.is_opened || (i == host_open),
-                                is_prize: d.is_prize,
-                            })
-                            .collect(),
+                        n_doors: self.n_doors,
+                        open_doors: &self.open_doors | &HashSet::from([host_open]),
                         win_index: self.win_index,
                     })
                 })
@@ -271,5 +252,5 @@ fn tabluate_plays(n_doors: usize) -> Metrics {
 }
 
 fn main() {
-    println!("Monty hall 4: {}", tabluate_plays(4));
+    println!("Monty hall 6: {}", tabluate_plays(6));
 }
