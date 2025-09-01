@@ -213,7 +213,9 @@ impl MontyHallState {
     fn generate_plays(&self, pick_index: usize) -> Vec<MontyHallState> {
         (0usize..self.n_doors)
             .filter(|host_open| {
-                *host_open != self.win_index && !self.open_doors.contains(&host_open)
+                *host_open != self.win_index
+                    && *host_open != self.previous_door
+                    && !self.open_doors.contains(&host_open)
             })
             .flat_map(|host_open| {
                 (0usize..self.n_doors).filter_map(move |next_pick| {
