@@ -107,6 +107,7 @@ mod ratio {
 
 #[derive(Default)]
 struct Metrics {
+    n_doors: usize,
     runs: usize,
     wins: usize,
     losses: usize,
@@ -119,6 +120,7 @@ impl std::iter::Sum for Metrics {
     fn sum<I: Iterator<Item = Self>>(iter: I) -> Self {
         let mut total = Metrics::default();
         for i in iter {
+            total.n_doors = i.n_doors;
             total.runs += i.runs;
             total.wins += i.wins;
             total.losses += i.losses;
@@ -138,7 +140,7 @@ impl std::fmt::Display for Metrics {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(
             f,
-            "Stats:
+            "Stats for {} doors:
 Plays: {}
 Wins: {}
 Losses: {}
@@ -148,6 +150,7 @@ Wins per swappiness:
 Swappiness\tWin rate in swap\tWin rate over all
 ----------\t----------------\t-----------------
 ",
+            self.n_doors,
             self.runs,
             self.wins,
             self.losses,
@@ -183,6 +186,7 @@ impl MontyHallState {
         let is_win = self.win_index == self.previous_door;
         let swapiness = ratio::Ratio::from((self.swapped_at_plays.len(), self.n_doors - 2));
         Metrics {
+            n_doors: self.n_doors,
             runs: 1,
             wins: if is_win { 1 } else { 0 },
             losses: if !is_win { 1 } else { 0 },
@@ -252,5 +256,5 @@ fn tabulate_plays(n_doors: usize) -> Metrics {
 }
 
 fn main() {
-    println!("Monty hall 6: {}", tabulate_plays(6));
+    println!("{}", tabulate_plays(4));
 }
